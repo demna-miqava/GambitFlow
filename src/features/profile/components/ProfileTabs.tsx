@@ -1,16 +1,19 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import OverviewSection from "./OverviewSection";
+import StatsSection from "./StatsSection";
+
 const tabs = [
-  { value: "overview", label: "Overview", content: "Overview content" },
-  { value: "games", label: "Games", content: "Games content" },
-  { value: "stats", label: "Stats", content: "Stats content" },
-  { value: "friends", label: "Friends", content: "Friends content" },
+  { value: "overview", label: "Overview" },
+  { value: "games", label: "Games" },
+  { value: "stats", label: "Stats" },
+  { value: "friends", label: "Friends" },
 ];
 
 export const ProfileTabs = () => {
   return (
     <Tabs defaultValue="overview" className="mt-8 w-full">
-      <TabsList className="flex w-full justify-start gap-3 overflow-x-auto bg-transparent p-0">
+      <TabsList className="flex w-full justify-start gap-3 overflow-x-auto bg-transparent p-0 scrollbar-hide">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}
@@ -22,15 +25,21 @@ export const ProfileTabs = () => {
         ))}
       </TabsList>
 
-      {tabs.map((tab) => (
-        <TabsContent
-          key={tab.value}
-          value={tab.value}
-          className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-6 text-white/80"
-        >
-          {tab.content}
-        </TabsContent>
-      ))}
+      <TabsContent value="overview" className="mt-6">
+        <OverviewSection />
+      </TabsContent>
+
+      <TabsContent value="games" className="mt-6 text-white/70">
+        Games content coming soon.
+      </TabsContent>
+
+      <TabsContent value="stats" className="mt-6 text-white/70">
+        <StatsSection />
+      </TabsContent>
+
+      <TabsContent value="friends" className="mt-6 text-white/70">
+        Friends content coming soon.
+      </TabsContent>
     </Tabs>
   );
 };
