@@ -1,3 +1,4 @@
+import FriendsGrid from "@/features/friends/components/FriendsGrid";
 import { GameTable } from "@/features/game-table";
 import PerformanceShowcase from "@/features/stats/components/performance/PerformanceShowcase";
 
@@ -9,12 +10,7 @@ const ProfileOverview = () => {
         <GameTable variant="preview" actionHref="/profile/games" />
       </div>
       <aside className="flex flex-col gap-4">
-        <div className="rounded-2xl border border-foreground bg-gray-400 p-4">
-          <h3 className="text-sm font-semibold text-foreground">Friends</h3>
-          <p className="mt-2 text-sm text-foreground">
-            Plug in additional profile insights or a small summary card here.
-          </p>
-        </div>
+        <FriendsGrid />
       </aside>
     </div>
   );
