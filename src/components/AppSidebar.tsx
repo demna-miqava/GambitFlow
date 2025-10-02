@@ -45,7 +45,7 @@ const items = [
   },
   {
     title: "Settings",
-    url: "/",
+    url: "/settings",
     icon: Settings,
     color: "text-amber-600 dark:text-amber-400",
   },
