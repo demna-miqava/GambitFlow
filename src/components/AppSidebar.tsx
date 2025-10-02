@@ -26,7 +26,7 @@ import { useTheme } from "@/context/ThemeContext";
 const items = [
   {
     title: "Home",
-    url: "/",
+    url: "/home",
     icon: Home,
     color: "text-sky-600 dark:text-sky-400",
   },
