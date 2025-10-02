@@ -11,7 +11,7 @@ export const IntroStep = ({
   onGoogleSignup,
 }: IntroStepProps) => {
   return (
-    <div className="w-full space-y-4 flex flex-col items-center gap-4">
+    <div className="w-full flex flex-col items-center gap-6">
       <Logo />
 
       <div className="w-full flex flex-col gap-4">

@@ -1,12 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { SKILL_OPTIONS, STEP_COPY } from "./consts";
-import { useStepsNavigation } from "./hooks/useStepsNavigation";
+import { useState } from "react";
+import { Link } from "react-router";
 import { ArrowLeft } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+import { CredentialsStep } from "./components/CredentialsStep";
 import Header from "./components/Header";
 import { IntroStep } from "./components/IntroStep";
 import { SkillStep } from "./components/SkillStep";
-import { CredentialsStep } from "./components/CredentialsStep";
-import { useState } from "react";
+import { SKILL_OPTIONS, STEP_COPY } from "./consts";
+import { useStepsNavigation } from "./hooks/useStepsNavigation";
 
 export const SignUpContainer = () => {
   const { currentStep, goNext, goBack, canGoBack } = useStepsNavigation();
@@ -17,25 +20,38 @@ export const SignUpContainer = () => {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0d0f14] text-white">
-      <div className="flex items-center gap-2 px-6 py-6">
-        {canGoBack && (
+      <header className="mx-auto flex w-full max-w-xl items-center justify-between px-4 pt-6 sm:px-0">
+        {canGoBack ? (
           <Button
             variant="ghost"
             size="icon"
             onClick={goBack}
-            className="size-10 rounded-full border border-white/10 bg-white/5 text-white hover:bg-white/10 absolute top-5 left-[15%]"
+            className="size-10 rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10"
           >
             <ArrowLeft className="size-5" />
           </Button>
+        ) : (
+          <span className="size-10" />
         )}
-      </div>
 
-      <div className="w-full max-w-xl mx-auto">
+        {currentStep === "intro" ? (
+          <Link
+            to="/signin"
+            className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10"
+          >
+            Log in
+          </Link>
+        ) : (
+          <span className="size-10" />
+        )}
+      </header>
+
+      <div className="mx-auto w-full max-w-xl px-4 pb-16 sm:px-0">
         <Header>
           <span className="text-base text-white/60 text-center">{title}</span>
         </Header>
         <main className="mt-10">
-          <div className="w-full max-w-xl">
+          <div className="w-full">
             {currentStep === "intro" && (
               <IntroStep
                 onEmailSignup={goNext}
