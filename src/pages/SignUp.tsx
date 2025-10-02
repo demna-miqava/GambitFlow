@@ -1,5 +1,7 @@
+import { SignUpContainer } from "@/features/signup/SignUpContainer";
+
 export const SignUp = () => {
-  return <div>SignUp</div>;
+  return <SignUpContainer />;
 };
 
 export default SignUp;
