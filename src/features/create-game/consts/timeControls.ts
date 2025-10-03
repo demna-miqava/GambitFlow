@@ -1,15 +1,9 @@
-import { Bolt, Clock, Zap } from "lucide-react";
-
-export const TIME_CONTROL_ICONS = {
-  Bullet: Bolt,
-  Blitz: Zap,
-  Rapid: Clock,
-};
+import { TIME_CONTROL_ICONS } from "@/consts";
 
 export const PLAY_TIME_CONTROLS = [
   {
     label: "Bullet",
-    icon: TIME_CONTROL_ICONS.Bullet,
+    icon: TIME_CONTROL_ICONS.bullet,
     options: [
       {
         label: "1 min",
@@ -27,7 +21,7 @@ export const PLAY_TIME_CONTROLS = [
   },
   {
     label: "Blitz",
-    icon: TIME_CONTROL_ICONS.Blitz,
+    icon: TIME_CONTROL_ICONS.blitz,
     options: [
       {
         label: "3 min",
@@ -45,7 +39,7 @@ export const PLAY_TIME_CONTROLS = [
   },
   {
     label: "Rapid",
-    icon: TIME_CONTROL_ICONS.Rapid,
+    icon: TIME_CONTROL_ICONS.rapid,
     options: [
       {
         label: "10 min",

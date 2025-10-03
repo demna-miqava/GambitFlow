@@ -1,7 +1,7 @@
 "use client";
 
+import { TIME_CONTROL_ICONS } from "@/consts";
 import { type ColumnDef } from "@tanstack/react-table";
-import { TIME_CONTROL_ICONS } from "../create-game/consts/timeControls";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -30,7 +30,7 @@ export const columns: ColumnDef<GameTableData>[] = [
       const Icon = TIME_CONTROL_ICONS[type as keyof typeof TIME_CONTROL_ICONS];
       return (
         <div className="flex flex-col items-center gap-1 text-xs text-white/70">
-          <Icon className="size-5 text-yellow-400" />
+          <Icon />
           <span className="font-medium text-gray-400">{timeControl}</span>
         </div>
       );

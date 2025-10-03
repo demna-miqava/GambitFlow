@@ -1,6 +1,7 @@
-import { Bolt, Puzzle, Rocket, Sun, Timer } from "lucide-react";
+import { Puzzle, Sun } from "lucide-react";
 
 import { SimpleStatCard } from "./SimpleStatCard";
+import { TIME_CONTROL_ICONS } from "@/consts";
 
 const simpleStats = [
   {
@@ -9,19 +10,19 @@ const simpleStats = [
     value: "1,847",
   },
   {
-    icon: <Bolt className="size-12 text-yellow-400" />,
+    icon: <TIME_CONTROL_ICONS.blitz className="size-12" />,
     label: "Blitz",
     value: "1415",
     delta: 363,
   },
   {
-    icon: <Rocket className="size-12 text-yellow-500" />,
+    icon: <TIME_CONTROL_ICONS.bullet className="size-12" />,
     label: "Bullet",
     value: "1251",
     delta: 323,
   },
   {
-    icon: <Timer className="size-12 text-emerald-400" />,
+    icon: <TIME_CONTROL_ICONS.rapid className="size-12" />,
     label: "Rapid",
     value: "1574",
     delta: 0,

@@ -6,7 +6,7 @@ export function getData(): GameTableData[] {
     {
       id: "game-1001",
       timeControl: "10+0",
-      type: "Rapid",
+      type: "rapid",
       players: {
         white: {
           userName: "Arjun",
@@ -28,7 +28,7 @@ export function getData(): GameTableData[] {
     {
       id: "game-1002",
       timeControl: "3+2",
-      type: "Blitz",
+      type: "blitz",
       players: {
         white: {
           userName: "Lena",
@@ -51,7 +51,7 @@ export function getData(): GameTableData[] {
     {
       id: "game-1003",
       timeControl: "1+0",
-      type: "Bullet",
+      type: "bullet",
       players: {
         white: {
           userName: "Mia",
@@ -73,7 +73,7 @@ export function getData(): GameTableData[] {
     {
       id: "game-1004",
       timeControl: "15+10",
-      type: "Rapid",
+      type: "rapid",
       players: {
         white: {
           userName: "Hiro",
@@ -95,7 +95,7 @@ export function getData(): GameTableData[] {
     {
       id: "game-1005",
       timeControl: "5+0",
-      type: "Blitz",
+      type: "blitz",
       players: {
         white: {
           userName: "Elena",
@@ -117,7 +117,7 @@ export function getData(): GameTableData[] {
     {
       id: "game-1006",
       timeControl: "25+0",
-      type: "Blitz",
+      type: "blitz",
       players: {
         white: {
           userName: "Isabel",
@@ -139,7 +139,7 @@ export function getData(): GameTableData[] {
     {
       id: "game-1007",
       timeControl: "3+0",
-      type: "Blitz",
+      type: "blitz",
       players: {
         white: {
           userName: "Chloe",
@@ -161,7 +161,7 @@ export function getData(): GameTableData[] {
     {
       id: "asdasdasdas",
       timeControl: "10+0",
-      type: "Rapid",
+      type: "rapid",
       players: {
         white: {
           userName: "John Doe",
@@ -183,7 +183,7 @@ export function getData(): GameTableData[] {
     {
       id: "728egghgfd52f",
       timeControl: "10+0",
-      type: "Rapid",
+      type: "rapid",
       players: {
         white: {
           userName: "John Doe",
@@ -205,7 +205,7 @@ export function getData(): GameTableData[] {
     {
       id: "728edasda52f",
       timeControl: "10+0",
-      type: "Rapid",
+      type: "rapid",
       players: {
         white: {
           userName: "John Doe",
@@ -227,7 +227,7 @@ export function getData(): GameTableData[] {
     {
       id: "728efdsfsdd52f",
       timeControl: "10+0",
-      type: "Rapid",
+      type: "rapid",
       players: {
         white: {
           userName: "John Doe",

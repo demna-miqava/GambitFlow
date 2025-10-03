@@ -1,35 +1,32 @@
-import { Bolt, Clock, Puzzle, Zap } from "lucide-react";
+import { Puzzle } from "lucide-react";
 
 import { PerformanceCard } from "./PerformanceCard";
+import { TIME_CONTROL_ICONS } from "@/consts";
 
 const performanceStats = [
   {
-    icon: <Bolt className="size-8 text-yellow-400" />,
+    icon: <TIME_CONTROL_ICONS.bullet className="size-8" />,
     label: "Bullet",
     rating: 1251,
     delta: 83,
-    trend: "up" as const,
   },
   {
-    icon: <Zap className="size-8 text-lime-400" />,
+    icon: <TIME_CONTROL_ICONS.blitz className="size-8" />,
     label: "Blitz",
     rating: 1415,
     delta: 292,
-    trend: "up" as const,
   },
   {
-    icon: <Clock className="size-8 text-emerald-400" />,
+    icon: <TIME_CONTROL_ICONS.rapid className="size-8" />,
     label: "Rapid",
     rating: 1574,
     delta: -9,
-    trend: "down" as const,
   },
   {
     icon: <Puzzle className="size-8 text-orange-400" />,
     label: "Puzzles",
     rating: 2365,
     delta: 21,
-    trend: "up" as const,
   },
 ];
 
