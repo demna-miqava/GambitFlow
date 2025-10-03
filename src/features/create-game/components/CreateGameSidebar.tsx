@@ -34,8 +34,7 @@ export const CreateGameSidebar = () => {
   return (
     <aside className="flex max-h-[calc(100vh-4rem)] w-full flex-col overflow-hidden rounded-xl border border-border/60 bg-sidebar text-sidebar-foreground p-4 shadow-sm lg:w-[500px]">
       <div
-        className="flex flex-1 flex-col gap-6 overflow-y-auto pr-2"
-        style={{ scrollbarGutter: "stable both-edges" }}
+        className="flex flex-1 flex-col gap-6 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
         <Tabs />
         {canGoBack && (

@@ -32,11 +32,18 @@ export const FriendInviteOptions = () => {
 
       <TimeControlsSection />
 
-      <section className="space-y-2 flex justify-between items-center">
+      <section className="flex justify-between items-center">
         <p className="text-sm font-semibold">I play as</p>
-        <div className="flex items-center gap-3">
+        <div className="flex gap-3">
           {COLOR_CHOICES.map((choice) => {
             const isActive = colorChoice === choice;
+            const bgColor =
+              choice === "white" ? "bg-white" :
+              choice === "black" ? "bg-[#1a1a1a]" :
+              "bg-sidebar";
+            const borderColor = isActive
+              ? "border-lime-400 shadow-[0_0_0_1px_rgba(163,230,53,0.4)]"
+              : "border-sidebar-border hover:border-lime-300";
 
             return (
               <button
@@ -44,26 +51,15 @@ export const FriendInviteOptions = () => {
                 type="button"
                 aria-pressed={isActive}
                 onClick={() => setColorChoice(choice)}
-                className={`flex h-12 w-12 items-center justify-center rounded-md border transition-all ${
-                  isActive
-                    ? "border-lime-400 bg-lime-400/10 text-lime-200 shadow-[0_0_0_1px_rgba(163,230,53,0.4)]"
-                    : "border-sidebar-border bg-sidebar text-sidebar-foreground hover:border-lime-300"
-                }`}
+                className={`relative size-12 flex items-center justify-center rounded-md border transition-all ${borderColor} ${bgColor}`}
               >
                 {choice === "random" ? (
-                  <div className="relative flex h-full w-full items-center justify-center text-lg font-semibold">
-                    <div className="absolute inset-0 grid grid-cols-2 overflow-hidden rounded-md">
-                      <span className="h-full w-full bg-white" />
-                      <span className="h-full w-full bg-[#1a1a1a]" />
-                    </div>
-                    <span className="relative text-black">?</span>
+                  <div className="absolute inset-0 grid grid-cols-2 overflow-hidden rounded-md">
+                    <span className="bg-white" />
+                    <span className="bg-[#1a1a1a]" />
                   </div>
                 ) : (
-                  <Crown
-                    className={`size-6 ${
-                      choice === "white" ? "text-white" : "text-black"
-                    }`}
-                  />
+                  <Crown className={`size-6 ${choice === "white" ? "text-black" : "text-white"}`} />
                 )}
               </button>
             );

@@ -1,12 +1,41 @@
+import { useState } from "react";
 import { useCreateGame } from "@/features/create-game/CreateGameContext";
-
-const friendsList = Array.from({ length: 10 }, (_, index) => ({
-  name: `Friend ${index + 1}`,
-  status: index % 2 === 0 ? "Online" : "Offline",
-}));
+import { useGetFriends } from "@/features/friends/hooks/useGetFriends";
+import { useFriendsPagination } from "@/features/friends/hooks/useFriendsPagination";
+import { FriendListItem } from "@/features/friends/components/FriendListItem";
+import { Pagination } from "@/components/Pagination";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import type { Friend } from "@/types";
 
 export const Friends = () => {
   const { setActiveSection } = useCreateGame();
+  const { friends } = useGetFriends();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredFriends = friends.filter(
+    (friend) =>
+      friend.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      friend.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const {
+    currentPage,
+    totalPages,
+    paginatedFriends,
+    goToPage,
+    hasNextPage,
+    hasPreviousPage,
+  } = useFriendsPagination({
+    friends: filteredFriends,
+    itemsPerPage: 10,
+  });
+
+  const handleChallenge = (friend: Friend) => {
+    console.log("Challenge:", friend.username);
+    setActiveSection("friend-invite-options");
+  };
+
   return (
     <section className="space-y-4">
       <header className="flex items-center justify-between">
@@ -17,31 +46,35 @@ export const Friends = () => {
           </p>
         </div>
       </header>
-      <div className="grid grid-cols-1 gap-2">
-        {friendsList.map((friend) => (
-          <button
-            key={friend.name}
-            onClick={() => setActiveSection("friend-invite-options")}
-            type="button"
-            className="cursor-pointer flex items-center justify-between rounded-xl border border-sidebar-border bg-sidebar px-4 py-3 text-left transition hover:border-sidebar-ring/60 hover:bg-sidebar-accent/40"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex size-9 items-center justify-center rounded-full bg-sidebar-accent/40 text-sm font-semibold">
-                {friend.name.slice(0, 2).toUpperCase()}
-              </div>
-              <div className="leading-tight">
-                <p className="font-semibold">{friend.name}</p>
-                <p className="text-xs text-sidebar-foreground/70">
-                  {friend.status}
-                </p>
-              </div>
-            </div>
-            <span className="text-xs font-semibold text-sidebar-foreground/70">
-              Challenge
-            </span>
-          </button>
+
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          type="text"
+          placeholder="Search friends..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-9"
+        />
+      </div>
+
+      <div className="space-y-2">
+        {paginatedFriends.map((friend) => (
+          <FriendListItem
+            key={friend.username}
+            friend={friend}
+            onChallenge={handleChallenge}
+          />
         ))}
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={goToPage}
+        hasNextPage={hasNextPage}
+        hasPreviousPage={hasPreviousPage}
+      />
     </section>
   );
 };
