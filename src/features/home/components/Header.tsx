@@ -1,5 +1,5 @@
 import { Mail, Settings, Users } from "lucide-react";
-import { UserInfo } from "./userInfo";
+import { UserInfo } from "./UserInfo";
 
 export const Header = () => {
   return (

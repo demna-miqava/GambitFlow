@@ -1,13 +1,4 @@
-import {
-  Home,
-  Puzzle,
-  Settings,
-  User,
-  Moon,
-  Sun,
-  ArrowRightToLine,
-  ArrowLeftToLine,
-} from "lucide-react";
+import { Moon, Sun, ArrowRightToLine, ArrowLeftToLine } from "lucide-react";
 
 import {
   Sidebar,
@@ -25,6 +16,7 @@ import { Link } from "react-router";
 import { useTheme } from "@/context/ThemeContext";
 import { useUser } from "@/hooks/useUser";
 import { useMemo } from "react";
+import { getSidebarItems } from "./config/sidebarItems";
 
 export function AppSidebar() {
   const { theme, toggleTheme } = useTheme();
@@ -32,36 +24,7 @@ export function AppSidebar() {
   const isCollapsed = state === "collapsed";
   const { userName } = useUser();
 
-  const items = useMemo(
-    () => [
-      {
-        title: "Home",
-        url: "/home",
-        icon: Home,
-        color: "text-sky-600 dark:text-sky-400",
-      },
-      {
-        title: "Puzzles",
-        url: "/home",
-        icon: Puzzle,
-        color: "text-violet-600 dark:text-violet-400",
-      },
-
-      {
-        title: "Profile",
-        url: `/profile/${userName}`,
-        icon: User,
-        color: "text-emerald-600 dark:text-emerald-400",
-      },
-      {
-        title: "Settings",
-        url: "/settings",
-        icon: Settings,
-        color: "text-amber-600 dark:text-amber-400",
-      },
-    ],
-    [userName]
-  );
+  const items = useMemo(() => getSidebarItems(userName), [userName]);
 
   return (
     <Sidebar collapsible="icon">

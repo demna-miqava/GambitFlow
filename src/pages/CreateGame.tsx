@@ -1,11 +1,7 @@
 import { CreateGameLayout } from "@/features/create-game/components/CreateGameLayout";
 
-const Play = () => {
-  return (
-    <div className="space-y-6">
-      <CreateGameLayout />
-    </div>
-  );
+const CreateGame = () => {
+  return <CreateGameLayout />;
 };
 
-export default Play;
+export default CreateGame;

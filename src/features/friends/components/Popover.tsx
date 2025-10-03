@@ -23,8 +23,9 @@ const FriendPopover = ({
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent>
         <div className="flex-col gap-4">
-          <div
-            className="flex gap-6 cursor-pointer"
+          <button
+            type="button"
+            className="flex gap-6 text-left w-full hover:opacity-80 transition-opacity"
             onClick={() => {
               navigate(`/profile/${username}`);
             }}
@@ -34,7 +35,7 @@ const FriendPopover = ({
               <h3>{username}</h3>
               <p>{friendFor}</p>
             </div>
-          </div>
+          </button>
           <div className="flex gap-2 mt-4 justify-end">
             <Button size="sm">
               <Sword />

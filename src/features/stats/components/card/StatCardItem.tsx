@@ -1,4 +1,4 @@
-import { TIME_CONTROL_ICONS } from "@/consts";
+import { getTimeControlIcon } from "@/utils/timeControl";
 
 interface StatCardItemProps {
   gameType: string;
@@ -6,8 +6,7 @@ interface StatCardItemProps {
 }
 
 const StatCardItem = ({ gameType, rating }: StatCardItemProps) => {
-  const IconComponent =
-    TIME_CONTROL_ICONS[gameType as keyof typeof TIME_CONTROL_ICONS];
+  const IconComponent = getTimeControlIcon(gameType);
 
   return (
     <>
