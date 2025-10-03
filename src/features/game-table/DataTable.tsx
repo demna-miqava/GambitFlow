@@ -14,24 +14,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import { Pagination } from "@/components/Pagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   hidePagination?: boolean;
+  pageSize?: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   hidePagination = false,
+  pageSize = 10,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize,
+      },
+    },
   });
 
   return (
@@ -79,25 +86,14 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
       {!hidePagination && (
-        <div className="flex items-center justify-end space-x-2 py-4 mr-5">
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-foreground"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-foreground"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+        <div className="py-4">
+          <Pagination
+            currentPage={table.getState().pagination.pageIndex + 1}
+            totalPages={table.getPageCount()}
+            onPageChange={(page) => table.setPageIndex(page - 1)}
+            hasNextPage={table.getCanNextPage()}
+            hasPreviousPage={table.getCanPreviousPage()}
+          />
         </div>
       )}
     </div>
