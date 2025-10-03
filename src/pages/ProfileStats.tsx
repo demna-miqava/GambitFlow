@@ -9,12 +9,12 @@ const ProfileStats = () => {
   const [variant, setVariant] = useQueryParams("variant", "all");
   return (
     <div className="space-y-4">
-      <div className="flex gap-4">
-        <StatsVariantSelect />
-        <StatsDaysSelect />
-      </div>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
-        <main>
+        <main className="space-y-4">
+          <div className="flex gap-4">
+            <StatsVariantSelect />
+            <StatsDaysSelect />
+          </div>
           {variant === "all" ? <SimpleStatsGrid /> : <ComprehensiveStats />}
         </main>
         <aside>

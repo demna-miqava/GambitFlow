@@ -16,14 +16,14 @@ const GameFilters = ({ statsData }: { statsData: ComprehensiveStatsData }) => {
 
   return (
     <div className="space-y-6 rounded-2xl border border-white/10 bg-[#1a1d24] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         {/* Game Type Tabs */}
-        <div className="flex gap-1">
+        <div className="flex gap-1 overflow-x-auto w-full sm:w-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 text-sm font-medium transition-colors ${
+              className={`px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
                 activeTab === tab.id
                   ? "border-b-2 border-blue-400 text-blue-400"
                   : "text-white/70 hover:text-white"
@@ -35,14 +35,14 @@ const GameFilters = ({ statsData }: { statsData: ComprehensiveStatsData }) => {
         </div>
 
         {/* Opponent Search */}
-        <div className="relative">
+        <div className="relative w-full sm:w-48">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-white/50" />
           <Input
             type="text"
             placeholder="Opponent..."
             value={opponentSearch}
             onChange={(e) => setOpponentSearch(e.target.value)}
-            className="w-48 bg-white/5 border-white/10 text-white placeholder:text-white/50 pl-10"
+            className="w-full bg-white/5 border-white/10 text-white placeholder:text-white/50 pl-10"
           />
         </div>
       </div>
