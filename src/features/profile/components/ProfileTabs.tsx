@@ -28,7 +28,7 @@ export const ProfileTabs = () => {
       }}
       className="mt-8 w-full"
     >
-      <TabsList className="flex w-full justify-start gap-3 overflow-x-auto bg-transparent p-0 scrollbar-hide">
+      <TabsList className="flex w-full justify-start gap-3 overflow-x-auto bg-transparent p-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}
