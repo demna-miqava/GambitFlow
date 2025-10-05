@@ -1,8 +1,6 @@
 import { Bolt, Clock, Zap } from "lucide-react";
-import { cn } from "./lib/utils";
+import { cn } from "@/lib/utils";
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-console.log("API_BASE_URL", API_BASE_URL);
 export const TIME_CONTROL_ICONS = {
   bullet: ({
     className,

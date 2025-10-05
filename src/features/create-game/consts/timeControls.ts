@@ -1,4 +1,4 @@
-import { TIME_CONTROL_ICONS } from "@/consts";
+import { TIME_CONTROL_ICONS } from "@/consts/timeControlIcons";
 
 export const PLAY_TIME_CONTROLS = [
   {

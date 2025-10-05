@@ -1,8 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCurrentUser, type User } from "@/services/user";
 import Cookies from "js-cookie";
-
-export const USER_QUERY_KEY = ["user"];
+import { QKEY_USER } from "@/consts/queryKeys";
 
 export const useUser = () => {
   const queryClient = useQueryClient();
@@ -14,7 +13,7 @@ export const useUser = () => {
     error,
     refetch,
   } = useQuery({
-    queryKey: USER_QUERY_KEY,
+    queryKey: [QKEY_USER],
     queryFn: getCurrentUser,
     enabled: !!token,
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -22,11 +21,11 @@ export const useUser = () => {
   });
 
   const setUser = (userData: User) => {
-    queryClient.setQueryData(USER_QUERY_KEY, userData);
+    queryClient.setQueryData([QKEY_USER], userData);
   };
 
   const clearUser = () => {
-    queryClient.removeQueries({ queryKey: USER_QUERY_KEY });
+    queryClient.removeQueries({ queryKey: [QKEY_USER] });
     Cookies.remove("token");
   };
 

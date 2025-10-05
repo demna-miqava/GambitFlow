@@ -1,7 +1,7 @@
 import { Puzzle } from "lucide-react";
 
 import { PerformanceCard } from "./PerformanceCard";
-import { TIME_CONTROL_ICONS } from "@/consts";
+import { TIME_CONTROL_ICONS } from "@/consts/timeControlIcons";
 
 const performanceStats = [
   {

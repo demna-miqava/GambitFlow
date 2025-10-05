@@ -7,6 +7,8 @@ import { useMutation } from "@tanstack/react-query";
 import { signUp, type AuthResponse } from "@/services/user";
 import Cookies from "js-cookie";
 import { useUser } from "@/hooks/useUser";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 const signupSchema = z.object({
   email: z
@@ -42,6 +44,11 @@ export const useSignup = (selectedSkill: SignupSkill) => {
       Cookies.set("token", data.session.access_token, { expires: 7 });
       refetch();
       navigate("/home");
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.message);
+      }
     },
   });
 

@@ -1,7 +1,7 @@
 import { Puzzle, Sun } from "lucide-react";
 
 import { SimpleStatCard } from "./SimpleStatCard";
-import { TIME_CONTROL_ICONS } from "@/consts";
+import { TIME_CONTROL_ICONS } from "@/consts/timeControlIcons";
 
 const simpleStats = [
   {

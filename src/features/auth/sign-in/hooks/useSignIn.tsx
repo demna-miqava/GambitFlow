@@ -6,6 +6,8 @@ import { useMutation } from "@tanstack/react-query";
 import { signIn, type AuthResponse } from "@/services/user";
 import Cookies from "js-cookie";
 import { useUser } from "@/hooks/useUser";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 const signInSchema = z.object({
   emailOrUsername: z.string().min(1, "Email or username is required"),
@@ -26,6 +28,11 @@ export const useSignIn = () => {
       Cookies.set("token", data.session.access_token, { expires });
       refetch();
       navigate("/home");
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.message);
+      }
     },
   });
 
