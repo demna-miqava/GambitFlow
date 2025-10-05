@@ -34,13 +34,13 @@ export type SignUpData = SignUpForm & { skill: SignupSkill };
 
 export const useSignup = (selectedSkill: SignupSkill) => {
   const navigate = useNavigate();
-  const { setUser } = useUser();
+  const { refetch } = useUser();
 
   const signUpMutation = useMutation({
     mutationFn: signUp,
     onSuccess: (data: AuthResponse) => {
       Cookies.set("token", data.session.access_token, { expires: 7 });
-      setUser(data.user);
+      refetch();
       navigate("/home");
     },
   });

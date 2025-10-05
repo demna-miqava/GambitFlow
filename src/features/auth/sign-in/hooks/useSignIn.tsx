@@ -17,14 +17,14 @@ export type SignInForm = z.infer<typeof signInSchema>;
 
 export const useSignIn = () => {
   const navigate = useNavigate();
-  const { setUser } = useUser();
+  const { refetch } = useUser();
 
   const signInMutation = useMutation({
     mutationFn: signIn,
     onSuccess: (data: AuthResponse, variables) => {
       const expires = variables.rememberMe ? 30 : 7;
       Cookies.set("token", data.session.access_token, { expires });
-      setUser(data.user);
+      refetch();
       navigate("/home");
     },
   });

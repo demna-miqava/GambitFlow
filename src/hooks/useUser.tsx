@@ -12,6 +12,7 @@ export const useUser = () => {
     data: userData,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: USER_QUERY_KEY,
     queryFn: getCurrentUser,
@@ -42,5 +43,6 @@ export const useUser = () => {
     setUser,
     clearUser,
     isAuthenticated: !!token && !!userData,
+    refetch,
   };
 };
