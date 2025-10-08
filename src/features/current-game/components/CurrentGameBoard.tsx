@@ -1,24 +1,19 @@
 import { useUser } from "@/hooks/useUser";
 import { User } from "lucide-react";
-import { Chessground } from "@lichess-org/chessground";
-import { useEffect, useRef } from "react";
 import "@lichess-org/chessground/assets/chessground.base.css";
 import "@lichess-org/chessground/assets/chessground.brown.css";
 import "@lichess-org/chessground/assets/chessground.cburnett.css";
+import { useCurrentGame } from "../CurrentGameContext";
+import { useLocation } from "react-router";
 
-export const PlayBoard = () => {
+const CurrentGameBoard = () => {
   const { userName, image } = useUser();
-  const boardRef = useRef<HTMLDivElement>(null);
+  const { boardRef } = useCurrentGame();
 
-  useEffect(() => {
-    if (boardRef.current) {
-      Chessground(boardRef.current, {
-        fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR",
-        viewOnly: true,
-        coordinates: true,
-      });
-    }
-  }, []);
+  const { opponentRating, opponentUserName } = useLocation().state || {
+    opponentRating: 0,
+    opponentUserName: "",
+  };
 
   return (
     <section className="flex w-full flex-1 flex-col overflow-hidden rounded-xl border border-border/60 bg-[#1a1a1a] shadow-sm">
@@ -28,8 +23,8 @@ export const PlayBoard = () => {
             <User className="size-4" />
           </div>
           <div className="leading-tight">
-            <p className="font-semibold">Opponent</p>
-            {/* <p className="text-xs text-white/70">waiting…</p> */}
+            <p className="font-semibold">{opponentUserName}</p>
+            <p className="text-xs text-white/70">{opponentRating} rating</p>
           </div>
         </div>
         <span className="rounded-md bg-black/50 px-2 py-1 text-xs tracking-wider">
@@ -64,3 +59,5 @@ export const PlayBoard = () => {
     </section>
   );
 };
+
+export default CurrentGameBoard;

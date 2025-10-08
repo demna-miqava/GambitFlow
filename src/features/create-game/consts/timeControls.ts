@@ -2,7 +2,7 @@ import { TIME_CONTROL_ICONS } from "@/consts/timeControlIcons";
 
 export const PLAY_TIME_CONTROLS = [
   {
-    label: "Bullet",
+    label: "bullet",
     icon: TIME_CONTROL_ICONS.bullet,
     options: [
       {
@@ -11,16 +11,16 @@ export const PLAY_TIME_CONTROLS = [
       },
       {
         label: "1|1",
-        value: "1|1",
+        value: "1 + 1",
       },
       {
         label: "2 | 1",
-        value: "2|1",
+        value: "2 + 1",
       },
     ],
   },
   {
-    label: "Blitz",
+    label: "blitz",
     icon: TIME_CONTROL_ICONS.blitz,
     options: [
       {
@@ -29,7 +29,7 @@ export const PLAY_TIME_CONTROLS = [
       },
       {
         label: "3 | 2",
-        value: "3|2",
+        value: "3 + 2",
       },
       {
         label: "5 min",
@@ -38,7 +38,7 @@ export const PLAY_TIME_CONTROLS = [
     ],
   },
   {
-    label: "Rapid",
+    label: "rapid",
     icon: TIME_CONTROL_ICONS.rapid,
     options: [
       {
@@ -47,7 +47,7 @@ export const PLAY_TIME_CONTROLS = [
       },
       {
         label: "15 | 10",
-        value: "15|10",
+        value: "15 + 10",
       },
       {
         label: "30 min",

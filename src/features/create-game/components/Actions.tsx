@@ -1,15 +1,12 @@
-import { Bolt, Plus, UserPlus } from "lucide-react";
+import { Plus, UserPlus } from "lucide-react";
 import {
   useCreateGame,
   type SidebarSection,
 } from "@/features/create-game/CreateGameContext";
+import { Button } from "@/components/ui/button";
+import { useCreateGameWS } from "@/features/create-game/hooks/useCreateGame";
 
 const actionItems = [
-  {
-    title: "Start Game",
-    description: "Jump into a blitz match",
-    icon: Bolt,
-  },
   {
     title: "Custom Challenge",
     description: "Choose time controls",
@@ -25,10 +22,32 @@ const actionItems = [
 ];
 
 export const Actions = () => {
-  const { setActiveSection } = useCreateGame();
+  const { setActiveSection, selectedFormat, selectedTimeControl } =
+    useCreateGame();
 
+  const { setShouldConnect, lastMessage } = useCreateGameWS(
+    selectedFormat,
+    selectedTimeControl
+  );
+  const message = JSON.parse(lastMessage?.data ?? "{}");
+  const isSearching = message?.type === "searching";
   return (
     <>
+      <Button
+        disabled={isSearching || !selectedFormat}
+        onClick={() => {
+          setShouldConnect(true);
+        }}
+        className="w-full py-6"
+      >
+        <>
+          {isSearching ? (
+            <span>Searching for a game...</span>
+          ) : (
+            <span>Start Game</span>
+          )}
+        </>
+      </Button>
       {actionItems.map((item) => {
         const Icon = item.icon;
         return (

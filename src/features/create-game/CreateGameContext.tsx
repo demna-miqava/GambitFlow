@@ -13,6 +13,10 @@ type CreateGameSidebarContextProps = {
   setActiveSection: (section: SidebarSection) => void;
   canGoBack: boolean;
   goBack: () => void;
+  selectedFormat: string;
+  setSelectedFormat: React.Dispatch<React.SetStateAction<string>>;
+  selectedTimeControl: string;
+  setSelectedTimeControl: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const CreateGameSidebarContext =
@@ -26,6 +30,8 @@ export const CreateGameSidebarProvider = ({
   const location = useLocation();
   const state = location.state;
   const initialSection = state.section ?? "new";
+  const [selectedFormat, setSelectedFormat] = useState<string>("blitz");
+  const [selectedTimeControl, setSelectedTimeControl] = useState<string>("3");
 
   const [activeSection, setActiveSection] = useState(initialSection);
 
@@ -45,13 +51,23 @@ export const CreateGameSidebarProvider = ({
   }, [initialSection]);
   return (
     <CreateGameSidebarContext.Provider
-      value={{ activeSection, setActiveSection, canGoBack, goBack }}
+      value={{
+        activeSection,
+        setActiveSection,
+        canGoBack,
+        goBack,
+        selectedFormat,
+        setSelectedFormat,
+        selectedTimeControl,
+        setSelectedTimeControl,
+      }}
     >
       {children}
     </CreateGameSidebarContext.Provider>
   );
 };
 
+/* eslint-disable-next-line */
 export const useCreateGame = () => {
   const context = useContext(CreateGameSidebarContext);
   if (!context) {

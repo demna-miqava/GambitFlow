@@ -8,17 +8,20 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { getTimeControlIcon } from "@/utils/timeControl";
 import { TimeControlOption } from "./TimeControlOption";
+import { useCreateGame } from "../CreateGameContext";
 
 export const TimeControlsSection = () => {
-  const type = "blitz";
-  const Icon = getTimeControlIcon(type);
+  const { selectedFormat, selectedTimeControl } = useCreateGame();
+  const Icon = getTimeControlIcon(selectedFormat);
   const [open, setOpen] = useState(false);
+
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger className="w-full m-auto">
         <div className="flex items-center justify-between rounded-lg bg-card border border-border px-3 py-2 text-sm text-foreground hover:bg-accent transition-colors">
           <span className="inline-flex items-center gap-2">
-            <Icon /> 3 min ({type})
+            {Icon && <Icon />} {selectedTimeControl}{" "}
+            <span className="capitalize">({selectedFormat})</span>
           </span>
           <span className="text-xs text-muted-foreground">
             {open ? <ChevronUp /> : <ChevronDown />}

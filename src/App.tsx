@@ -14,6 +14,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import IntroPage from "./pages/IntroPage";
 import ForgotPassword from "./pages/ForgotPassword";
+import CurrentGame from "./pages/CurrentGame";
 // Components
 import AuthGuard from "./components/AuthGuard";
 import { AppLayout } from "./components/AppLayout";
@@ -31,6 +32,7 @@ function App() {
             <Route path="friends" element={<ProfileFriends />} />
           </Route>
           <Route path="/play" element={<Play />} />
+          <Route path="/game/:gameId" element={<CurrentGame />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
         <Route path="/" element={<IntroPage />} />

@@ -61,8 +61,6 @@ export const useSignup = (selectedSkill: SignupSkill) => {
   });
 
   const onSubmit = async (data: SignUpForm) => {
-    console.log(data, selectedSkill);
-
     signUpMutation.mutate({
       ...data,
       skill: selectedSkill,
