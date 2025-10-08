@@ -7,10 +7,12 @@ import type { PlayerColor } from "../types/game.types";
  */
 export const calculateLegalMoves = (chess: Chess) => {
   return new Map(
-    chess.moves({ verbose: true }).map((m) => [
-      m.from,
-      chess.moves({ square: m.from, verbose: true }).map((move) => move.to),
-    ])
+    chess
+      .moves({ verbose: true })
+      .map((m) => [
+        m.from,
+        chess.moves({ square: m.from, verbose: true }).map((move) => move.to),
+      ])
   );
 };
 
@@ -21,7 +23,8 @@ export const calculateLegalMoves = (chess: Chess) => {
 export const syncBoardState = (
   chessRef: React.RefObject<Chess | null>,
   cgRef: React.RefObject<Api | null>,
-  playerColor: PlayerColor
+  playerColor: PlayerColor,
+  setTurn: React.Dispatch<PlayerColor>
 ) => {
   const chess = chessRef.current;
   if (!chess || !cgRef.current) return;
@@ -39,6 +42,7 @@ export const syncBoardState = (
     },
     check: chess.inCheck(),
   });
+  setTurn(turn === "w" ? "white" : "black");
 
   if (isMyTurn) {
     cgRef.current.playPremove();

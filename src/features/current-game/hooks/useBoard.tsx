@@ -2,7 +2,7 @@ import { useUser } from "@/hooks/useUser";
 import { Chessground } from "@lichess-org/chessground";
 import type { Api } from "@lichess-org/chessground/api";
 import { Chess } from "chess.js";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import type { Key } from "@lichess-org/chessground/types";
 import { useGameWebSocket } from "@/features/game/hooks/useGameWebSocket";
@@ -17,6 +17,7 @@ export const useBoard = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const chessRef = useRef(new Chess());
   const cgRef = useRef<Api | null>(null);
+  const [turn, setTurn] = useState<"white" | "black">("white");
   const { color } = useLocation().state || {
     color: "black" as PlayerColor,
     timeControl: "3",
@@ -31,6 +32,7 @@ export const useBoard = () => {
     playerColor: color,
     chessRef,
     cgRef,
+    setTurn,
   });
 
   useEffect(() => {
@@ -59,8 +61,7 @@ export const useBoard = () => {
               });
 
               // Sync board after move
-              syncBoardState(chessRef, cgRef, color);
-
+              syncBoardState(chessRef, cgRef, color, setTurn);
               // Send move to server
               sendMessage(
                 JSON.stringify({
@@ -84,5 +85,6 @@ export const useBoard = () => {
     boardRef,
     chessRef,
     cgRef,
+    turn,
   };
 };

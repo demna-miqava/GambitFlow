@@ -12,6 +12,7 @@ interface GameWebSocketProps {
   playerColor: PlayerColor;
   chessRef: React.RefObject<Chess | null>;
   cgRef: React.RefObject<Api | null>;
+  setTurn: React.Dispatch<PlayerColor>;
 }
 
 /**
@@ -24,6 +25,7 @@ export const useGameWebSocket = ({
   playerColor,
   chessRef,
   cgRef,
+  setTurn,
 }: GameWebSocketProps) => {
   const { lastMessage, sendMessage } = useWebSocket(
     gameId
@@ -41,13 +43,13 @@ export const useGameWebSocket = ({
       if (data?.pgn) {
         chessRef.current.loadPgn(data.pgn);
       }
-      syncBoardState(chessRef, cgRef, playerColor);
+      syncBoardState(chessRef, cgRef, playerColor, setTurn);
     }
 
     // Handle opponent's move
     if (data.type === "move" && data?.move && data?.userId !== userId) {
       chessRef.current.move(data.move.lan);
-      syncBoardState(chessRef, cgRef, playerColor);
+      syncBoardState(chessRef, cgRef, playerColor, setTurn);
     }
   }, [lastMessage, userId, playerColor, chessRef, cgRef]);
 

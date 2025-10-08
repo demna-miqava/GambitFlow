@@ -2,6 +2,7 @@ import { createContext, useContext, type RefObject } from "react";
 import { useMoveNavigation } from "./hooks/useMoveNavigation";
 import { useBoard } from "./hooks/useBoard";
 import { Chess } from "chess.js";
+import type { PlayerColor } from "../game/types/game.types";
 
 const CurrentGameContext = createContext<{
   boardRef: RefObject<HTMLDivElement | null>;
@@ -12,6 +13,7 @@ const CurrentGameContext = createContext<{
   isAtStart: boolean;
   isAtEnd: boolean;
   chessRef: RefObject<Chess | null>;
+  turn: PlayerColor;
 }>({
   boardRef: { current: null },
   goToFirstMove: () => {},
@@ -21,6 +23,7 @@ const CurrentGameContext = createContext<{
   isAtStart: false,
   isAtEnd: false,
   chessRef: { current: null },
+  turn: "white",
 });
 
 export const CurrentGameProvider = ({
@@ -28,7 +31,7 @@ export const CurrentGameProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { boardRef, chessRef } = useBoard();
+  const { boardRef, chessRef, turn } = useBoard();
   const totalMoves = chessRef.current?.history().length || 0;
 
   const {
@@ -103,12 +106,14 @@ export const CurrentGameProvider = ({
         isAtStart,
         isAtEnd,
         chessRef,
+        turn,
       }}
     >
       {children}
     </CurrentGameContext.Provider>
   );
 };
+
 /* eslint-disable-next-line */
 export const useCurrentGame = () => {
   return useContext(CurrentGameContext);
