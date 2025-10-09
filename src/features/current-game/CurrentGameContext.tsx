@@ -1,8 +1,10 @@
-import { createContext, useContext, type RefObject } from "react";
+import { createContext, useContext, useEffect, type RefObject } from "react";
 import { useMoveNavigation } from "./hooks/useMoveNavigation";
 import { useBoard } from "./hooks/useBoard";
 import { Chess } from "chess.js";
 import type { PlayerColor } from "../game/types/game.types";
+import { useLocation } from "react-router";
+import { calculateLegalMoves } from "../game/utils/board-sync";
 
 const CurrentGameContext = createContext<{
   boardRef: RefObject<HTMLDivElement | null>;
@@ -14,6 +16,9 @@ const CurrentGameContext = createContext<{
   isAtEnd: boolean;
   chessRef: RefObject<Chess | null>;
   turn: PlayerColor;
+  viewingIndex: number | null;
+  currentIndex: number;
+  isViewingHistory: boolean;
 }>({
   boardRef: { current: null },
   goToFirstMove: () => {},
@@ -24,6 +29,9 @@ const CurrentGameContext = createContext<{
   isAtEnd: false,
   chessRef: { current: null },
   turn: "white",
+  viewingIndex: null,
+  currentIndex: 0,
+  isViewingHistory: false,
 });
 
 export const CurrentGameProvider = ({
@@ -31,7 +39,8 @@ export const CurrentGameProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { boardRef, chessRef, turn } = useBoard();
+  const { boardRef, chessRef, turn, cgRef } = useBoard();
+  const { color } = useLocation().state || { color: "white" as PlayerColor };
   const totalMoves = chessRef.current?.history().length || 0;
 
   const {
@@ -41,59 +50,50 @@ export const CurrentGameProvider = ({
     goToLastMove,
     isAtStart,
     isAtEnd,
+    viewingIndex,
+    currentIndex,
+    isViewingHistory,
   } = useMoveNavigation(totalMoves);
 
   // Handle navigation - runs when user explicitly navigates
-  // useEffect(() => {
-  //   if (!chessRef.current || !cgRef.current) return;
+  useEffect(() => {
+    if (!chessRef.current || !cgRef.current) return;
 
-  //   const history = chessRef.current.history();
+    const history = chessRef.current.history();
 
-  //   if (navigation.isViewingHistory) {
-  //     // Viewing a historical position
-  //     const tempChess = new Chess();
+    if (isViewingHistory) {
+      // Viewing a historical position
+      const tempChess = new Chess();
 
-  //     // Replay moves up to currentIndex
-  //     for (let i = 0; i < navigation.currentIndex; i++) {
-  //       tempChess.move(history[i]);
-  //     }
+      // Replay moves up to currentIndex
+      for (let i = 0; i < currentIndex; i++) {
+        tempChess.move(history[i]);
+      }
 
-  //     // Update the board to show this historical position
-  //     cgRef.current.set({
-  //       fen: tempChess.fen(),
-  //       movable: {
-  //         color: undefined, // Disable moves when viewing history
-  //         dests: new Map(),
-  //       },
-  //       check: tempChess.inCheck(),
-  //     });
-  //   } else if (navigation.viewingIndex === null && history.length > 0) {
-  //     // User navigated back to current position - restore the live board state
-  //     cgRef.current.set({
-  //       fen: chessRef.current.fen(),
-  //       movable: {
-  //         color: "white", // Re-enable moves (you'll need to set this based on player color)
-  //         dests: new Map(
-  //           chessRef.current
-  //             .moves({ verbose: true })
-  //             .map((m) => [
-  //               m.from,
-  //               chessRef
-  //                 .current!.moves({ square: m.from, verbose: true })
-  //                 .map((move) => move.to),
-  //             ])
-  //         ),
-  //       },
-  //       check: chessRef.current.inCheck(),
-  //     });
-  //   }
-  // }, [
-  //   navigation.viewingIndex,
-  //   chessRef,
-  //   cgRef,
-  //   navigation.isViewingHistory,
-  //   navigation.currentIndex,
-  // ]);
+      // Update the board to show this historical position
+      cgRef.current.set({
+        fen: tempChess.fen(),
+        movable: {
+          color: undefined, // Disable moves when viewing history
+          dests: new Map(),
+        },
+        check: tempChess.inCheck(),
+      });
+    } else if (viewingIndex === null && history.length > 0) {
+      // User navigated back to current position - restore the live board state
+      const playerColorCode = color === "white" ? "w" : "b";
+      const isMyTurn = chessRef.current.turn() === playerColorCode;
+
+      cgRef.current.set({
+        fen: chessRef.current.fen(),
+        movable: {
+          color: color,
+          dests: isMyTurn ? calculateLegalMoves(chessRef.current) : new Map(),
+        },
+        check: chessRef.current.inCheck(),
+      });
+    }
+  }, [viewingIndex, chessRef, cgRef, isViewingHistory, currentIndex, color]);
 
   return (
     <CurrentGameContext.Provider
@@ -107,6 +107,9 @@ export const CurrentGameProvider = ({
         isAtEnd,
         chessRef,
         turn,
+        viewingIndex,
+        currentIndex,
+        isViewingHistory,
       }}
     >
       {children}

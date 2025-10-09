@@ -9,12 +9,11 @@ export const useMoveNavigation = (totalMoves: number) => {
   const isAtStart = currentIndex === 0;
   const isAtEnd = currentIndex === totalMoves;
 
-  // When new moves come in and we're at the current position, stay there
+  // When new moves come in, return to current position
   useEffect(() => {
-    if (!isViewingHistory) {
-      setViewingIndex(null);
-    }
-  }, [totalMoves, isViewingHistory]);
+    // Always return to current position when totalMoves changes
+    setViewingIndex(null);
+  }, [totalMoves]);
 
   const goToFirstMove = useCallback(() => {
     setViewingIndex(0);
