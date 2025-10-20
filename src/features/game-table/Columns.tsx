@@ -1,24 +1,11 @@
-"use client";
-
 import { type ColumnDef } from "@tanstack/react-table";
 import { TimeControlCell } from "./components/TimeControlCell";
 import { PlayerCell } from "./components/PlayerCell";
 import { ResultBadge } from "./components/ResultBadge";
+import { format } from "date-fns";
+import type { Game } from "@/services/game";
 
-export type GameTableData = {
-  id: string;
-  timeControl: string;
-  type: string; // TODO: Should be an enum (rapid, blitz, bullet)
-  players: {
-    white: { userName: string; rating: number; image: string };
-    black: { userName: string; rating: number; image: string };
-  };
-  result: string;
-  moves: string;
-  date: string;
-};
-
-export const columns: ColumnDef<GameTableData>[] = [
+export const columns: ColumnDef<Game>[] = [
   {
     accessorKey: "timeControl",
     header: "",
@@ -52,7 +39,11 @@ export const columns: ColumnDef<GameTableData>[] = [
     header: "Moves",
   },
   {
-    accessorKey: "date",
+    accessorKey: "createdAt",
     header: "Date",
+    cell: ({ row }) => {
+      const date = row.original.createdAt;
+      return <p className="max-w-2">{format(new Date(date), "MMM d, yyyy")}</p>;
+    },
   },
 ];

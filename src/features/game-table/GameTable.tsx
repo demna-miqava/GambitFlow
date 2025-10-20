@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { Link } from "react-router";
 import { columns } from "./Columns";
+import { useUserGames } from "./hooks/useUserGames";
 import { DataTable } from "./DataTable";
-import { getData } from "./data";
 
 type GameTableVariant = "preview" | "full";
 
@@ -9,33 +10,50 @@ export type GameTableProps = {
   variant?: GameTableVariant;
   title?: string;
   actionHref?: string;
-  actionLabel?: string;
-  previewCount?: number;
+  limit?: number;
 };
 
 export const GameTable = ({
   variant = "full",
   title = "Recent Games",
   actionHref,
-  previewCount = 10,
+  limit = 10,
 }: GameTableProps) => {
-  const data = getData();
   const isPreview = variant === "preview";
-  const tableData = isPreview ? data.slice(0, previewCount) : data;
+  const { games, isPending, page, setPage, pagination } = useUserGames({
+    defaultLimit: limit,
+  });
+
+  const paginationProps = useMemo(() => {
+    const totalPages = pagination?.totalPages ?? 1;
+    return {
+      currentPage: page,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+    };
+  }, [page, pagination?.totalPages]);
+
+  const showLoading = isPending && games.length === 0;
 
   return (
     <section className="space-y-4">
-      <div className="flex items-center justify-between">
-        {isPreview && actionHref && (
+      {isPreview && actionHref && (
+        <div className="flex items-center justify-between">
           <Link to={actionHref} className="text-lg font-semibold">
             {title}
           </Link>
-        )}
-      </div>
+        </div>
+      )}
+
       <DataTable
         columns={columns}
-        data={tableData}
-        hidePagination={isPreview}
+        data={games}
+        enablePagination={!isPreview}
+        isLoading={showLoading}
+        pageSize={limit}
+        onPageChange={setPage}
+        {...paginationProps}
       />
     </section>
   );

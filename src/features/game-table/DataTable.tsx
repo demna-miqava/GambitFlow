@@ -3,7 +3,6 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -15,30 +14,39 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Pagination } from "@/components/Pagination";
+import { GameTableSkeleton } from "./components/GameTableSkeleton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  hidePagination?: boolean;
+  enablePagination?: boolean;
   pageSize?: number;
+  isLoading?: boolean;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  hidePagination = false,
-  pageSize = 10,
+  enablePagination = false,
+  pageSize = 1,
+  isLoading = false,
+  currentPage,
+  totalPages,
+  onPageChange,
+  hasNextPage,
+  hasPreviousPage,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize,
-      },
-    },
+    manualPagination: true,
+    // limit: totalPages,
   });
 
   return (
@@ -63,7 +71,9 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {isLoading ? (
+            <GameTableSkeleton rows={pageSize} columnCount={columns.length} />
+          ) : data.length > 0 ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
@@ -85,14 +95,14 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      {!hidePagination && (
+      {enablePagination && (
         <div className="py-4">
           <Pagination
-            currentPage={table.getState().pagination.pageIndex + 1}
-            totalPages={table.getPageCount()}
-            onPageChange={(page) => table.setPageIndex(page - 1)}
-            hasNextPage={table.getCanNextPage()}
-            hasPreviousPage={table.getCanPreviousPage()}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+            hasNextPage={hasNextPage}
+            hasPreviousPage={hasPreviousPage}
           />
         </div>
       )}

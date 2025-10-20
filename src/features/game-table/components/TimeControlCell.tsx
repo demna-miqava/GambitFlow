@@ -5,7 +5,10 @@ interface TimeControlCellProps {
   timeControl: string;
 }
 
-export const TimeControlCell = ({ type, timeControl }: TimeControlCellProps) => {
+export const TimeControlCell = ({
+  type,
+  timeControl,
+}: TimeControlCellProps) => {
   const Icon = getTimeControlIcon(type);
 
   return (

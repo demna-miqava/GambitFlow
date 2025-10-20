@@ -8,7 +8,6 @@ export type User = {
   username: string;
   email: string;
   skill: string;
-  createdAt: string;
   avatar_url: string | null;
   friendsCount: number;
   blitz_rating: number;
