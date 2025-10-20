@@ -14,6 +14,7 @@ import { BOARD_CONFIG } from "@/features/game/constants/board-config";
 import type { PlayerColor } from "@/features/game/types/game.types";
 import { parseWebSocketMessage } from "@/features/game/utils/websocket-helpers";
 import type { GameWebSocketMessage } from "@/features/game/types/websocket-messages";
+import { useChessSound } from "@/features/game/hooks/useChessSound";
 
 export const useBoard = () => {
   const boardRef = useRef<HTMLDivElement>(null);
@@ -25,9 +26,10 @@ export const useBoard = () => {
     timeControl: "3",
   };
   const { id } = useUser();
-
   // Use the game WebSocket hook
   const { sendMessage, lastMessage } = useGameWebSocket();
+
+  const { playSoundForMove, playGenericSound } = useChessSound();
 
   useEffect(() => {
     if (!chessRef.current) return;
@@ -47,18 +49,21 @@ export const useBoard = () => {
     // Handle opponent's move
     if (data.type === "move" && "move" in data) {
       if (data.move) {
-        chessRef.current.move(data.move.lan);
+        const move = chessRef.current.move(data.move.lan);
+        const isCheckmate = chessRef.current.isCheckmate();
         syncBoardState(chessRef, cgRef, color, setTurn);
+        // Play sound for opponent's move
+        playSoundForMove(move, isCheckmate);
       }
     }
-  }, [lastMessage, id, color, chessRef, cgRef]);
+  }, [lastMessage, id, color, chessRef, cgRef, playSoundForMove]);
 
   useEffect(() => {
     if (boardRef.current) {
       const chess = chessRef.current;
       const playerColorCode = color === "white" ? "w" : "b";
       const isMyTurn = chess.turn() === playerColorCode;
-
+      playGenericSound();
       cgRef.current = Chessground(boardRef.current, {
         fen: chess.fen(),
         orientation: color,
@@ -78,8 +83,14 @@ export const useBoard = () => {
                 to: dest as string,
               });
               const numberOfMoves = chess.moveNumber();
+              const isCheckmate = chess.isCheckmate();
+
               // Sync board after move
               syncBoardState(chessRef, cgRef, color, setTurn);
+
+              // Play sound for player's move
+              playSoundForMove(move, isCheckmate);
+
               // Send move to server
               sendMessage(
                 JSON.stringify({
@@ -98,7 +109,7 @@ export const useBoard = () => {
         },
       });
     }
-  }, [color, sendMessage, chessRef, cgRef]);
+  }, [color, sendMessage, chessRef, cgRef, playSoundForMove]);
 
   return {
     boardRef,

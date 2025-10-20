@@ -3,6 +3,7 @@ import { useGameWebSocket } from "@/features/game/hooks/useGameWebSocket";
 import { useCurrentGame } from "../CurrentGameContext";
 import { parseWebSocketMessage } from "@/features/game/utils/websocket-helpers";
 import type { GameWebSocketMessage } from "@/features/game/types/websocket-messages";
+import { useChessSound } from "@/features/game/hooks/useChessSound";
 
 type FinishState = {
   title: string;
@@ -12,6 +13,7 @@ type FinishState = {
 export const useGameActions = () => {
   const { sendMessage, lastMessage } = useGameWebSocket();
   const { chessRef } = useCurrentGame();
+  const { playGenericSound } = useChessSound();
 
   const [openGameResultDialog, setOpenGameResultDialog] = useState(false);
   const [finish, setFinish] = useState<FinishState | null>(null);
@@ -30,6 +32,7 @@ export const useGameActions = () => {
         description: "The game ended in a draw.",
       });
       setOpenGameResultDialog(true);
+      playGenericSound();
       return;
     }
 
@@ -39,6 +42,7 @@ export const useGameActions = () => {
         title: "You won by resignation!",
         description: "Resignation.",
       });
+      playGenericSound();
       setOpenGameResultDialog(true);
       return;
     }
@@ -49,9 +53,10 @@ export const useGameActions = () => {
         description: "The opponent aborted the game.",
       });
       setOpenGameResultDialog(true);
+      playGenericSound();
       return;
     }
-  }, [lastMessage]);
+  }, [lastMessage, playGenericSound]);
 
   const onResign = () => {
     sendMessage(JSON.stringify({ type: "resign" }));
@@ -60,6 +65,7 @@ export const useGameActions = () => {
       description: "The game has ended.",
     });
     setOpenGameResultDialog(true);
+    playGenericSound();
   };
 
   const onOfferDraw = () => {
@@ -67,6 +73,7 @@ export const useGameActions = () => {
   };
 
   const onAbort = () => {
+    playGenericSound();
     sendMessage(JSON.stringify({ type: "abort" }));
     setFinish({
       title: "Game aborted",
