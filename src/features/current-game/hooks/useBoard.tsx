@@ -109,7 +109,7 @@ export const useBoard = () => {
         },
       });
     }
-  }, [color, sendMessage, chessRef, cgRef, playSoundForMove]);
+  }, [color, sendMessage, chessRef, cgRef, playSoundForMove, playGenericSound]);
 
   return {
     boardRef,
