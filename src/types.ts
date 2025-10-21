@@ -14,7 +14,7 @@ export interface Friend {
  * Friend action callbacks that accept friend ID
  */
 export interface FriendActionHandlers {
-  onChallenge?: (friendId: Friend) => void;
+  onChallenge?: (friend: Friend) => void;
   onMessage?: (friendId: string) => void;
   onRemove?: (friendId: string) => void;
 }
@@ -23,7 +23,7 @@ export interface FriendActionHandlers {
  * Friend suggestion action callbacks
  */
 export interface FriendSuggestionActionHandlers {
-  onChallenge?: (friendId: string) => void;
+  onChallenge?: (friend: Friend) => void;
   onMessage?: (friendId: string) => void;
   onAddFriend?: (friendId: string) => void;
 }

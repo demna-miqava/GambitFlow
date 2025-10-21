@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router";
 import { useSendFriendRequest } from "../suggestions/hooks/useSendFriendRequest";
 import { useRemoveFriend } from "./useRemoveFriend";
+import type { Friend } from "@/types";
 
 export const useFriendActions = () => {
   const navigate = useNavigate();
   const sendFriendRequestMutation = useSendFriendRequest();
   const removeFriendMutation = useRemoveFriend();
 
-  const onChallenge = (id: string) => {
+  const onChallenge = (friend: Friend) => {
     // Navigate to create game with friend pre-selected
-    navigate(`/create-game?friendId=${id}`);
+    navigate(`/create-game?friendId=${friend.id}`);
   };
 
   const onRemove = (id: string) => {
