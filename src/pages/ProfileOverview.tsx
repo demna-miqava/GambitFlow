@@ -1,4 +1,4 @@
-import FriendsGrid from "@/features/friends/components/FriendsGrid";
+import FriendsGrid from "@/features/friends/list/components/FriendsGrid";
 import { GameTable } from "@/features/game-table";
 import PerformanceShowcase from "@/features/stats/components/performance/PerformanceShowcase";
 import { useUser } from "@/hooks/useUser";

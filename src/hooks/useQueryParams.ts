@@ -30,26 +30,12 @@ export const useQueryParams = () => {
     [setSearchParams]
   );
 
-  const setParams = useCallback(
-    (params: Record<string, string | number>) => {
-      setSearchParams((prev) => {
-        Object.entries(params).forEach(([key, value]) => {
-          prev.set(key, String(value));
-        });
-        return prev;
-      });
-    },
-    [setSearchParams]
-  );
-
   const removeParam = useCallback(
     (key: string) => {
-      setSearchParams((prev) => {
-        prev.delete(key);
-        return prev;
-      });
+      searchParams.delete(key);
+      setSearchParams(searchParams);
     },
-    [setSearchParams]
+    [setSearchParams, searchParams]
   );
 
   /**
@@ -63,7 +49,6 @@ export const useQueryParams = () => {
     getParam,
     getNumberParam,
     setParam,
-    setParams,
     removeParam,
     clearParams,
     searchParams,

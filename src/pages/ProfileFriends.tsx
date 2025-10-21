@@ -1,86 +1,50 @@
-import { useGetFriends } from "@/features/friends/hooks/useGetFriends";
-import { useFriendsSearch } from "@/features/friends/hooks/useFriendsSearch";
-import { useFriendsPagination } from "@/features/friends/hooks/useFriendsPagination";
-import { FriendListItem } from "@/features/friends/components/FriendListItem";
-import { Pagination } from "@/components/Pagination";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
-import type { Friend } from "@/types";
+import { PendingFriendRequests } from "@/features/friends/requests/components/PendingFriendRequests";
+import { FriendsPaginatedList } from "@/features/friends/list/components/FriendsPaginatedList";
+import { FriendsSearch } from "@/features/friends/list/components/FriendsSearch";
+import { SuggestedFriends } from "@/features/friends/suggestions/components/SuggestedFriends";
+import { useUserFriends } from "@/features/friends/list/hooks/useUserFriends";
+import { useFriendActions } from "@/features/friends/hooks/useFriendActions";
 
 const ProfileFriends = () => {
-  const { friends, numberOfFriends } = useGetFriends();
-  const { searchQuery, setSearchQuery, filteredFriends } =
-    useFriendsSearch(friends);
+  const { friends, page, setPage, pagination, search, isLoading } =
+    useUserFriends({
+      defaultLimit: 1,
+    });
+  const { onChallenge, onRemove, onMessage } = useFriendActions();
 
-  const {
-    currentPage,
-    totalPages,
-    paginatedFriends,
-    goToPage,
-    hasNextPage,
-    hasPreviousPage,
-  } = useFriendsPagination({
-    friends: filteredFriends,
-    itemsPerPage: 10,
-  });
-
-  const handleChallenge = (friend: Friend) => {
-    console.log("Challenge:", friend.username);
-    // TODO: Implement challenge logic
-  };
-
-  const handleMessage = (friend: Friend) => {
-    console.log("Message:", friend.username);
-    // TODO: Implement message logic
-  };
-
-  const handleRemove = (friend: Friend) => {
-    console.log("Remove:", friend.username);
-    // TODO: Implement remove logic
-  };
+  const total = pagination?.total ?? 0;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Friends ({numberOfFriends})</h2>
-        <div className="relative w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Search friends..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
+    <section className="space-y-8 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
+      <section className="space-y-8">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-bold">Friends ({total})</h2>
+          </div>
+
+          <FriendsPaginatedList
+            friends={friends}
+            page={page}
+            setPage={setPage}
+            pagination={pagination}
+            isLoading={isLoading}
+            onChallenge={onChallenge}
+            onMessage={onMessage}
+            onRemove={onRemove}
+            searchSlot={<FriendsSearch />}
+            emptyMessage={
+              search
+                ? `No friends found matching "${search}"`
+                : "No friends yet"
+            }
+            showPagination={!search}
           />
         </div>
-      </div>
 
-      <div className="space-y-2">
-        {paginatedFriends.length > 0 ? (
-          paginatedFriends.map((friend) => (
-            <FriendListItem
-              key={friend.username}
-              friend={friend}
-              onChallenge={handleChallenge}
-              onMessage={handleMessage}
-              onRemove={handleRemove}
-            />
-          ))
-        ) : (
-          <div className="text-center py-8 text-muted-foreground">
-            No friends found matching "{searchQuery}"
-          </div>
-        )}
-      </div>
-
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={goToPage}
-        hasNextPage={hasNextPage}
-        hasPreviousPage={hasPreviousPage}
-      />
-    </div>
+        <SuggestedFriends />
+      </section>
+      <PendingFriendRequests />
+    </section>
   );
 };
 

@@ -1,40 +1,18 @@
 import { useState } from "react";
-import { useCreateGame } from "@/features/create-game/CreateGameContext";
-import { useGetFriends } from "@/features/friends/hooks/useGetFriends";
-import { useFriendsPagination } from "@/features/friends/hooks/useFriendsPagination";
-import { FriendListItem } from "@/features/friends/components/FriendListItem";
-import { Pagination } from "@/components/Pagination";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
-import type { Friend } from "@/types";
+import { useUserFriends } from "@/features/friends/list/hooks/useUserFriends";
+import { FriendsPaginatedList } from "@/features/friends/list/components/FriendsPaginatedList";
+import { FriendsLocalSearch } from "@/features/friends/list/components/FriendsLocalSearch";
+import { useFriendActions } from "@/features/friends/hooks/useFriendActions";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export const Friends = () => {
-  const { setActiveSection } = useCreateGame();
-  const { friends } = useGetFriends();
   const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredFriends = friends.filter(
-    (friend) =>
-      friend.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      friend.username.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const {
-    currentPage,
-    totalPages,
-    paginatedFriends,
-    goToPage,
-    hasNextPage,
-    hasPreviousPage,
-  } = useFriendsPagination({
-    friends: filteredFriends,
-    itemsPerPage: 10,
+  const debouncedSearch = useDebounce(searchQuery, 500);
+  const { onChallenge } = useFriendActions();
+  const { friends, page, setPage, pagination, isLoading } = useUserFriends({
+    defaultLimit: 1,
+    searchQuery: debouncedSearch,
   });
-
-  const handleChallenge = (friend: Friend) => {
-    console.log("Challenge:", friend.username);
-    setActiveSection("friend-invite-options");
-  };
 
   return (
     <section className="space-y-4">
@@ -47,33 +25,17 @@ export const Friends = () => {
         </div>
       </header>
 
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          type="text"
-          placeholder="Search friends..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9"
-        />
-      </div>
-
-      <div className="space-y-2">
-        {paginatedFriends.map((friend) => (
-          <FriendListItem
-            key={friend.username}
-            friend={friend}
-            onChallenge={handleChallenge}
-          />
-        ))}
-      </div>
-
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={goToPage}
-        hasNextPage={hasNextPage}
-        hasPreviousPage={hasPreviousPage}
+      <FriendsPaginatedList
+        friends={friends}
+        page={page}
+        setPage={setPage}
+        pagination={pagination}
+        isLoading={isLoading}
+        onChallenge={onChallenge}
+        searchSlot={
+          <FriendsLocalSearch value={searchQuery} onChange={setSearchQuery} />
+        }
+        emptyMessage="No friends found"
       />
     </section>
   );

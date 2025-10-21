@@ -42,7 +42,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     </ThemeContext.Provider>
   );
 }
-
+/* eslint-disable-next-line */
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) {

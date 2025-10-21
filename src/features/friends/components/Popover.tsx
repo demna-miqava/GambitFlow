@@ -7,6 +7,7 @@ import type { Friend } from "@/types";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Sword } from "lucide-react";
 import { useNavigate } from "react-router";
+import { format } from "date-fns";
 
 const FriendPopover = ({
   children,
@@ -15,7 +16,7 @@ const FriendPopover = ({
   children: React.ReactNode;
   data: Friend;
 }) => {
-  const { username, friendFor, image } = data;
+  const { username, created_at, image } = data;
   // recieve id to fetch friend
   const navigate = useNavigate();
   return (
@@ -33,7 +34,9 @@ const FriendPopover = ({
             <img src={image} alt={username} className="size-12 rounded-full" />
             <div>
               <h3>{username}</h3>
-              <p>{friendFor}</p>
+              <p className="text-sm">
+                Friends since {format(new Date(created_at), "MMM d, yyyy")}
+              </p>
             </div>
           </button>
           <div className="flex gap-2 mt-4 justify-end">
