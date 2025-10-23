@@ -22,7 +22,7 @@ export const TimeControlsSection = () => {
           <span className="inline-flex items-center gap-2">
             {Icon && <Icon />}{" "}
             {timeControl.increment > 0
-              ? `${timeControl.time} | ${timeControl.increment}`
+              ? `${timeControl.time / 60} | ${timeControl.increment}`
               : `${timeControl.time / 60} min`}{" "}
             <span className="capitalize">({timeControl.format})</span>
           </span>
