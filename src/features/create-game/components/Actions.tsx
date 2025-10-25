@@ -1,6 +1,6 @@
 import { Plus, UserPlus } from "lucide-react";
 import {
-  useCreateGame,
+  useGameSetup,
   type GameSection,
 } from "@/features/create-game/CreateGameContext";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ const actionItems = [
 ];
 
 export const Actions = () => {
-  const { setActiveSection, timeControl } = useCreateGame();
+  const { setActiveSection, timeControl } = useGameSetup();
 
   const { setShouldConnect, isSearching } = useMatchmaking({
     time: timeControl.time,

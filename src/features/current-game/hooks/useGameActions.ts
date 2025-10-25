@@ -32,7 +32,7 @@ export const useGameActions = () => {
       const isWinner = winnerId === currentUserId;
 
       // Close WebSocket connection when game ends
-      closeConnection();
+      // closeConnection();
 
       if (reason === "resignation") {
         setFinish({

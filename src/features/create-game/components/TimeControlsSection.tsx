@@ -8,10 +8,10 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { getTimeControlIcon } from "@/utils/timeControl";
 import { TimeControlOption } from "./TimeControlOption";
-import { useCreateGame } from "../CreateGameContext";
+import { useGameSetup } from "../CreateGameContext";
 
 export const TimeControlsSection = () => {
-  const { timeControl } = useCreateGame();
+  const { timeControl } = useGameSetup();
   const Icon = getTimeControlIcon(timeControl.format);
   const [open, setOpen] = useState(false);
 

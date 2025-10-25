@@ -33,7 +33,7 @@ export const useMatchmaking = ({ time, increment }: UseMatchmakingProps) => {
     if (!lastMessage) return;
 
     const data: MatchmakingMessage = JSON.parse(lastMessage.data);
-    console.log("data", data);
+
     const { gameId, color, opponentRating, opponentUsername, time, increment } =
       data.data;
     if (data.type === "match_found" && gameId) {

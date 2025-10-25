@@ -1,6 +1,6 @@
 import { CircleUserRound, Play, Plus } from "lucide-react";
 import {
-  useCreateGame,
+  useGameSetup,
   type GameSection,
 } from "@/features/create-game/CreateGameContext";
 
@@ -11,7 +11,7 @@ const tabs = [
 ];
 
 export const Tabs = () => {
-  const { setActiveSection, activeSection } = useCreateGame();
+  const { setActiveSection, activeSection } = useGameSetup();
   return (
     <nav className="grid grid-cols-3 gap-2">
       {tabs.map((tab) => {

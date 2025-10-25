@@ -14,7 +14,7 @@ export type GameSection =
   | "friend-invite-options"
   | "custom";
 
-interface CreateGameContextValue {
+interface GameSetupContextValue {
   // Navigation
   activeSection: GameSection;
   setActiveSection: (section: GameSection) => void;
@@ -28,9 +28,9 @@ interface CreateGameContextValue {
   setSelectedFriend: React.Dispatch<React.SetStateAction<Friend | null>>;
 }
 
-const CreateGameContext = createContext<CreateGameContextValue | null>(null);
+const GameSetupContext = createContext<GameSetupContextValue | null>(null);
 
-export const CreateGameProvider = ({
+export const GameSetupProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -57,7 +57,7 @@ export const CreateGameProvider = ({
   }, [initialSection]);
 
   return (
-    <CreateGameContext.Provider
+    <GameSetupContext.Provider
       value={{
         activeSection,
         setActiveSection,
@@ -70,15 +70,15 @@ export const CreateGameProvider = ({
       }}
     >
       {children}
-    </CreateGameContext.Provider>
+    </GameSetupContext.Provider>
   );
 };
 
 /* eslint-disable-next-line */
-export const useCreateGame = () => {
-  const context = useContext(CreateGameContext);
+export const useGameSetup = () => {
+  const context = useContext(GameSetupContext);
   if (!context) {
-    throw new Error("useCreateGame must be used within CreateGameProvider");
+    throw new Error("useGameSetup must be used within GameSetupProvider");
   }
   return context;
 };

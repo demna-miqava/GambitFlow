@@ -4,12 +4,12 @@ import { FriendsPaginatedList } from "@/features/friends/list/components/Friends
 import { FriendsLocalSearch } from "@/features/friends/list/components/FriendsLocalSearch";
 import { useDebounce } from "@/hooks/useDebounce";
 import type { Friend } from "@/types";
-import { useCreateGame } from "../../CreateGameContext";
+import { useGameSetup } from "../../CreateGameContext";
 
 export const Friends = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSearch = useDebounce(searchQuery, 500);
-  const { setSelectedFriend, setActiveSection } = useCreateGame();
+  const { setSelectedFriend, setActiveSection } = useGameSetup();
 
   const onChallenge = (friend: Friend) => {
     setSelectedFriend(friend);

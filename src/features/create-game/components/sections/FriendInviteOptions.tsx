@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 
 import { TimeControlsSection } from "../TimeControlsSection";
-import { useCreateGame } from "../../CreateGameContext";
+import { useGameSetup } from "../../CreateGameContext";
 import { UserAvatar } from "@/components/UserAvatar";
 
 type ColorChoice = "white" | "random" | "black";
@@ -13,7 +13,7 @@ const COLOR_CHOICES: ColorChoice[] = ["white", "random", "black"];
 
 export const FriendInviteOptions = () => {
   const [colorChoice, setColorChoice] = useState<ColorChoice>("random");
-  const { selectedFriend, timeControl } = useCreateGame();
+  const { selectedFriend, timeControl } = useGameSetup();
 
   if (!selectedFriend) return;
 

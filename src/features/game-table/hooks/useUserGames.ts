@@ -29,7 +29,7 @@ export const useUserGames = ({
   const setPage = (newPage: number) => {
     setParam("page", newPage);
   };
-
+  console.log(query?.data?.data);
   return {
     ...query,
     page,

@@ -1,4 +1,4 @@
-import { useCreateGame } from "../CreateGameContext";
+import { useGameSetup } from "../CreateGameContext";
 
 interface TimeControlOptionProps {
   label: string;
@@ -11,7 +11,7 @@ export const TimeControlOption = ({
   icon: Icon,
   options,
 }: TimeControlOptionProps) => {
-  const { timeControl, updateTimeControl } = useCreateGame();
+  const { timeControl, updateTimeControl } = useGameSetup();
   const formatType = label.toLowerCase() as "bullet" | "blitz" | "rapid";
 
   return (

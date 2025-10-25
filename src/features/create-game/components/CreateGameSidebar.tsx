@@ -5,7 +5,7 @@ import { Bots } from "./sections/Bots";
 import { Friends } from "./sections/Friends";
 import { Custom } from "./sections/Custom";
 import { FriendInviteOptions } from "./sections/FriendInviteOptions";
-import { useCreateGame, type GameSection } from "@/features/create-game/CreateGameContext";
+import { useGameSetup, type GameSection } from "@/features/create-game/CreateGameContext";
 import { Tabs } from "./Tabs";
 
 const SECTIONS = (activeSection: GameSection) => {
@@ -26,7 +26,7 @@ const SECTIONS = (activeSection: GameSection) => {
 };
 
 export const CreateGameSidebar = () => {
-  const { activeSection, canGoBack, goBack } = useCreateGame();
+  const { activeSection, canGoBack, goBack } = useGameSetup();
 
   return (
     <aside className="flex max-h-[calc(100vh-4rem)] w-full flex-col overflow-hidden rounded-xl border border-border/60 bg-sidebar text-sidebar-foreground p-4 shadow-sm lg:w-[500px]">
