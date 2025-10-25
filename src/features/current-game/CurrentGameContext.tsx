@@ -74,7 +74,13 @@ export const CurrentGameProvider = ({
 
     const data = parseWebSocketMessage(lastMessage) as GameWebSocketMessage;
 
+    // Handle games that ended during play
     if (data?.type === "game_ended") {
+      setGameEnded(true);
+    }
+
+    // Handle games that are already finished (viewing past games)
+    if (data?.type === "initial_game_state" && data.data?.isFinished) {
       setGameEnded(true);
     }
   }, [lastMessage]);

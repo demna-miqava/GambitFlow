@@ -60,6 +60,7 @@ export type InitialGameStateMessage = {
   data?: {
     fen: string;
     pgn?: string;
+    isFinished?: boolean;
   };
 };
 

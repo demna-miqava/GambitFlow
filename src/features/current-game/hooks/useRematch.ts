@@ -17,7 +17,6 @@ export const useRematch = ({
   const [rematchRequested, setRematchRequested] = useState(false);
   const [rematchOffered, setRematchOffered] = useState(false);
   const [rematchDeclined, setRematchDeclined] = useState(false);
-  // TODO: handle cancel request
   useEffect(() => {
     if (!lastMessage) return;
 

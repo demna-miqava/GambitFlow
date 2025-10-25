@@ -1,6 +1,5 @@
 import { MovesList } from "./MovesList";
 import MoveControls from "./MoveControls";
-import MatchActions from "./MatchActions";
 import DrawOffer from "./DrawOffer";
 import { useGameWebSocket } from "@/features/game/hooks/useGameWebSocket";
 import { parseWebSocketMessage } from "@/features/game/utils/websocket-helpers";
@@ -10,22 +9,24 @@ import type {
 } from "@/features/game/types/websocket-messages";
 import { useUser } from "@/hooks/useUser";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { useMatchmaking } from "@/features/game/hooks/useMatchmaking";
+import { useLocation } from "react-router";
+import MatchActions from "./MatchActions";
+import { useCurrentGame } from "../CurrentGameContext";
 
 export const MovesContainer = () => {
   const { lastMessage, sendMessage } = useGameWebSocket();
   const data = parseWebSocketMessage<GameWebSocketMessage>(lastMessage);
   const { id } = useUser();
+  const { time, increment } = useLocation()?.state || {};
+  const { setShouldConnect, isSearching } = useMatchmaking({ time, increment });
 
   const [userDeclinedDraw, setUserDeclinedDraw] = useState(false);
-  const [gameEnded, setGameEnded] = useState(false);
+  const { gameEnded } = useCurrentGame();
 
   useEffect(() => {
     if (!data) return;
-
-    // Track when game ends
-    if (data.type === "game_ended") {
-      setGameEnded(true);
-    }
 
     // Track draw responses - if current user declined, hide the draw offer
     if (data.type === "draw_response") {
@@ -68,8 +69,17 @@ export const MovesContainer = () => {
           </div>
         )}
         <MoveControls />
-
         <MatchActions gameEnded={gameEnded} />
+        {gameEnded && (
+          <Button
+            variant="secondary"
+            disabled={isSearching}
+            onClick={() => setShouldConnect(true)}
+            className="w-full"
+          >
+            {isSearching ? "Searching..." : "New Game"}
+          </Button>
+        )}
       </div>
     </div>
   );
