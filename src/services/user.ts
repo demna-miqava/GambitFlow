@@ -36,3 +36,14 @@ export const getCurrentUser = async (): Promise<User> => {
 export const logout = async () => {
   return apiRequest<void>("post", "/users/logout");
 };
+
+export type ChangePasswordData = {
+  currentPassword: string;
+  newPassword: string;
+};
+
+export const changePassword = async (data: ChangePasswordData) => {
+  return apiRequest<{ message: string }>("put", "/users/change-password", {
+    data,
+  });
+};

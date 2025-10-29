@@ -13,13 +13,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Pencil } from "lucide-react";
+import { ChangePasswordForm } from "./components/ChangePasswordForm";
 
 export const AccountSettingsForm = () => {
-  // Change password state
-  const [currentPassword, setCurrentPassword] = useState("••••••••");
-  const [newPassword, setNewPassword] = useState("");
-  const [retypePassword, setRetypePassword] = useState("");
-
   // Change email state
   const [currentEmail] = useState("user@example.com");
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
@@ -33,19 +29,6 @@ export const AccountSettingsForm = () => {
       return `${localPart[0]}***@${domain}`;
     }
     return `${localPart.slice(0, 2)}***@${domain}`;
-  };
-
-  const handlePasswordSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newPassword !== retypePassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-    console.log("Change password:", {
-      currentPassword,
-      newPassword,
-    });
-    // TODO: Implement password change logic
   };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
@@ -65,48 +48,7 @@ export const AccountSettingsForm = () => {
   return (
     <div className="space-y-8">
       {/* Change Password Section */}
-      <form onSubmit={handlePasswordSubmit} className="space-y-6">
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Change Password</h3>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="current-password">Current Password</Label>
-              <PasswordInput
-                id="current-password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="new-password">New Password</Label>
-              <PasswordInput
-                id="new-password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Enter new password"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="retype-password">Retype New Password</Label>
-              <PasswordInput
-                id="retype-password"
-                value={retypePassword}
-                onChange={(e) => setRetypePassword(e.target.value)}
-                placeholder="Retype new password"
-                required
-              />
-            </div>
-          </div>
-        </div>
-
-        <Button type="submit" className="w-full sm:w-auto">
-          Update Password
-        </Button>
-      </form>
+      <ChangePasswordForm />
 
       {/* Change Email Section */}
       <div className="space-y-6 pt-6 border-t">

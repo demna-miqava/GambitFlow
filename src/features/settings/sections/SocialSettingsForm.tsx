@@ -4,6 +4,7 @@ import { SettingRadioGroup } from "../components/SettingRadioGroup";
 import { SettingsSubmitButton } from "../components/SettingsSubmitButton";
 import { useSettings } from "../SettingsContext";
 import type { MessagesAllowedFrom } from "@/services/settings";
+import { Form } from "@/components/ui/form";
 
 type SocialSettingsFormValues = {
   messagesAllowedFrom: MessagesAllowedFrom;
@@ -37,19 +38,21 @@ export const SocialSettingsForm = () => {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      <div className="space-y-6">
-        <SettingRadioGroup
-          control={form.control}
-          name="messagesAllowedFrom"
-          label="Send and receive direct messages"
-          description="Allow other users to send you private messages"
-          options={privacyOptions}
-          id="messages-privacy"
-        />
-      </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="space-y-6">
+          <SettingRadioGroup
+            control={form.control}
+            name="messagesAllowedFrom"
+            label="Send and receive direct messages"
+            description="Allow other users to send you private messages"
+            options={privacyOptions}
+            id="messages-privacy"
+          />
+        </div>
 
-      <SettingsSubmitButton isLoading={updateSettings.isPending} />
-    </form>
+        <SettingsSubmitButton isLoading={updateSettings.isPending} />
+      </form>
+    </Form>
   );
 };
