@@ -47,3 +47,13 @@ export const changePassword = async (data: ChangePasswordData) => {
     data,
   });
 };
+
+export type ChangeEmailData = {
+  newEmail: string;
+};
+
+export const changeEmail = async (data: ChangeEmailData) => {
+  return apiRequest<{ message: string }>("put", "/users/change-email", {
+    data,
+  });
+};
