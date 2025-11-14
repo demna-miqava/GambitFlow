@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { searchFriends } from "@/services/friends";
 import { useUser } from "@/hooks/useUser";
 import { useQueryParams } from "@/hooks/useQueryParams";
-import { QKEY_USER_FRIENDS } from "@/consts/queryKeys";
+import { QKEY_USER_FRIENDS } from "@/constants/queryKeys";
 
 interface UseUserFriendsOptions {
   defaultPage?: number;
@@ -19,16 +19,17 @@ export const useUserFriends = ({
   useLocalState = false,
 }: UseUserFriendsOptions = {}) => {
   const { id: userId } = useUser();
-  const { getNumberParam, getParam, setParam } = useQueryParams();
+  const [urlPageStr, setUrlPageStr] = useQueryParams("page", String(defaultPage));
+  const [searchParam] = useQueryParams("search", "");
 
   // Use local state or URL params based on useLocalState flag
   const [localPage, setLocalPage] = useState(defaultPage);
-  const urlPage = getNumberParam("page", defaultPage);
+  const urlPage = parseInt(urlPageStr) || defaultPage;
   const page = useLocalState ? localPage : urlPage;
 
   // Use searchQuery prop if provided, otherwise read from URL params
   const search =
-    searchQuery !== undefined ? searchQuery : getParam("search") || "";
+    searchQuery !== undefined ? searchQuery : searchParam;
 
   const buildQuery = () => {
     const params = new URLSearchParams();
@@ -51,7 +52,7 @@ export const useUserFriends = ({
     if (useLocalState) {
       setLocalPage(newPage);
     } else {
-      setParam("page", newPage);
+      setUrlPageStr(String(newPage));
     }
   };
 

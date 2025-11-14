@@ -5,9 +5,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TIME_CONTROL_ICONS } from "@/consts/timeControlIcons";
+import { TIME_CONTROL_ICONS } from "@/constants/timeControlIcons";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { ChartNoAxesColumnIncreasing } from "lucide-react";
-import { useQueryParams } from "../hooks/useQueryParams";
 
 const STATS_OPTIONS = [
   {

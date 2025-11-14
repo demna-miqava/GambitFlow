@@ -1,4 +1,5 @@
 import { useGameSetup } from "../GameSetupContext";
+import type { TimeControlType } from "@/types";
 
 interface TimeControlOptionProps {
   label: string;
@@ -12,7 +13,7 @@ export const TimeControlOption = ({
   options,
 }: TimeControlOptionProps) => {
   const { timeControl, updateTimeControl } = useGameSetup();
-  const formatType = label.toLowerCase() as "bullet" | "blitz" | "rapid";
+  const formatType = label.toLowerCase() as TimeControlType;
 
   return (
     <div className="flex flex-col gap-4">

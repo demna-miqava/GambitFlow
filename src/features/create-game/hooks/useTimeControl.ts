@@ -1,9 +1,8 @@
 import { useState, useCallback } from "react";
-
-export type TimeControlFormat = "bullet" | "blitz" | "rapid";
+import type { TimeControlType } from "@/types";
 
 export interface TimeControl {
-  format: TimeControlFormat;
+  format: TimeControlType;
   time: number;
   increment: number;
 }
@@ -13,7 +12,7 @@ export interface TimeControl {
  * Combines format (bullet/blitz/rapid), time (in minutes), and increment (in seconds)
  */
 export const useTimeControl = (
-  initialFormat: TimeControlFormat = "blitz",
+  initialFormat: TimeControlType = "blitz",
   initialTime = 180,
   initialIncrement = 0
 ) => {
@@ -24,7 +23,7 @@ export const useTimeControl = (
   });
 
   const updateTimeControl = useCallback(
-    (format: TimeControlFormat, time: number, increment: number = 0) => {
+    (format: TimeControlType, time: number, increment: number = 0) => {
       setTimeControl({ format, time, increment });
     },
     []

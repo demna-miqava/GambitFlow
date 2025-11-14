@@ -22,8 +22,8 @@ import { Link } from "react-router";
 import { useTheme } from "@/context/ThemeContext";
 import { useUser } from "@/hooks/useUser";
 import { useMemo } from "react";
-import { getSidebarItems } from "./config/sidebarItems";
 import { useLogout } from "@/features/auth/hooks/useLogout";
+import { getSidebarItems } from "@/config/sidebarItems";
 
 export function AppSidebar() {
   const { theme, toggleTheme } = useTheme();

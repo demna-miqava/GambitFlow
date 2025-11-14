@@ -5,7 +5,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getChallenges } from "@/services/challenges";
-import { QKEY_CHALLENGES } from "@/consts/queryKeys";
+import { QKEY_CHALLENGES } from "@/constants/queryKeys";
 
 export const Challenges = () => {
   const { data: challenges = [], isLoading } = useQuery({

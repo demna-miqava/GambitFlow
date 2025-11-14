@@ -6,7 +6,7 @@ import type {
   Challenge,
 } from "../types/websocket-messages";
 import { useQueryClient } from "@tanstack/react-query";
-import { QKEY_CHALLENGES } from "@/consts/queryKeys";
+import { QKEY_CHALLENGES } from "@/constants/queryKeys";
 import type { SendMessage } from "react-use-websocket";
 import type { ReadyState } from "react-use-websocket";
 

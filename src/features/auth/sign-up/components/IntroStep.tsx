@@ -1,6 +1,6 @@
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-import OAuthSection from "../../OAuthSection";
+import OAuthSection from "../../components/OAuthSection";
 
 type IntroStepProps = {
   onEmailSignup: () => void;

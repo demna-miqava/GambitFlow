@@ -3,7 +3,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { PLAY_TIME_CONTROLS } from "../consts/timeControls";
+import { PLAY_TIME_CONTROLS } from "../constants/timeControls";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { getTimeControlIcon, formatTimeControl } from "@/utils/timeControl";

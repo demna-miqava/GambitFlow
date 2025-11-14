@@ -1,5 +1,6 @@
-import { QKEY_USER_SETTINGS } from "@/consts/queryKeys";
-import { updateSettings, type Settings } from "@/services/settings";
+import { QKEY_USER_SETTINGS } from "@/constants/queryKeys";
+import { updateSettings } from "@/services/settings";
+import type { Settings } from "../types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 

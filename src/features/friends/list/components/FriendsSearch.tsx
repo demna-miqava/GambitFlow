@@ -5,20 +5,20 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 export const FriendsSearch = () => {
-  const { getParam, setParam, removeParam } = useQueryParams();
-  const search = getParam("search") || "";
+  const [search, setSearch] = useQueryParams("search", "");
+  const [, setPage] = useQueryParams("page", "1");
   const [inputValue, setInputValue] = useState(search);
   const debouncedValue = useDebounce(inputValue, 500);
 
   // Update URL param when debounced value changes
   useEffect(() => {
     if (debouncedValue.length === 0) {
-      removeParam("search");
-      setParam("page", 1);
+      setSearch(undefined);
+      setPage("1");
     } else {
-      setParam("search", debouncedValue);
+      setSearch(debouncedValue);
     }
-  }, [debouncedValue]);
+  }, [debouncedValue, setSearch, setPage]);
 
   return (
     <div className="relative w-64">

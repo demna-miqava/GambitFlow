@@ -3,7 +3,7 @@ import { sendFriendRequest } from "@/services/friends";
 import {
   QKEY_PENDING_FRIEND_REQUESTS,
   QKEY_SUGGESTED_FRIENDS,
-} from "@/consts/queryKeys";
+} from "@/constants/queryKeys";
 import { useUser } from "@/hooks/useUser";
 
 export const useSendFriendRequest = () => {

@@ -3,7 +3,7 @@ import ComprehensiveStats from "@/features/stats/components/comprehensive-stats/
 import SimpleStatsGrid from "@/features/stats/components/simple-stats/SimpleStatsGrid";
 import StatsDaysSelect from "@/features/stats/components/StatsDaysSelect";
 import StatsVariantSelect from "@/features/stats/components/StatsVariantSelect";
-import { useQueryParams } from "@/features/stats/hooks/useQueryParams";
+import { useQueryParams } from "@/hooks/useQueryParams";
 
 const ProfileStats = () => {
   const [variant, setVariant] = useQueryParams("variant", "all");

@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import SignInForm from "./components/SignInForm";
-import { FormContainer } from "../FormContainer";
+import { FormContainer } from "../components/FormContainer";
 
 export const SignInContainer = () => {
   return (

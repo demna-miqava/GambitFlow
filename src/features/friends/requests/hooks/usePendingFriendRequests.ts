@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPendingFriendRequests } from "@/services/friends";
 import { useUser } from "@/hooks/useUser";
-import { QKEY_PENDING_FRIEND_REQUESTS } from "@/consts/queryKeys";
+import { QKEY_PENDING_FRIEND_REQUESTS } from "@/constants/queryKeys";
 
 export const usePendingFriendRequests = () => {
   const { id: userId } = useUser();

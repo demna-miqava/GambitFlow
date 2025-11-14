@@ -1,5 +1,5 @@
 import { FriendRequestCard } from "./FriendRequestCard";
-import type { FriendRequest } from "@/services/friends";
+import type { FriendRequest } from "@/features/friends/types";
 
 interface OutgoingRequestsProps {
   requests: FriendRequest[];

@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useForm, type DefaultValues } from "react-hook-form";
 import { useSettings } from "../SettingsContext";
-import type { Settings } from "@/services/settings";
+import type { Settings } from "../types";
 // gadaxede typescripts
 type BooleanKeys<T> = {
   [K in keyof T]: T[K] extends boolean ? K : never;

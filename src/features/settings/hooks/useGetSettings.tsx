@@ -1,4 +1,4 @@
-import { QKEY_USER_SETTINGS } from "@/consts/queryKeys";
+import { QKEY_USER_SETTINGS } from "@/constants/queryKeys";
 import { useUser } from "@/hooks/useUser";
 import { getSettings } from "@/services/settings";
 import { useQuery } from "@tanstack/react-query";

@@ -1,6 +1,5 @@
-import { TIME_CONTROL_ICONS } from "@/consts/timeControlIcons";
-
-export type TimeControlType = keyof typeof TIME_CONTROL_ICONS;
+import { TIME_CONTROL_ICONS } from "@/constants/timeControlIcons";
+import type { TimeControlType } from "@/types";
 
 /**
  * Get the icon component for a given time control type

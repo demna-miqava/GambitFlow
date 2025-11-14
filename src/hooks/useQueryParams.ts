@@ -1,54 +1,24 @@
 import { useSearchParams } from "react-router-dom";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
-export const useQueryParams = () => {
+export const useQueryParams = (key: string, defaultValue: string = "") => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const getParam = useCallback(
-    (key: string): string | null => {
-      return searchParams.get(key);
-    },
-    [searchParams]
-  );
+  const value = useMemo(() => {
+    return searchParams.get(key) || defaultValue;
+  }, [searchParams, key, defaultValue]);
 
-  const getNumberParam = useCallback(
-    (key: string, defaultValue: number): number => {
-      const value = searchParams.get(key);
-      const parsed = Number(value);
-      return !isNaN(parsed) && parsed > 0 ? parsed : defaultValue;
-    },
-    [searchParams]
-  );
-
-  const setParam = useCallback(
-    (key: string, value: string | number) => {
-      searchParams.set(key, String(value));
+  const setValue = useCallback(
+    (newValue: string | undefined) => {
+      if (newValue === undefined || newValue === "") {
+        searchParams.delete(key);
+      } else {
+        searchParams.set(key, newValue);
+      }
       setSearchParams(searchParams);
     },
-    [setSearchParams]
+    [searchParams, setSearchParams, key]
   );
 
-  const removeParam = useCallback(
-    (key: string) => {
-      searchParams.delete(key);
-      setSearchParams(searchParams);
-    },
-    [setSearchParams, searchParams]
-  );
-
-  /**
-   * Clear all query parameters
-   */
-  const clearParams = useCallback(() => {
-    setSearchParams({});
-  }, [setSearchParams]);
-
-  return {
-    getParam,
-    getNumberParam,
-    setParam,
-    removeParam,
-    clearParams,
-    searchParams,
-  };
+  return [value, setValue] as const;
 };

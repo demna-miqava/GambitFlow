@@ -1,8 +1,8 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useQueryParams } from "../../hooks/useQueryParams";
 import GameStatsSummary from "./GameStatsSummary";
 import { type ComprehensiveStatsData } from "../../hooks/useGetComprehensiveStats";
+import { useQueryParams } from "@/hooks/useQueryParams";
 
 const GameFilters = ({ statsData }: { statsData: ComprehensiveStatsData }) => {
   const [activeTab, setActiveTab] = useQueryParams("gameType", "all");

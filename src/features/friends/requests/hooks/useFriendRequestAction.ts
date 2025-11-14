@@ -3,7 +3,7 @@ import { apiRequest } from "@/services";
 import {
   QKEY_PENDING_FRIEND_REQUESTS,
   QKEY_USER_FRIENDS,
-} from "@/consts/queryKeys";
+} from "@/constants/queryKeys";
 import { useUser } from "@/hooks/useUser";
 
 export type FriendRequestAction = "accept" | "decline" | "cancel";

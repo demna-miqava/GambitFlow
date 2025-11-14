@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import { useGetSettings } from "./hooks/useGetSettings";
 import { useUpdateSettings } from "./hooks/useUpdateSettings";
-import type { Settings } from "@/services/settings";
+import type { Settings } from "./types";
 import type { UseMutationResult } from "@tanstack/react-query";
 
 type SettingsContextType = {

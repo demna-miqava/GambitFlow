@@ -4,7 +4,7 @@ import {
   CAPTURE_SOUND_URL,
   GENERIC_SOUND_URL,
   MOVE_SOUND_URL,
-} from "@/consts/apiConfig";
+} from "@/constants/apiConfig";
 
 export type ChessSoundType = "move" | "capture" | "generic";
 

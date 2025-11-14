@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getCurrentUser, type User } from "@/services/user";
-import { QKEY_USER } from "@/consts/queryKeys";
+import { getCurrentUser } from "@/services/user";
+import type { User } from "@/types";
+import { QKEY_USER } from "@/constants/queryKeys";
 
 export const useUser = (enabled: boolean = true) => {
   const queryClient = useQueryClient();

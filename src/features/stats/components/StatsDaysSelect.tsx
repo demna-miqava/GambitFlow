@@ -5,9 +5,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { Calendar, CalendarDays } from "lucide-react";
 import { useMemo } from "react";
-import { useQueryParams } from "../hooks/useQueryParams";
 
 const STATS_DAYS_OPTIONS = [
   {

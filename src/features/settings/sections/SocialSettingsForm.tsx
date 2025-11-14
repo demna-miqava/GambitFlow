@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { SettingRadioGroup } from "../components/SettingRadioGroup";
 import { SettingsSubmitButton } from "../components/SettingsSubmitButton";
 import { useSettings } from "../SettingsContext";
-import type { MessagesAllowedFrom } from "@/services/settings";
+import type { MessagesAllowedFrom } from "../types";
 import { Form } from "@/components/ui/form";
 
 type SocialSettingsFormValues = {

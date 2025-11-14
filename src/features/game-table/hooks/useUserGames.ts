@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserGames } from "@/services/game";
 import { useQueryParams } from "@/hooks/useQueryParams";
 import { useUser } from "@/hooks/useUser";
-import { QKEY_USER_GAMES } from "@/consts/queryKeys";
+import { QKEY_USER_GAMES } from "@/constants/queryKeys";
 
 interface UseUserGamesOptions {
   defaultPage?: number;
@@ -14,10 +14,11 @@ export const useUserGames = ({
   defaultLimit = 10,
 }: UseUserGamesOptions = {}) => {
   const { id: userId, username } = useUser();
-  const { getNumberParam, setParam } = useQueryParams();
+  const [pageStr, setPageStr] = useQueryParams("page", String(defaultPage));
+  const [limitStr] = useQueryParams("limit", String(defaultLimit));
 
-  const page = getNumberParam("page", defaultPage);
-  const limit = getNumberParam("limit", defaultLimit);
+  const page = parseInt(pageStr) || defaultPage;
+  const limit = parseInt(limitStr) || defaultLimit;
 
   const query = useQuery({
     queryKey: [QKEY_USER_GAMES, username, page, limit],
@@ -27,7 +28,7 @@ export const useUserGames = ({
   });
 
   const setPage = (newPage: number) => {
-    setParam("page", newPage);
+    setPageStr(String(newPage));
   };
 
   return {

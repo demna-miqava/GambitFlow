@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getFriendSuggestions } from "@/services/friends";
 import { useUser } from "@/hooks/useUser";
-import { QKEY_SUGGESTED_FRIENDS } from "@/consts/queryKeys";
+import { QKEY_SUGGESTED_FRIENDS } from "@/constants/queryKeys";
 
 export const useSuggestedFriends = (searchQuery?: string) => {
   const { id: userId } = useUser();

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/UserAvatar";
-import type { FriendRequest } from "@/services/friends";
+import type { FriendRequest } from "@/features/friends/types";
 
 interface FriendRequestCardProps {
   request: FriendRequest;

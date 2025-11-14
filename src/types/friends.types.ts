@@ -9,29 +9,6 @@ export interface Friend {
   rapidRating: number;
 }
 
-/**
- * Friend action callbacks that accept friend ID
- */
-export interface FriendActionHandlers {
-  onChallenge?: (friend: Friend) => void;
-  onMessage?: (friendId: string) => void;
-  onRemove?: (friendId: string) => void;
-}
-
-/**
- * Friend suggestion action callbacks
- */
-export interface FriendSuggestionActionHandlers {
-  onChallenge?: (friend: Friend) => void;
-  onMessage?: (friendId: string) => void;
-  onAddFriend?: (friendId: string) => void;
-}
-
-export interface FriendsData {
-  friends: Friend[];
-  suggestions: Friend[];
-}
-
 export type PaginatedFriendsResponse = {
   data: Friend[];
   pagination: {
@@ -41,3 +18,25 @@ export type PaginatedFriendsResponse = {
     totalPages: number;
   };
 };
+
+/**
+ * Base friend action handlers shared across all friend interactions
+ */
+interface BaseFriendActionHandlers {
+  onChallenge?: (friend: Friend) => void;
+  onMessage?: (friendId: string) => void;
+}
+
+export interface FriendActionHandlers extends BaseFriendActionHandlers {
+  onRemove?: (friendId: string) => void;
+}
+
+export interface FriendSuggestionActionHandlers
+  extends BaseFriendActionHandlers {
+  onAddFriend?: (friendId: string) => void;
+}
+
+export interface FriendsData {
+  friends: Friend[];
+  suggestions: Friend[];
+}

@@ -1,5 +1,5 @@
 import { ForgotPasswordForm } from "./components/ForgotPasswordForm";
-import { FormContainer } from "../FormContainer";
+import { FormContainer } from "../components/FormContainer";
 
 export const ForgotPasswordContainer = () => {
   return (

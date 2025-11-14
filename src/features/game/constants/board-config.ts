@@ -1,4 +1,4 @@
-import { WS_BASE_URL } from "@/consts/apiConfig";
+import { WS_BASE_URL } from "@/constants/apiConfig";
 
 export const BOARD_CONFIG = {
   ENABLE_PREMOVES: true,

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, type ReactNode } from "react";
 import useWebSocket from "react-use-websocket";
-import { WS_BASE_URL } from "@/consts/apiConfig";
+import { WS_BASE_URL } from "@/constants/apiConfig";
 import { parseWebSocketMessage } from "@/features/game/utils/websocket-helpers";
 import type {
   NotificationWebSocketMessage,
@@ -11,7 +11,7 @@ import ChallengeNotification from "../components/ChallengeNotification";
 import { useNavigate } from "react-router";
 import { useUser } from "@/hooks/useUser";
 import { useQueryClient } from "@tanstack/react-query";
-import { QKEY_CHALLENGES } from "@/consts/queryKeys";
+import { QKEY_CHALLENGES } from "@/constants/queryKeys";
 import { useManageChallenge } from "../hooks/useManageChallenge";
 
 type ChallengesContextType = {

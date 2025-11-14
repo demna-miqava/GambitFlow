@@ -1,6 +1,6 @@
 import { usePendingFriendRequests } from "../hooks/usePendingFriendRequests";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { FriendRequest } from "@/services/friends";
+import type { FriendRequest } from "@/features/friends/types";
 import { IncomingRequests } from "./IncomingRequests";
 import { OutgoingRequests } from "./OutgoingRequests";
 import { useFriendRequestAction } from "../hooks/useFriendRequestAction";

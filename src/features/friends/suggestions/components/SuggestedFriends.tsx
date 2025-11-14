@@ -5,8 +5,7 @@ import { useFriendActions } from "../../hooks/useFriendActions";
 
 export const SuggestedFriends = () => {
   const { onChallenge, onMessage, onAddFriend } = useFriendActions();
-  const { getParam } = useQueryParams();
-  const search = getParam("search") || "";
+  const [search] = useQueryParams("search", "");
   const { suggestions } = useSuggestedFriends(search);
 
   if (suggestions.length === 0) {
