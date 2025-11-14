@@ -14,8 +14,6 @@ export const useUser = (enabled: boolean = true) => {
   } = useQuery({
     queryKey: [QKEY_USER],
     queryFn: getCurrentUser,
-
-    staleTime: 5 * 60 * 1000, // 5 minutes
     retry: false,
     enabled,
   });

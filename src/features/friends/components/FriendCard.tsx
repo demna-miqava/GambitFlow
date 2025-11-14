@@ -67,7 +67,7 @@ export function FriendCard<T extends Friend>({
   return (
     <div className="flex items-center justify-between rounded-lg border p-4">
       <div className="flex items-center gap-3">
-        <UserAvatar src={friend.image} username={friend.username} />
+        <UserAvatar src={friend.avatarUrl} username={friend.username} />
         <div className="flex flex-col">
           <span className="font-medium">{friend.username}</span>
           {secondaryText && (

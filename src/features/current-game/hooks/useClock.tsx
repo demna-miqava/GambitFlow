@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef } from "react";
-import type { TimeControlFormat } from "@/features/create-game/hooks/useTimeControl";
+import type { TimeControlType } from "@/types";
+import {
+  LOW_TIME_THRESHOLDS,
+  TIME_CONTROL_BOUNDARIES,
+  CLOCK_TICK_INTERVAL_MS,
+  ONE_SECOND_MS,
+} from "@/constants/time";
 
-const LOW_TIME_PER_FORMAT: Record<TimeControlFormat, number> = {
-  rapid: 60000,
-  blitz: 20000,
-  bullet: 10000,
-};
-
-const getTimeControlFormat = (timeInSeconds: number): TimeControlFormat => {
-  if (timeInSeconds < 180) return "bullet"; // < 3 minutes
-  if (timeInSeconds < 600) return "blitz"; // < 10 minutes
+const getTimeControlFormat = (timeInSeconds: number): TimeControlType => {
+  if (timeInSeconds < TIME_CONTROL_BOUNDARIES.bulletMax) return "bullet";
+  if (timeInSeconds < TIME_CONTROL_BOUNDARIES.blitzMax) return "blitz";
   return "rapid";
 };
 
@@ -26,8 +26,8 @@ export const useClock = ({
   onTimeout?: () => void;
   gameEnded?: boolean;
 }) => {
-  const startingTimeMs = startingTime * 1000;
-  const incrementMs = increment ? increment * 1000 : 0;
+  const startingTimeMs = startingTime * ONE_SECOND_MS;
+  const incrementMs = increment ? increment * ONE_SECOND_MS : 0;
 
   const [time, setTime] = useState(startingTimeMs);
   const lastTickRef = useRef<number>(Date.now());
@@ -35,7 +35,7 @@ export const useClock = ({
   const timeoutCalledRef = useRef(false);
 
   const format = getTimeControlFormat(startingTime);
-  const isLowTime = time <= LOW_TIME_PER_FORMAT[format];
+  const isLowTime = time <= LOW_TIME_THRESHOLDS[format];
   // TODO: Check requestAnimationFrame for better countdown experience
   useEffect(() => {
     setTime(startingTimeMs);
@@ -77,7 +77,7 @@ export const useClock = ({
       lastTickRef.current = now;
 
       setTime((prevTime) => Math.max(0, prevTime - elapsed));
-    }, 100);
+    }, CLOCK_TICK_INTERVAL_MS);
 
     return () => {
       if (intervalRef.current) {

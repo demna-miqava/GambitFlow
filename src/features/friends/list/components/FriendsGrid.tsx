@@ -26,7 +26,7 @@ const FriendsGrid = () => {
               <FriendPopover data={friend}>
                 <TooltipTrigger>
                   <UserAvatar
-                    src={friend.image}
+                    src={friend.avatarUrl}
                     username={friend.username}
                     className="cursor-pointer"
                   />

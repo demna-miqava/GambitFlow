@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getChallenges } from "@/services/challenges";
 import { QKEY_CHALLENGES } from "@/constants/queryKeys";
+import { TWO_MINUTES_MS } from "@/constants/time";
 
 export const Challenges = () => {
   const { data: challenges = [], isLoading } = useQuery({
     queryKey: [QKEY_CHALLENGES],
     queryFn: getChallenges,
-    staleTime: 1000 * 60 * 2,
+    staleTime: TWO_MINUTES_MS,
   });
   const { handleAcceptChallenge, handleDeclineChallenge } = useChallenges();
 

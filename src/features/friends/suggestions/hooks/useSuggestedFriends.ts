@@ -17,7 +17,6 @@ export const useSuggestedFriends = (searchQuery?: string) => {
     queryKey: [QKEY_SUGGESTED_FRIENDS, userId, searchQuery],
     queryFn: () => getFriendSuggestions(buildQuery()),
     enabled: !!(userId && searchQuery),
-    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
   return {

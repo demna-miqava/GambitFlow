@@ -3,7 +3,7 @@ import { TimeControlCell } from "./components/TimeControlCell";
 import { PlayerCell } from "./components/PlayerCell";
 import { ResultBadge } from "./components/ResultBadge";
 import { format } from "date-fns";
-import type { Game } from "@/services/game";
+import type { Game } from "@/types";
 
 // Helper function to determine result from current user's perspective
 const getResult = (game: Game, currentUserId?: string): "win" | "loss" | "draw" => {

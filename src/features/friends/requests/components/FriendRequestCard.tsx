@@ -21,17 +21,17 @@ export const FriendRequestCard = ({
     type === "incoming"
       ? {
           username: request.senderUsername,
-          image: request.senderAvatarUrl,
+          avatarUrl: request.senderAvatarUrl,
         }
       : {
           username: request.receiverUsername,
-          image: request.receiverAvatarUrl,
+          avatarUrl: request.receiverAvatarUrl,
         };
 
   return (
     <div className="flex flex-col gap-2 p-4 border rounded-lg">
       <div className="flex items-center gap-3">
-        <UserAvatar src={displayUser.image} username={displayUser.username} />
+        <UserAvatar src={displayUser.avatarUrl} username={displayUser.username} />
 
         <div>
           <p className="font-medium">{displayUser.username}</p>

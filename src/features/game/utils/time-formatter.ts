@@ -1,3 +1,11 @@
+import {
+  MILLISECONDS_IN_SECOND,
+  SECONDS_IN_MINUTE,
+  MINUTES_IN_HOUR,
+  ONE_MINUTE_MS,
+  ONE_SECOND_MS,
+} from "@/constants/time";
+
 /**
  * Formats milliseconds to MM:SS or H:MM:SS format
  * Shows milliseconds when time is low (< 20 seconds)
@@ -7,11 +15,13 @@
  */
 export const formatTime = (ms: number, showMilliseconds = false): string => {
   const totalMs = Math.max(0, ms);
-  const totalSeconds = Math.floor(totalMs / 1000);
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-  const centiseconds = Math.floor((totalMs % 1000) / 10); // Show centiseconds (00-99)
+  const totalSeconds = Math.floor(totalMs / MILLISECONDS_IN_SECOND);
+  const hours = Math.floor(totalSeconds / (MINUTES_IN_HOUR * SECONDS_IN_MINUTE));
+  const minutes = Math.floor(
+    (totalSeconds % (MINUTES_IN_HOUR * SECONDS_IN_MINUTE)) / SECONDS_IN_MINUTE
+  );
+  const seconds = totalSeconds % SECONDS_IN_MINUTE;
+  const centiseconds = Math.floor((totalMs % MILLISECONDS_IN_SECOND) / 10);
 
   // When time is low, show seconds with centiseconds
   if (showMilliseconds) {
@@ -36,8 +46,8 @@ export const parseTimeControl = (
   timeControl: string
 ): { initialTime: number; increment: number } => {
   const parts = timeControl.split("+").map((p) => p.trim());
-  const initialTime = parseInt(parts[0]) * 60 * 1000; // Convert minutes to ms
-  const increment = parts[1] ? parseInt(parts[1]) * 1000 : 0; // Convert seconds to ms
+  const initialTime = parseInt(parts[0]) * ONE_MINUTE_MS;
+  const increment = parts[1] ? parseInt(parts[1]) * ONE_SECOND_MS : 0;
 
   return { initialTime, increment };
 };

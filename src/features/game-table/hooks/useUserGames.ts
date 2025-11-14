@@ -24,7 +24,6 @@ export const useUserGames = ({
     queryKey: [QKEY_USER_GAMES, username, page, limit],
     queryFn: () => getUserGames({ username: username || "", page, limit }),
     enabled: !!userId,
-    staleTime: 1000 * 60 * 5,
   });
 
   const setPage = (newPage: number) => {

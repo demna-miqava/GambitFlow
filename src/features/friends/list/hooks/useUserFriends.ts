@@ -19,7 +19,10 @@ export const useUserFriends = ({
   useLocalState = false,
 }: UseUserFriendsOptions = {}) => {
   const { id: userId } = useUser();
-  const [urlPageStr, setUrlPageStr] = useQueryParams("page", String(defaultPage));
+  const [urlPageStr, setUrlPageStr] = useQueryParams(
+    "page",
+    String(defaultPage)
+  );
   const [searchParam] = useQueryParams("search", "");
 
   // Use local state or URL params based on useLocalState flag
@@ -28,8 +31,7 @@ export const useUserFriends = ({
   const page = useLocalState ? localPage : urlPage;
 
   // Use searchQuery prop if provided, otherwise read from URL params
-  const search =
-    searchQuery !== undefined ? searchQuery : searchParam;
+  const search = searchQuery !== undefined ? searchQuery : searchParam;
 
   const buildQuery = () => {
     const params = new URLSearchParams();
@@ -43,7 +45,6 @@ export const useUserFriends = ({
     queryKey: [QKEY_USER_FRIENDS, userId, page, defaultLimit, search],
     queryFn: () => searchFriends(buildQuery()),
     enabled: !!userId,
-    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
   const totalPages = query.data?.pagination.totalPages ?? 1;

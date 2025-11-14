@@ -9,7 +9,6 @@ export const useGetSettings = () => {
     queryFn: getSettings,
     queryKey: [QKEY_USER_SETTINGS],
     enabled: !!userId,
-    staleTime: 1000 * 60 * 5,
   });
 
   return {
