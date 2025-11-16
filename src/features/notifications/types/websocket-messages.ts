@@ -1,5 +1,7 @@
+import { NOTIFICATION_MESSAGE_TYPES } from "../constants/websocket-types";
+
 export type SendChallengeMessage = {
-  type: "challenge_sent";
+  type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_SENT;
   data: {
     challengedId: string;
     color: "white" | "black" | "random";
@@ -9,21 +11,21 @@ export type SendChallengeMessage = {
 };
 
 export type AcceptChallengeMessage = {
-  type: "challenge_accepted";
+  type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_ACCEPTED;
   data: {
     challengerId: string;
   };
 };
 
 export type DeclineChallengeMessage = {
-  type: "challenge_declined";
+  type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_DECLINED;
   data: {
     challengerId: string;
   };
 };
 
 export type ChallengeReceivedNotification = {
-  type: "challenge_received";
+  type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_RECEIVED;
   data: {
     challengerId: string;
     username: string;
@@ -37,15 +39,15 @@ export type ChallengeReceivedNotification = {
 };
 
 export type OpponentUnavailableNotification = {
-  type: "opponent_unavailable";
+  type: NOTIFICATION_MESSAGE_TYPES.OPPONENT_UNAVAILABLE;
 };
 
 export type ChallengeDeclinedNotification = {
-  type: "challenge_declined";
+  type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_DECLINED;
 };
 
 export type MatchCreatedNotification = {
-  type: "match_created";
+  type: NOTIFICATION_MESSAGE_TYPES.MATCH_CREATED;
   data: {
     gameId: string;
     opponentId: string;
@@ -58,7 +60,7 @@ export type MatchCreatedNotification = {
 };
 
 export type ChallengeErrorNotification = {
-  type: "error";
+  type: NOTIFICATION_MESSAGE_TYPES.ERROR;
   data: {
     message: string;
   };

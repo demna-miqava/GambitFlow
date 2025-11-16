@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback } from "react";
 import type {
   RatingChanges,
   MoveMessage,
@@ -10,8 +10,8 @@ import { useChessBoardContext } from "@/features/game/contexts/ChessBoardContext
 import { useGameNavigation } from "@/features/game/contexts/GameNavigationContext";
 import { useChessSound } from "@/features/game/hooks/useChessSound";
 import { useSettings } from "@/features/settings/SettingsContext";
-import { messageDispatcher } from "@/features/game/services/WebSocketMessageDispatcher";
-import { WS_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
+import { useMessageDispatcher } from "@/hooks/useMessageDispatcher";
+import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
 
 interface UseLiveGameMessagesOptions {
   setGameEnded: (ended: boolean) => void;
@@ -27,75 +27,70 @@ export const useLiveGameMessages = ({
   const { settings } = useSettings();
   const { playSoundForMove } = useChessSound(settings?.soundsEnabled);
 
-  useEffect(() => {
-    // Subscribe to move messages
-    const unsubMove = messageDispatcher.subscribe<MoveMessage>(
-      WS_MESSAGE_TYPES.MOVE,
-      (data) => {
-        if (!chessRef.current || !cgRef.current) return;
-        if (!data.move) return;
+  // Handle move messages
+  const handleMove = useCallback(
+    (data: MoveMessage) => {
+      if (!chessRef.current || !cgRef.current) return;
+      if (!data.move) return;
 
-        const chess = chessRef.current;
+      const chess = chessRef.current;
 
-        try {
-          const move = chess.move(data.move.lan);
-          const isCheckmate = chess.isCheckmate();
+      try {
+        const move = chess.move(data.move.lan);
+        const isCheckmate = chess.isCheckmate();
 
-          syncBoardState(chessRef, cgRef, color, setTurn);
-          playSoundForMove(move, isCheckmate);
+        syncBoardState(chessRef, cgRef, color, setTurn);
+        playSoundForMove(move, isCheckmate);
 
-          // Auto-jump to latest move when opponent moves
-          goToLastMove();
-        } catch (error) {
-          console.error("Failed to apply move:", error);
-        }
+        // Auto-jump to latest move when opponent moves
+        goToLastMove();
+      } catch (error) {
+        console.error("Failed to apply move:", error);
       }
-    );
+    },
+    [chessRef, cgRef, color, setTurn, playSoundForMove, goToLastMove]
+  );
 
-    // Subscribe to game_ended messages
-    const unsubGameEnded = messageDispatcher.subscribe<GameEndedMessage>(
-      WS_MESSAGE_TYPES.GAME_ENDED,
-      (data) => {
+  // Handle game_ended messages
+  const handleGameEnded = useCallback(
+    (data: GameEndedMessage) => {
+      setGameEnded(true);
+      if (data.ratingChanges) {
+        setRatingChanges(data.ratingChanges);
+      }
+    },
+    [setGameEnded, setRatingChanges]
+  );
+
+  // Handle initial game state
+  const handleInitialState = useCallback(
+    (data: InitialGameStateMessage) => {
+      if (!chessRef.current || !cgRef.current) return;
+      if (!data.data?.fen) return;
+
+      if (data.data.pgn) {
+        chessRef.current.loadPgn(data.data.pgn);
+      }
+
+      syncBoardState(chessRef, cgRef, color, setTurn);
+
+      if (data.data.isFinished) {
         setGameEnded(true);
-        if (data.ratingChanges) {
-          setRatingChanges(data.ratingChanges);
-        }
       }
-    );
+    },
+    [chessRef, cgRef, color, setTurn, setGameEnded]
+  );
 
-    // Subscribe to initial game state
-    const unsubInitialState =
-      messageDispatcher.subscribe<InitialGameStateMessage>(
-        WS_MESSAGE_TYPES.INITIAL_GAME_STATE,
-        (data) => {
-          if (!chessRef.current || !cgRef.current) return;
-          if (!data.data?.fen) return;
+  // Subscribe to all message types using the reusable hook
+  useMessageDispatcher<MoveMessage>(GAME_MESSAGE_TYPES.MOVE, handleMove);
 
-          if (data.data.pgn) {
-            chessRef.current.loadPgn(data.data.pgn);
-          }
+  useMessageDispatcher<GameEndedMessage>(
+    GAME_MESSAGE_TYPES.GAME_ENDED,
+    handleGameEnded
+  );
 
-          syncBoardState(chessRef, cgRef, color, setTurn);
-
-          if (data.data.isFinished) {
-            setGameEnded(true);
-          }
-        }
-      );
-
-    return () => {
-      unsubMove();
-      unsubGameEnded();
-      unsubInitialState();
-    };
-  }, [
-    chessRef,
-    cgRef,
-    setTurn,
-    color,
-    playSoundForMove,
-    goToLastMove,
-    setGameEnded,
-    setRatingChanges,
-  ]);
+  useMessageDispatcher<InitialGameStateMessage>(
+    GAME_MESSAGE_TYPES.INITIAL_GAME_STATE,
+    handleInitialState
+  );
 };

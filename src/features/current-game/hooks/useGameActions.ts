@@ -4,10 +4,10 @@ import { useChessSound } from "@/features/game/hooks/useChessSound";
 import { useUser } from "@/hooks/useUser";
 import { useChessBoardContext } from "@/features/game/contexts/ChessBoardContext";
 import { getGameEndMessage } from "../constants/gameEndMessages";
-import { messageDispatcher } from "@/features/game/services/WebSocketMessageDispatcher";
+import { messageDispatcher } from "@/services/websocketMessageDispatcher";
 import { useSettings } from "@/features/settings/SettingsContext";
 import { useLiveGame } from "../contexts/LiveGameContext";
-import { WS_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
+import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
 
 type FinishState = {
   title: string;
@@ -32,7 +32,7 @@ export const useGameActions = () => {
 
   useEffect(() => {
     const unsubscribe = messageDispatcher.subscribe<GameEndedMessage>(
-      WS_MESSAGE_TYPES.GAME_ENDED,
+      GAME_MESSAGE_TYPES.GAME_ENDED,
       (data) => {
         const { reason, winnerId } = data;
 
@@ -51,15 +51,15 @@ export const useGameActions = () => {
   }, [playGenericSound, currentUserId]);
 
   const onResign = useCallback(() => {
-    sendMessage(JSON.stringify({ type: WS_MESSAGE_TYPES.RESIGN }));
+    sendMessage(JSON.stringify({ type: GAME_MESSAGE_TYPES.RESIGN }));
   }, [sendMessage]);
 
   const onOfferDraw = useCallback(() => {
-    sendMessage(JSON.stringify({ type: WS_MESSAGE_TYPES.DRAW_OFFER }));
+    sendMessage(JSON.stringify({ type: GAME_MESSAGE_TYPES.DRAW_OFFER }));
   }, [sendMessage]);
 
   const onAbort = useCallback(() => {
-    sendMessage(JSON.stringify({ type: WS_MESSAGE_TYPES.ABORT }));
+    sendMessage(JSON.stringify({ type: GAME_MESSAGE_TYPES.ABORT }));
   }, [sendMessage]);
 
   return {

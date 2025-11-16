@@ -5,8 +5,8 @@ import type {
   GameEndedMessage,
 } from "@/features/game/types/websocket-messages";
 import { useUser } from "@/hooks/useUser";
-import { messageDispatcher } from "@/features/game/services/WebSocketMessageDispatcher";
-import { WS_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
+import { messageDispatcher } from "@/services/websocketMessageDispatcher";
+import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
 
 export const useDrawOffer = (gameEnded: boolean) => {
   const { id } = useUser();
@@ -15,14 +15,14 @@ export const useDrawOffer = (gameEnded: boolean) => {
 
   useEffect(() => {
     const unsubDrawOffer = messageDispatcher.subscribe<DrawOfferMessage>(
-      WS_MESSAGE_TYPES.DRAW_OFFER,
+      GAME_MESSAGE_TYPES.DRAW_OFFER,
       () => {
         setHasDrawOffer(true);
       }
     );
 
     const unsubDrawResponse = messageDispatcher.subscribe<DrawResponseMessage>(
-      WS_MESSAGE_TYPES.DRAW_RESPONSE,
+      GAME_MESSAGE_TYPES.DRAW_RESPONSE,
       (data) => {
         if (data.userId === id) {
           setHasDrawOffer(false);
@@ -33,7 +33,7 @@ export const useDrawOffer = (gameEnded: boolean) => {
     );
 
     const unsubGameEnded = messageDispatcher.subscribe<GameEndedMessage>(
-      WS_MESSAGE_TYPES.GAME_ENDED,
+      GAME_MESSAGE_TYPES.GAME_ENDED,
       () => {
         setHasDrawOffer(false);
       }

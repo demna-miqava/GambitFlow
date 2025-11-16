@@ -9,7 +9,7 @@ import { useSettings } from "@/features/settings/SettingsContext";
 import { calculatePlayerRating } from "../utils/rating-helpers";
 import { useChessBoardContext } from "@/features/game/contexts/ChessBoardContext";
 import { useLiveGame } from "../contexts/LiveGameContext";
-import { WS_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
+import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
 
 const CurrentGameBoard = () => {
   const { username, image } = useUser();
@@ -56,7 +56,7 @@ const CurrentGameBoard = () => {
   const handleTimeout = () => {
     if (!timeoutSentRef.current) {
       timeoutSentRef.current = true;
-      sendMessage(JSON.stringify({ type: WS_MESSAGE_TYPES.TIMEOUT }));
+      sendMessage(JSON.stringify({ type: GAME_MESSAGE_TYPES.TIMEOUT }));
     }
   };
 

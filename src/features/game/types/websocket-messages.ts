@@ -1,9 +1,11 @@
+import { GAME_MESSAGE_TYPES } from "../constants/websocket-types";
+
 export type DrawOfferMessage = {
-  type: "draw_offer";
+  type: GAME_MESSAGE_TYPES.DRAW_OFFER;
 };
 
 export type DrawResponseMessage = {
-  type: "draw_response";
+  type: GAME_MESSAGE_TYPES.DRAW_RESPONSE;
   accepted: boolean;
   userId?: string;
 };
@@ -16,7 +18,7 @@ export type RatingChanges = {
 };
 
 export type GameEndedMessage = {
-  type: "game_ended";
+  type: GAME_MESSAGE_TYPES.GAME_ENDED;
   reason:
     | "resignation"
     | "draw_agreement"
@@ -29,16 +31,16 @@ export type GameEndedMessage = {
 };
 
 export type ResignMessage = {
-  type: "resign";
+  type: GAME_MESSAGE_TYPES.RESIGN;
   userId?: string;
 };
 
 export type AbortMessage = {
-  type: "abort";
+  type: GAME_MESSAGE_TYPES.ABORT;
 };
 
 export type MoveMessage = {
-  type: "move";
+  type: GAME_MESSAGE_TYPES.MOVE;
   move: {
     lan: string;
     san?: string;
@@ -51,20 +53,20 @@ export type MoveMessage = {
 };
 
 export type TimeoutMessage = {
-  type: "timeout";
+  type: GAME_MESSAGE_TYPES.TIMEOUT;
 };
 
 export type CheckmateMessage = {
-  type: "checkmate";
+  type: GAME_MESSAGE_TYPES.CHECKMATE;
   winnerId: string;
 };
 
 export type StalemateMessage = {
-  type: "stalemate";
+  type: GAME_MESSAGE_TYPES.STALEMATE;
 };
 
 export type InitialGameStateMessage = {
-  type: "initial_game_state";
+  type: GAME_MESSAGE_TYPES.INITIAL_GAME_STATE;
   data?: {
     fen: string;
     pgn?: string;
@@ -73,16 +75,16 @@ export type InitialGameStateMessage = {
 };
 
 export type RematchRequestMessage = {
-  type: "rematch_request";
+  type: GAME_MESSAGE_TYPES.REMATCH_REQUEST;
 };
 
 export type RematchResponseMessage = {
-  type: "rematch_response";
+  type: GAME_MESSAGE_TYPES.REMATCH_RESPONSE;
   accepted: boolean;
 };
 
 export type CancelRematchMessage = {
-  type: "rematch_canceled";
+  type: GAME_MESSAGE_TYPES.REMATCH_CANCELED;
 };
 
 export type GameWebSocketMessage =

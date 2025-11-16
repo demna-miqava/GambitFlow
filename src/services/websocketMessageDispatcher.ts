@@ -4,6 +4,13 @@ type MessageHandler<T extends WebSocketMessage = WebSocketMessage> = (
   message: T
 ) => void;
 
+/**
+ * Centralized WebSocket message dispatcher.
+ * Provides pub/sub pattern for WebSocket messages across the application.
+ *
+ * This dispatcher is used by both game and notification WebSocket connections
+ * to distribute messages to multiple subscribers without tight coupling.
+ */
 class WebSocketMessageDispatcher {
   private handlers = new Map<string, Set<MessageHandler>>();
 
