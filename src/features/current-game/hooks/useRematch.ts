@@ -1,56 +1,66 @@
 import { useState, useEffect } from "react";
-import { useGameWebSocket } from "@/features/game/hooks/useGameWebSocket";
-import { parseWebSocketMessage } from "@/features/game/utils/websocket-helpers";
-import type { GameWebSocketMessage } from "@/features/game/types/websocket-messages";
+import type {
+  RematchRequestMessage,
+  RematchResponseMessage,
+  CancelRematchMessage,
+} from "@/features/game/types/websocket-messages";
 import type { MatchmakingMessage } from "@/features/game/types/game.types";
 import { useStartGame } from "@/features/game/hooks/useStartGame";
+import { messageDispatcher } from "@/features/game/services/WebSocketMessageDispatcher";
+import { useLiveGame } from "../contexts/LiveGameContext";
 
 export const useRematch = ({
   setOpenGameResultDialog,
 }: {
   setOpenGameResultDialog: (open: boolean) => void;
 }) => {
-  const { sendMessage, lastMessage } = useGameWebSocket();
-
+  const { sendMessage } = useLiveGame();
   const { startGame } = useStartGame();
 
   const [rematchRequested, setRematchRequested] = useState(false);
   const [rematchOffered, setRematchOffered] = useState(false);
   const [rematchDeclined, setRematchDeclined] = useState(false);
+
   useEffect(() => {
-    if (!lastMessage) return;
-
-    try {
-      const data = parseWebSocketMessage(lastMessage) as
-        | GameWebSocketMessage
-        | MatchmakingMessage;
-      if (!data) return;
-
-      if (data.type === "rematch_canceled") {
+    const unsubCanceled = messageDispatcher.subscribe<CancelRematchMessage>(
+      "rematch_canceled",
+      () => {
         setRematchOffered(false);
       }
+    );
 
-      if (data.type === "rematch_request") {
+    const unsubRequest = messageDispatcher.subscribe<RematchRequestMessage>(
+      "rematch_request",
+      () => {
         setRematchOffered(true);
-        return;
       }
+    );
 
-      if (data.type === "rematch_response") {
+    const unsubResponse = messageDispatcher.subscribe<RematchResponseMessage>(
+      "rematch_response",
+      (data) => {
         if (!data.accepted) {
           setRematchDeclined(true);
           setRematchRequested(false);
         }
-        return;
       }
+    );
 
-      if (data.type === "match_found") {
-        startGame(data as MatchmakingMessage);
+    const unsubMatchFound = messageDispatcher.subscribe(
+      "match_found",
+      (data) => {
+        startGame(data as unknown as MatchmakingMessage);
         setOpenGameResultDialog(false);
       }
-    } catch (error) {
-      console.error("Error parsing WebSocket message:", error);
-    }
-  }, [lastMessage, startGame]);
+    );
+
+    return () => {
+      unsubCanceled();
+      unsubRequest();
+      unsubResponse();
+      unsubMatchFound();
+    };
+  }, [startGame, setOpenGameResultDialog]);
 
   const requestRematch = () => {
     sendMessage(JSON.stringify({ type: "rematch_request" }));

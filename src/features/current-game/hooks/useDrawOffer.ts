@@ -1,49 +1,52 @@
-import { useState, useEffect, useMemo } from "react";
-import { parseWebSocketMessage } from "@/features/game/utils/websocket-helpers";
+import { useState, useEffect } from "react";
 import type {
-  GameWebSocketMessage,
+  DrawOfferMessage,
   DrawResponseMessage,
+  GameEndedMessage,
 } from "@/features/game/types/websocket-messages";
 import { useUser } from "@/hooks/useUser";
+import { messageDispatcher } from "@/features/game/services/WebSocketMessageDispatcher";
 
-export const useDrawOffer = (
-  lastMessage: MessageEvent | null,
-  gameEnded: boolean
-) => {
+export const useDrawOffer = (gameEnded: boolean) => {
   const { id } = useUser();
   const [hasDrawOffer, setHasDrawOffer] = useState(false);
-
-  const data = useMemo(
-    () => parseWebSocketMessage<GameWebSocketMessage>(lastMessage),
-    [lastMessage]
-  );
+  const [opponentDeclinedDraw, setOpponentDeclinedDraw] = useState(false);
 
   useEffect(() => {
-    if (!data) return;
+    const unsubDrawOffer = messageDispatcher.subscribe<DrawOfferMessage>(
+      "draw_offer",
+      () => {
+        setHasDrawOffer(true);
+      }
+    );
 
-    if (data.type === "draw_offer") {
-      setHasDrawOffer(true);
-    }
+    const unsubDrawResponse = messageDispatcher.subscribe<DrawResponseMessage>(
+      "draw_response",
+      (data) => {
+        if (data.userId === id) {
+          setHasDrawOffer(false);
+        } else {
+          setOpponentDeclinedDraw(!data.accepted);
+        }
+      }
+    );
 
-    if (data.type === "draw_response") {
-      const drawResponse = data as DrawResponseMessage;
-      if (drawResponse.userId === id) {
+    const unsubGameEnded = messageDispatcher.subscribe<GameEndedMessage>(
+      "game_ended",
+      () => {
         setHasDrawOffer(false);
       }
-    }
+    );
 
-    if (data.type === "game_ended") {
-      setHasDrawOffer(false);
-    }
-  }, [lastMessage, data, id]);
-
-  const drawResponse =
-    data?.type === "draw_response" ? (data as DrawResponseMessage) : null;
-
-  const showOpponentDeclined =
-    drawResponse && drawResponse.userId !== id && !drawResponse.accepted;
+    return () => {
+      unsubDrawOffer();
+      unsubDrawResponse();
+      unsubGameEnded();
+    };
+  }, [id]);
 
   const showDrawOffer = !gameEnded && hasDrawOffer;
+  const showOpponentDeclined = opponentDeclinedDraw;
 
   return {
     showDrawOffer,

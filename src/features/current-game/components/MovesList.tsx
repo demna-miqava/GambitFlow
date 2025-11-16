@@ -16,6 +16,7 @@ export const MovesList = () => {
         black: moves[i + 1],
       });
     }
+
     return movePairs;
   }, [chessRef.current.history().length]);
 

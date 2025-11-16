@@ -4,7 +4,6 @@ import { useLocation } from "react-router";
 import Clock from "./Clock";
 import { BoardLayout } from "@/features/game/components/BoardLayout";
 import { UserAvatar } from "@/components/UserAvatar";
-import { useGameWebSocket } from "@/features/game/hooks/useGameWebSocket";
 import { useRef, useMemo } from "react";
 import { useSettings } from "@/features/settings/SettingsContext";
 import { calculatePlayerRating } from "../utils/rating-helpers";
@@ -14,8 +13,7 @@ import { useLiveGame } from "../contexts/LiveGameContext";
 const CurrentGameBoard = () => {
   const { username, image } = useUser();
   const { boardRef, turn } = useChessBoardContext();
-  const { gameEnded, ratingChanges } = useLiveGame();
-  const { sendMessage } = useGameWebSocket();
+  const { gameEnded, ratingChanges, sendMessage } = useLiveGame();
   const timeoutSentRef = useRef(false);
   const { settings } = useSettings();
 

@@ -15,10 +15,12 @@ import { useUser } from "@/hooks/useUser";
 import type { Key } from "@lichess-org/chessground/types";
 import { syncBoardState } from "@/features/game/utils/board-utils";
 import { useLiveGameMessages } from "../hooks/useLiveGameMessages";
+import type { SendMessage } from "react-use-websocket";
 
 interface LiveGameContextValue {
   gameEnded: boolean;
   ratingChanges: RatingChanges | null;
+  sendMessage: SendMessage;
 }
 
 const LiveGameContext = createContext<LiveGameContextValue | null>(null);
@@ -111,6 +113,7 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
   const value: LiveGameContextValue = {
     gameEnded,
     ratingChanges,
+    sendMessage,
   };
 
   return (
