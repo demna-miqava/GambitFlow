@@ -4,8 +4,9 @@ import type {
   RematchResponseMessage,
   CancelRematchMessage,
 } from "@/features/game/types/websocket-messages";
-import type { MatchmakingMessage } from "@/features/game/types/game.types";
-import { useStartGame } from "@/features/game/hooks/useStartGame";
+import type { MatchFoundMessage } from "@/features/matchmaking/types/websocket-messages";
+import { MATCHMAKING_MESSAGE_TYPES } from "@/features/matchmaking/constants/websocket-types";
+import { useStartGame } from "@/features/matchmaking/hooks/useStartGame";
 import { messageDispatcher } from "@/services/websocketMessageDispatcher";
 import { useLiveGame } from "../contexts/LiveGameContext";
 import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
@@ -47,10 +48,10 @@ export const useRematch = ({
       }
     );
 
-    const unsubMatchFound = messageDispatcher.subscribe(
-      GAME_MESSAGE_TYPES.MATCH_FOUND,
+    const unsubMatchFound = messageDispatcher.subscribe<MatchFoundMessage>(
+      MATCHMAKING_MESSAGE_TYPES.MATCH_FOUND,
       (data) => {
-        startGame(data as unknown as MatchmakingMessage);
+        startGame(data);
         setOpenGameResultDialog(false);
       }
     );

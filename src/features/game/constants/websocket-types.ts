@@ -20,5 +20,4 @@ export const enum GAME_MESSAGE_TYPES {
   // Game state
   GAME_ENDED = "game_ended",
   INITIAL_GAME_STATE = "initial_game_state",
-  MATCH_FOUND = "match_found",
 }

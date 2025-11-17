@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useMatchmaking } from "@/features/game/hooks/useMatchmaking";
+import { useMatchmaking } from "@/features/matchmaking/hooks/useMatchmaking";
 import { useLocation } from "react-router";
 
 type Props = {

@@ -9,16 +9,3 @@ export interface GameState {
   checkmate: boolean;
   stalemate: boolean;
 }
-
-export interface MatchmakingMessage {
-  type: "searching" | "match_found" | "error";
-  data: {
-    gameId?: string;
-    color?: PlayerColor;
-    opponentRating?: number;
-    opponentUsername?: string;
-    time: number;
-    increment: number | null;
-    rating: number;
-  };
-}

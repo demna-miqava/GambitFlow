@@ -2,7 +2,7 @@ import { MovesList } from "./MovesList";
 import MoveControls from "./MoveControls";
 import DrawOffer from "./DrawOffer";
 import { Button } from "@/components/ui/button";
-import { useMatchmaking } from "@/features/game/hooks/useMatchmaking";
+import { useMatchmaking } from "@/features/matchmaking/hooks/useMatchmaking";
 import { useLocation } from "react-router";
 import MatchActions from "./MatchActions";
 import { useLiveGame } from "../contexts/LiveGameContext";

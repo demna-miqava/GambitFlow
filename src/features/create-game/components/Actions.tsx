@@ -4,7 +4,7 @@ import {
   type GameSection,
 } from "@/features/create-game/GameSetupContext";
 import { Button } from "@/components/ui/button";
-import { useMatchmaking } from "@/features/game/hooks/useMatchmaking";
+import { useMatchmaking } from "@/features/matchmaking/hooks/useMatchmaking";
 
 const actionItems = [
   {

@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router";
-import type { MatchmakingMessage } from "../types/game.types";
+import type { MatchFoundMessage } from "../types/websocket-messages";
+import { MATCHMAKING_MESSAGE_TYPES } from "../constants/websocket-types";
 
 /**
  * Hook to handle starting a game when match_found message is received
@@ -10,8 +11,8 @@ export const useStartGame = () => {
   const navigate = useNavigate();
 
   const startGame = useCallback(
-    (data: MatchmakingMessage) => {
-      if (data.type !== "match_found") return;
+    (message: MatchFoundMessage) => {
+      if (message.type !== MATCHMAKING_MESSAGE_TYPES.MATCH_FOUND) return;
 
       const {
         gameId,
@@ -21,7 +22,7 @@ export const useStartGame = () => {
         time,
         increment,
         rating,
-      } = data.data;
+      } = message.data;
 
       if (gameId) {
         navigate(`/game/${gameId}`, {
