@@ -51,8 +51,8 @@ export type MoveMessage = {
   fen?: string;
   pgn?: string;
   moveNumber?: number;
-  whiteTimeLeft?: number; // Time left in milliseconds
-  blackTimeLeft?: number; // Time left in milliseconds
+  whiteTimeLeft?: number;
+  blackTimeLeft?: number;
 };
 
 export type TimeoutMessage = {
@@ -74,12 +74,12 @@ export type InitialGameStateMessage = {
     gameId: number;
     fen: string;
     pgn?: string;
-    time: number; // Initial time in seconds
-    increment?: number | null; // Increment in seconds
+    time: number;
+    increment?: number | null;
     status?: string;
     isFinished?: boolean;
-    whiteTimeLeft?: number; // Current time left in milliseconds
-    blackTimeLeft?: number; // Current time left in milliseconds
+    whiteTimeLeft?: number;
+    blackTimeLeft?: number;
   };
 };
 
