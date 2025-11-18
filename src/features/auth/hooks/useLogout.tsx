@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "@/hooks/useUser";
 import { useMutation } from "@tanstack/react-query";
 import { logout as logoutApi } from "@/services/user";
+import { ROUTES } from "@/constants/routes";
 
 export const useLogout = () => {
   const navigate = useNavigate();
@@ -11,12 +12,12 @@ export const useLogout = () => {
     mutationFn: logoutApi,
     onSuccess: () => {
       clearUser();
-      navigate("/signin");
+      navigate(ROUTES.AUTH.SIGN_IN);
     },
     onError: () => {
       // Even if the API call fails, clear local state and redirect
       clearUser();
-      navigate("/signin");
+      navigate(ROUTES.AUTH.SIGN_IN);
     },
   });
 

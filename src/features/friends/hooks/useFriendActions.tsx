@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useSendFriendRequest } from "../suggestions/hooks/useSendFriendRequest";
 import { useRemoveFriend } from "./useRemoveFriend";
 import type { Friend } from "@/types";
+import { ROUTES } from "@/constants/routes";
 
 export const useFriendActions = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export const useFriendActions = () => {
   const onChallenge = (friend: Friend) => {
     const { username, avatarUrl, blitzRating, bulletRating, rapidRating, id } =
       friend;
-    navigate("/play", {
+    navigate(ROUTES.PLAY, {
       state: {
         section: "friend-invite-options",
         selectedFriend: {

@@ -1,6 +1,7 @@
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 const IntroPage = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const IntroPage = () => {
         <p className="text-sm text-muted-foreground">
           Improve your chess skills with our app. Enjoy!
         </p>
-        <Button onClick={() => navigate("/signup")}>Get Started</Button>
+        <Button onClick={() => navigate(ROUTES.AUTH.SIGN_UP)}>Get Started</Button>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { signIn } from "@/services/user";
 import { useUser } from "@/hooks/useUser";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { ROUTES } from "@/constants/routes";
 
 const signInSchema = z.object({
   emailOrUsername: z.string().min(1, "Email or username is required"),
@@ -24,7 +25,7 @@ export const useSignIn = () => {
     mutationFn: signIn,
     onSuccess: () => {
       refetch();
-      navigate("/home");
+      navigate(ROUTES.HOME);
     },
     onError: (error) => {
       if (error instanceof AxiosError) {

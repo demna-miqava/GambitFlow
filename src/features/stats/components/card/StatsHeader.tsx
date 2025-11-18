@@ -1,3 +1,4 @@
+import { getProfileStatsRoute } from "@/constants/routes";
 import { useUser } from "@/hooks/useUser";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router";
@@ -11,7 +12,7 @@ const StatsHeader = ({ showLink = true }: StatsHeaderProps) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`/profile/${username}/stats`);
+    navigate(getProfileStatsRoute(username));
   };
 
   return (

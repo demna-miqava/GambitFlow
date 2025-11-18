@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import type { MatchFoundMessage } from "../types/websocket-messages";
 import { MATCHMAKING_MESSAGE_TYPES } from "../constants/websocket-types";
+import { getGameRoute } from "@/constants/routes";
 
 /**
  * Hook to handle starting a game when match_found message is received
@@ -25,7 +26,7 @@ export const useStartGame = () => {
       } = message.data;
 
       if (gameId) {
-        navigate(`/game/${gameId}`, {
+        navigate(getGameRoute(gameId), {
           replace: true,
           state: {
             color: color,

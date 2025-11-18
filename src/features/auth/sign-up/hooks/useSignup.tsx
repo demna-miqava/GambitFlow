@@ -13,6 +13,7 @@ import {
   passwordSchema,
   usernameSchema,
 } from "@/lib/schemas/validation.schemas";
+import { ROUTES } from "@/constants/routes";
 
 const signupSchema = z.object({
   email: emailSchema,
@@ -32,7 +33,7 @@ export const useSignup = (selectedSkill: SignupSkill) => {
     mutationFn: signUp,
     onSuccess: () => {
       refetch();
-      navigate("/home");
+      navigate(ROUTES.HOME);
     },
     onError: (error) => {
       if (error instanceof AxiosError) {

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { UserAvatar } from "@/components/UserAvatar";
 import { useFriendActions } from "../hooks/useFriendActions";
+import { getProfileRoute } from "@/constants/routes";
 
 const FriendPopover = ({
   children,
@@ -32,7 +33,7 @@ const FriendPopover = ({
             type="button"
             className="flex gap-6 text-left w-full hover:opacity-80 transition-opacity"
             onClick={() => {
-              navigate(`/profile/${username}`);
+              navigate(getProfileRoute(username));
             }}
           >
             <UserAvatar src={avatarUrl} username={username} />

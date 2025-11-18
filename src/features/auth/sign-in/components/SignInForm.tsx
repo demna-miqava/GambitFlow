@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/PasswordInput";
+import { ROUTES } from "@/constants/routes";
 
 const SignInForm = () => {
   const { form, onSubmit, isLoading } = useSignIn();
@@ -74,7 +75,7 @@ const SignInForm = () => {
               </label>
             )}
           />
-          <Link to="/forgot-password" className="text-white hover:underline">
+          <Link to={ROUTES.AUTH.FORGOT_PASSWORD} className="text-white hover:underline">
             Forgot password?
           </Link>
         </div>

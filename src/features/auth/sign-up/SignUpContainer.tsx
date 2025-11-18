@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -37,7 +38,7 @@ export const SignUpContainer = () => {
 
         {currentStep === "intro" ? (
           <Link
-            to="/signin"
+            to={ROUTES.AUTH.SIGN_IN}
             className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10"
           >
             Log in

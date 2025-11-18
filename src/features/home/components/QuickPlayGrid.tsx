@@ -1,6 +1,7 @@
 import { Bot, Handshake, Plus, Zap } from "lucide-react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 export const QuickPlayGrid = () => {
   // TODO: should come from API
@@ -46,7 +47,7 @@ export const QuickPlayGrid = () => {
   return (
     <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {gridOptions.map((option) => (
-        <Link key={option.title} to="/play" state={option.state}>
+        <Link key={option.title} to={ROUTES.PLAY} state={option.state}>
           <div className="border-border/60 bg-card text-card-foreground hover:border-sidebar-ring/80 hover:shadow-lg transition-colors rounded-xl border p-6 flex items-center gap-4 h-full">
             <option.icon size={30} className="flex-shrink-0" />
             <div className="flex-1 min-w-0">

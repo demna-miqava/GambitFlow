@@ -7,6 +7,7 @@ import { useUser } from "@/hooks/useUser";
 import { QKEY_CHALLENGES } from "@/constants/queryKeys";
 import { NOTIFICATION_MESSAGE_TYPES } from "../constants/websocket-types";
 import ChallengeNotification from "../components/ChallengeNotification";
+import { ROUTES, getGameRoute } from "@/constants/routes";
 import type {
   NotificationWebSocketMessage,
   Challenge,
@@ -81,8 +82,8 @@ export const useChallengeMessageHandlers = (
   const handleError = useCallback((message: NotificationWebSocketMessage) => {
     if (message.type !== NOTIFICATION_MESSAGE_TYPES.ERROR) return;
     toast.dismiss();
-    navigate("/");
-  }, []);
+    navigate(ROUTES.LANDING);
+  }, [navigate]);
 
   // Handle match_created messages
   const handleMatchCreated = useCallback(
@@ -92,7 +93,7 @@ export const useChallengeMessageHandlers = (
       toast.dismiss();
       // Clear all challenges when game starts
       queryClient.setQueryData<Challenge[]>([QKEY_CHALLENGES], []);
-      navigate(`/game/${message.data.gameId}`, {
+      navigate(getGameRoute(message.data.gameId), {
         replace: true,
         state: {
           color: message.data.color,
