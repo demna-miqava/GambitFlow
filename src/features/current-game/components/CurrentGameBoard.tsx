@@ -9,11 +9,19 @@ import { calculatePlayerRating } from "../utils/rating-helpers";
 import { useChessBoardContext } from "@/features/game/contexts/ChessBoardContext";
 import { useLiveGame } from "../contexts/LiveGameContext";
 import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
+import { PromotionSelector } from "@/features/game/components/PromotionSelector";
 
 const CurrentGameBoard = () => {
   const { username, image } = useUser();
   const { boardRef, turn } = useChessBoardContext();
-  const { gameEnded, ratingChanges, sendMessage } = useLiveGame();
+  const {
+    gameEnded,
+    ratingChanges,
+    sendMessage,
+    pendingPromotion,
+    handlePromotionSelect,
+    cancelPromotion,
+  } = useLiveGame();
   const timeoutSentRef = useRef(false);
   const { settings } = useSettings();
 
@@ -96,7 +104,17 @@ const CurrentGameBoard = () => {
           gameEnded={gameEnded}
         />
       }
-    />
+    >
+      {pendingPromotion && (
+        <PromotionSelector
+          color={color}
+          square={pendingPromotion.to}
+          onSelect={handlePromotionSelect}
+          onCancel={cancelPromotion}
+          boardOrientation={color}
+        />
+      )}
+    </BoardLayout>
   );
 };
 

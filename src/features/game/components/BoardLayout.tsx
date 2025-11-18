@@ -18,6 +18,7 @@ interface BoardLayoutProps {
   bottomPlayer: PlayerInfo;
   topPlayerClock?: ReactNode;
   bottomPlayerClock?: ReactNode;
+  children?: ReactNode;
 }
 
 /**
@@ -30,6 +31,7 @@ export const BoardLayout = ({
   bottomPlayer,
   topPlayerClock,
   bottomPlayerClock,
+  children,
 }: BoardLayoutProps) => {
   return (
     <section className="flex w-full flex-1 flex-col overflow-hidden rounded-xl border border-border/60 bg-background shadow-sm">
@@ -38,6 +40,7 @@ export const BoardLayout = ({
       <div className="flex flex-1 items-center justify-center bg-background p-4">
         <div className="relative aspect-square w-full max-w-3xl">
           <div ref={boardRef} className="h-full w-full" />
+          {children}
         </div>
       </div>
 

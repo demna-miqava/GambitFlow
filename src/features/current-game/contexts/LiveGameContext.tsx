@@ -13,15 +13,25 @@ import { useChessSound } from "@/features/game/hooks/useChessSound";
 import { useSettings } from "@/features/settings/SettingsContext";
 import { useUser } from "@/hooks/useUser";
 import type { Key } from "@lichess-org/chessground/types";
+import type { Square, PieceSymbol } from "chess.js";
 import { syncBoardState } from "@/features/game/utils/board-utils";
 import { useLiveGameMessages } from "../hooks/useLiveGameMessages";
 import type { SendMessage } from "react-use-websocket";
 import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
+import { isPromotionMove } from "@/features/game/utils/promotionUtils";
+
+interface PendingPromotion {
+  from: Square;
+  to: Square;
+}
 
 interface LiveGameContextValue {
   gameEnded: boolean;
   ratingChanges: RatingChanges | null;
   sendMessage: SendMessage;
+  pendingPromotion: PendingPromotion | null;
+  handlePromotionSelect: (piece: PieceSymbol) => void;
+  cancelPromotion: () => void;
 }
 
 const LiveGameContext = createContext<LiveGameContextValue | null>(null);
@@ -41,18 +51,21 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
   const [ratingChanges, setRatingChanges] = useState<RatingChanges | null>(
     null
   );
+  const [pendingPromotion, setPendingPromotion] =
+    useState<PendingPromotion | null>(null);
 
-  // Handle player's move
-  const handleMove = useCallback(
-    (orig: Key, dest: Key) => {
+  // Complete a move with a specific promotion piece
+  const completeMove = useCallback(
+    (fromSquare: Square, toSquare: Square, promotion?: PieceSymbol) => {
       const chess = chessRef.current;
       const cg = cgRef.current;
       if (!chess || !cg) return;
 
       try {
         const move = chess.move({
-          from: orig as string,
-          to: dest as string,
+          from: fromSquare,
+          to: toSquare,
+          promotion,
         });
 
         const numberOfMoves = chess.moveNumber();
@@ -95,6 +108,60 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
     [chessRef, cgRef, setTurn, color, playSoundForMove, sendMessage, id]
   );
 
+  // Handle promotion piece selection
+  const handlePromotionSelect = useCallback(
+    (piece: PieceSymbol) => {
+      if (!pendingPromotion) return;
+
+      completeMove(pendingPromotion.from, pendingPromotion.to, piece);
+      setPendingPromotion(null);
+    },
+    [pendingPromotion, completeMove]
+  );
+
+  // Cancel promotion and revert the move
+  const cancelPromotion = useCallback(() => {
+    const cg = cgRef.current;
+    const chess = chessRef.current;
+
+    if (cg && chess) {
+      // Revert the board to the current chess state and sync everything
+      syncBoardState(chessRef, cgRef, color, setTurn);
+    }
+
+    setPendingPromotion(null);
+  }, [cgRef, chessRef, color, setTurn]);
+
+  // Handle player's move
+  const handleMove = useCallback(
+    (orig: Key, dest: Key) => {
+      const chess = chessRef.current;
+      const cg = cgRef.current;
+      if (!chess || !cg) return;
+
+      const fromSquare = orig as Square;
+      const toSquare = dest as Square;
+
+      // Check if this is a promotion move (pawn reaching 8th/1st rank)
+      const piece = chess.get(fromSquare);
+
+      const isPromotion = isPromotionMove(toSquare, piece);
+
+      if (isPromotion) {
+        // Check if auto-promote to queen is enabled
+        if (settings?.autoPromoteToQueenEnabled) {
+          completeMove(fromSquare, toSquare, "q");
+        } else {
+          // Show promotion selector
+          setPendingPromotion({ from: fromSquare, to: toSquare });
+        }
+      } else {
+        completeMove(fromSquare, toSquare);
+      }
+    },
+    [chessRef, cgRef, settings?.autoPromoteToQueenEnabled, completeMove]
+  );
+
   // Register move handler with Chessground
   useEffect(() => {
     if (!cgRef.current) return;
@@ -115,6 +182,9 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
     gameEnded,
     ratingChanges,
     sendMessage,
+    pendingPromotion,
+    handlePromotionSelect,
+    cancelPromotion,
   };
 
   return (
