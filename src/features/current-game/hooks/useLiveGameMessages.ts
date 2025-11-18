@@ -37,8 +37,8 @@ export const useLiveGameMessages = ({
     undefined
   );
 
-  // Handle move messages
-  const handleMove = useCallback(
+  // Handle incoming move messages from WebSocket
+  const handleIncomingMove = useCallback(
     (data: MoveMessage) => {
       if (!chessRef.current || !cgRef.current) return;
       if (!data.move) return;
@@ -119,7 +119,7 @@ export const useLiveGameMessages = ({
   );
 
   // Subscribe to all message types using the reusable hook
-  useMessageDispatcher<MoveMessage>(GAME_MESSAGE_TYPES.MOVE, handleMove);
+  useMessageDispatcher<MoveMessage>(GAME_MESSAGE_TYPES.MOVE, handleIncomingMove);
 
   useMessageDispatcher<GameEndedMessage>(
     GAME_MESSAGE_TYPES.GAME_ENDED,

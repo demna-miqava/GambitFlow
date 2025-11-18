@@ -134,8 +134,8 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
     setPendingPromotion(null);
   }, [cgRef, chessRef, color, setTurn]);
 
-  // Handle player's move
-  const handleMove = useCallback(
+  // Handle player's piece drag/drop on the board
+  const handlePlayerMove = useCallback(
     (orig: Key, dest: Key) => {
       const chess = chessRef.current;
       const cg = cgRef.current;
@@ -170,10 +170,10 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
 
     cgRef.current.set({
       events: {
-        move: handleMove,
+        move: handlePlayerMove,
       },
     });
-  }, [cgRef, handleMove]);
+  }, [cgRef, handlePlayerMove]);
 
   const { whiteTimeLeft, blackTimeLeft } = useLiveGameMessages({
     setGameEnded,
