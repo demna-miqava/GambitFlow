@@ -13,7 +13,7 @@ const CurrentGame = () => {
     <ChessBoardProvider color={color} key={gameId}>
       <GameNavigationProvider>
         <LiveGameProvider>
-          <div className="grid h-full grid-cols-1 lg:grid-cols-[1fr_300px] gap-4 p-4">
+          <div className="grid h-full grid-cols-1 lg:grid-cols-[1fr_300px] gap-4">
             <div className="flex items-center justify-center">
               <CurrentGameBoard />
             </div>
