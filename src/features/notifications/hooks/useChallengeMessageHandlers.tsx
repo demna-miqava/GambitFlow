@@ -80,9 +80,8 @@ export const useChallengeMessageHandlers = (
   // Handle error messages
   const handleError = useCallback((message: NotificationWebSocketMessage) => {
     if (message.type !== NOTIFICATION_MESSAGE_TYPES.ERROR) return;
-
     toast.dismiss();
-    toast.error(message.data.message, { id: "error" });
+    navigate("/");
   }, []);
 
   // Handle match_created messages
