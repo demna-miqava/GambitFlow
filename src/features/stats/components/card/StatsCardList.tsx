@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode, useMemo } from "react";
 import { Accordion } from "@/components/ui/accordion";
 import { useGetStats } from "../../hooks/useGetStats";
 import StatsHeader from "./StatsHeader";
@@ -35,10 +35,13 @@ interface StatsProps {
 const StatsCardList = ({ children, onGameTypeClick }: StatsProps) => {
   const { numberOfGames, stats } = useGetStats();
 
+  const value = useMemo(
+    () => ({ numberOfGames, stats, onGameTypeClick }),
+    [numberOfGames, stats, onGameTypeClick]
+  );
+
   return (
-    <StatsListContent.Provider
-      value={{ numberOfGames, stats, onGameTypeClick }}
-    >
+    <StatsListContent.Provider value={value}>
       <div className="space-y-4 bg-card border border-border rounded-lg p-4">
         {children}
       </div>

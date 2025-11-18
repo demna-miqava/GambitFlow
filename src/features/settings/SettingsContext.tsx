@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { useGetSettings } from "./hooks/useGetSettings";
 import { useUpdateSettings } from "./hooks/useUpdateSettings";
 import type { Settings } from "./types";
@@ -22,13 +22,16 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const { data: settings } = useGetSettings();
   const updateSettingsMutation = useUpdateSettings();
 
+  const value = useMemo(
+    () => ({
+      settings: settings?.data,
+      updateSettings: updateSettingsMutation,
+    }),
+    [settings?.data, updateSettingsMutation]
+  );
+
   return (
-    <SettingsContext.Provider
-      value={{
-        settings: settings?.data,
-        updateSettings: updateSettingsMutation,
-      }}
-    >
+    <SettingsContext.Provider value={value}>
       {children}
     </SettingsContext.Provider>
   );

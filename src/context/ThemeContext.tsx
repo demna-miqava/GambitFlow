@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  type ReactNode,
+  useMemo,
+  useCallback,
+} from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 type Theme = "light" | "dark";
@@ -28,18 +35,21 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     }
   }, [theme]);
 
-  const toggleTheme = () =>
-    setTheme((current: Theme) => (current === "dark" ? "light" : "dark"));
+  const toggleTheme = useCallback(
+    () => setTheme((current: Theme) => (current === "dark" ? "light" : "dark")),
+    [setTheme]
+  );
+
+  const value = useMemo<ThemeContextValue>(
+    () => ({
+      theme,
+      toggleTheme,
+    }),
+    [theme, toggleTheme]
+  );
 
   return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        toggleTheme,
-      }}
-    >
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 }
 /* eslint-disable-next-line */

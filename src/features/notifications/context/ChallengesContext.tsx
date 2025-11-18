@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode, useMemo } from "react";
 import { useNotificationWebSocket } from "../hooks/useNotificationWebSocket";
 import { useManageChallenge } from "../hooks/useManageChallenge";
 import { useChallengeMessageHandlers } from "../hooks/useChallengeMessageHandlers";
@@ -33,16 +33,19 @@ export const ChallengesProvider = ({ children }: { children: ReactNode }) => {
   // Handle incoming challenge messages
   useChallengeMessageHandlers(handleAccept, handleDecline);
 
+  const value = useMemo(
+    () => ({
+      sendMessage,
+      readyState,
+      handleAcceptChallenge: handleAccept,
+      handleDeclineChallenge: handleDecline,
+      sendChallenge,
+    }),
+    [sendMessage, readyState, handleAccept, handleDecline, sendChallenge]
+  );
+
   return (
-    <ChallengesContext.Provider
-      value={{
-        sendMessage,
-        readyState,
-        handleAcceptChallenge: handleAccept,
-        handleDeclineChallenge: handleDecline,
-        sendChallenge,
-      }}
-    >
+    <ChallengesContext.Provider value={value}>
       {children}
     </ChallengesContext.Provider>
   );

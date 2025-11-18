@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode, useMemo } from "react";
 import type { PlayerColor } from "../types/game.types";
 import { useChessBoard } from "../hooks/useChessBoard";
 import type { Chess } from "chess.js";
@@ -26,14 +26,21 @@ export const ChessBoardProvider = ({
 }: ChessBoardProviderProps) => {
   const chessBoard = useChessBoard({ color });
 
-  const value: ChessBoardContextValue = {
+  const value = useMemo<ChessBoardContextValue>(() => ({
     boardRef: chessBoard.boardRef,
     chessRef: chessBoard.chessRef,
     cgRef: chessBoard.cgRef,
     turn: chessBoard.turn,
     setTurn: chessBoard.setTurn,
     color,
-  };
+  }), [
+    chessBoard.boardRef,
+    chessBoard.chessRef,
+    chessBoard.cgRef,
+    chessBoard.turn,
+    chessBoard.setTurn,
+    color
+  ]);
 
   return (
     <ChessBoardContext.Provider value={value}>

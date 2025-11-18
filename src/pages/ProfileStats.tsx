@@ -4,9 +4,18 @@ import SimpleStatsGrid from "@/features/stats/components/simple-stats/SimpleStat
 import StatsDaysSelect from "@/features/stats/components/StatsDaysSelect";
 import StatsVariantSelect from "@/features/stats/components/StatsVariantSelect";
 import { useQueryParams } from "@/hooks/useQueryParams";
+import { useCallback } from "react";
 
 const ProfileStats = () => {
   const [variant, setVariant] = useQueryParams("variant", "all");
+
+  const onGameTypeClick = useCallback(
+    (gameType: string) => {
+      setVariant(gameType);
+    },
+    [setVariant]
+  );
+
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
@@ -18,11 +27,7 @@ const ProfileStats = () => {
           {variant === "all" ? <SimpleStatsGrid /> : <ComprehensiveStats />}
         </main>
         <aside>
-          <StatsCardList
-            onGameTypeClick={(gameType) => {
-              setVariant(gameType);
-            }}
-          >
+          <StatsCardList onGameTypeClick={onGameTypeClick}>
             <StatsCardList.Header showLink={false} />
             <StatsCardList.General />
             <StatsCardList.ButtonsList />

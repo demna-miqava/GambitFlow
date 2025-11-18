@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode, useMemo } from "react";
 import { useChessBoardContext } from "./ChessBoardContext";
 import { useEffect } from "react";
 import { Chess } from "chess.js";
@@ -83,7 +83,7 @@ export const GameNavigationProvider = ({
     }
   }, [viewingIndex, chessRef, cgRef, isViewingHistory, currentIndex, color]);
 
-  const value: GameNavigationContextValue = {
+  const value = useMemo<GameNavigationContextValue>(() => ({
     goToFirstMove,
     goToPreviousMove,
     goToNextMove,
@@ -93,7 +93,17 @@ export const GameNavigationProvider = ({
     viewingIndex,
     currentIndex,
     isViewingHistory,
-  };
+  }), [
+    goToFirstMove,
+    goToPreviousMove,
+    goToNextMove,
+    goToLastMove,
+    isAtStart,
+    isAtEnd,
+    viewingIndex,
+    currentIndex,
+    isViewingHistory
+  ]);
 
   return (
     <GameNavigationContext.Provider value={value}>

@@ -4,6 +4,7 @@ import {
   useEffect,
   useState,
   useCallback,
+  useMemo,
   type ReactNode,
 } from "react";
 import { useChessBoardContext } from "@/features/game/contexts/ChessBoardContext";
@@ -180,7 +181,7 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
     setRatingChanges,
   });
 
-  const value: LiveGameContextValue = {
+  const value = useMemo<LiveGameContextValue>(() => ({
     gameEnded,
     ratingChanges,
     sendMessage,
@@ -189,7 +190,16 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
     cancelPromotion,
     whiteTimeLeft,
     blackTimeLeft,
-  };
+  }), [
+    gameEnded,
+    ratingChanges,
+    sendMessage,
+    pendingPromotion,
+    handlePromotionSelect,
+    cancelPromotion,
+    whiteTimeLeft,
+    blackTimeLeft
+  ]);
 
   return (
     <LiveGameContext.Provider value={value}>

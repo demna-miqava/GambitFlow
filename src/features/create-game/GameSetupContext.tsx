@@ -1,9 +1,13 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { useLocation } from "react-router";
 import {
-  useTimeControl,
-  type TimeControl,
-} from "./hooks/useTimeControl";
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
+import { useLocation } from "react-router";
+import { useTimeControl, type TimeControl } from "./hooks/useTimeControl";
 import type { TimeControlType } from "@/types";
 import type { Friend } from "@/types";
 import { useMatchmaking } from "@/features/matchmaking/hooks/useMatchmaking";
@@ -59,13 +63,13 @@ export const GameSetupProvider = ({
   });
 
   const canGoBack = activeSection !== "new";
-  const goBack = () => {
+  const goBack = useCallback(() => {
     if (activeSection === "friend-invite-options") {
       setActiveSection("friends");
     } else {
       setActiveSection("new");
     }
-  };
+  }, [activeSection]);
 
   useEffect(() => {
     if (state?.selectedFriend) {
@@ -77,21 +81,32 @@ export const GameSetupProvider = ({
     setActiveSection(initialSection);
   }, [initialSection]);
 
+  const value = useMemo(
+    () => ({
+      activeSection,
+      setActiveSection,
+      canGoBack,
+      goBack,
+      timeControl,
+      updateTimeControl,
+      selectedFriend,
+      setSelectedFriend,
+      isSearching,
+      setShouldConnect,
+    }),
+    [
+      activeSection,
+      canGoBack,
+      timeControl,
+      updateTimeControl,
+      selectedFriend,
+      isSearching,
+      setShouldConnect,
+      goBack,
+    ]
+  );
   return (
-    <GameSetupContext.Provider
-      value={{
-        activeSection,
-        setActiveSection,
-        canGoBack,
-        goBack,
-        timeControl,
-        updateTimeControl,
-        selectedFriend,
-        setSelectedFriend,
-        isSearching,
-        setShouldConnect,
-      }}
-    >
+    <GameSetupContext.Provider value={value}>
       {children}
     </GameSetupContext.Provider>
   );
