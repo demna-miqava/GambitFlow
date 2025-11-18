@@ -13,10 +13,11 @@ export const MovesContainer = () => {
   const { setShouldConnect, isSearching } = useMatchmaking({ time, increment });
   const { gameEnded, sendMessage } = useLiveGame();
 
-  const { showDrawOffer, showOpponentDeclined, setHasDrawOffer } = useDrawOffer(gameEnded);
+  const { showDrawOffer, showOpponentDeclined, setHasDrawOffer } =
+    useDrawOffer(gameEnded);
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-border/60 bg-background">
+    <div className="flex h-full flex-col rounded-xl border border-border/60 bg-card">
       <div className="flex-1 overflow-auto p-4">
         <h2 className="mb-4 text-lg font-semibold text-foreground">Moves</h2>
         <MovesList />

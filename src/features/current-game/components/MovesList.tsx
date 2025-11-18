@@ -1,9 +1,12 @@
 import type { Move } from "chess.js";
 import { useChessBoardContext } from "@/features/game/contexts/ChessBoardContext";
 import { useMemo } from "react";
+import { useSettings } from "@/features/settings/SettingsContext";
+import { renderMoveNotation } from "@/features/game/utils/notationUtils";
 
 export const MovesList = () => {
   const { chessRef } = useChessBoardContext();
+  const { settings } = useSettings();
 
   const movePairs = useMemo(() => {
     const moves = chessRef.current?.history({ verbose: true }) || [];
@@ -20,16 +23,20 @@ export const MovesList = () => {
     return movePairs;
   }, [chessRef.current.history().length]);
 
+  const showIcons = settings?.pieceIconNotationEnabled ?? false;
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 rounded-lg p-3">
       {movePairs.map((pair, index) => (
         <div key={index} className="flex gap-2 text-sm">
           <span className="w-6 text-foreground">{index + 1}.</span>
-          <span className="w-10 text-foreground">{pair.white.san}</span>
+          <span className="w-10 text-foreground">
+            {renderMoveNotation(pair.white, showIcons)}
+          </span>
 
           {pair.black && (
             <span className="text-md w-16 text-foreground">
-              {pair.black.san}
+              {renderMoveNotation(pair.black, showIcons)}
             </span>
           )}
         </div>
