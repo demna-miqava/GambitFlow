@@ -1,6 +1,6 @@
 import { Mail, Settings, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { UserInfo } from "./UserInfo";
+import { Link } from "react-router";
 
 export const Header = () => {
   return (
@@ -8,27 +8,15 @@ export const Header = () => {
       <UserInfo />
 
       <nav className="flex items-center gap-4" aria-label="Quick actions">
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="View friends list"
-        >
+        <Link to="/" aria-label="View friends list">
           <Users className="h-5 w-5" aria-hidden="true" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="View messages"
-        >
+        </Link>
+        <Link to="/" aria-label="View Messages">
           <Mail className="h-5 w-5" aria-hidden="true" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Open settings"
-        >
+        </Link>
+        <Link to="/settings" aria-label="Open settings">
           <Settings className="h-5 w-5" aria-hidden="true" />
-        </Button>
+        </Link>
       </nav>
     </div>
   );
