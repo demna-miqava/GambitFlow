@@ -12,7 +12,7 @@ import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
 import { PromotionSelector } from "@/features/game/components/PromotionSelector";
 
 const CurrentGameBoard = () => {
-  const { username, image } = useUser();
+  const { username, image, id } = useUser();
   const { boardRef, turn } = useChessBoardContext();
   const {
     gameEnded,
@@ -27,10 +27,11 @@ const CurrentGameBoard = () => {
   const timeoutSentRef = useRef(false);
   const { settings } = useSettings();
 
-  const { opponentRating, opponentUsername, rating, color, time } =
+  const { opponentRating, opponentUsername, opponentId, rating, color, time } =
     useLocation().state || {
       opponentRating: 0,
       opponentUsername: "",
+      opponentId: undefined,
       color: "",
       time: 180,
       rating: 0,
@@ -66,10 +67,15 @@ const CurrentGameBoard = () => {
     ]
   );
 
-  const handleTimeout = () => {
+  const handleTimeout = (timedOutUserId: string) => {
     if (!timeoutSentRef.current) {
       timeoutSentRef.current = true;
-      sendMessage(JSON.stringify({ type: GAME_MESSAGE_TYPES.TIMEOUT }));
+      sendMessage(
+        JSON.stringify({
+          type: GAME_MESSAGE_TYPES.TIMEOUT,
+          userId: timedOutUserId,
+        })
+      );
     }
   };
 
@@ -98,7 +104,11 @@ const CurrentGameBoard = () => {
         <Clock
           startingTime={time}
           isActive={turn !== color}
-          onTimeout={turn !== color ? handleTimeout : undefined}
+          onTimeout={
+            turn !== color && opponentId
+              ? () => handleTimeout(opponentId)
+              : undefined
+          }
           gameEnded={gameEnded}
           serverTimeLeft={color === "white" ? blackTimeLeft : whiteTimeLeft}
         />
@@ -107,7 +117,7 @@ const CurrentGameBoard = () => {
         <Clock
           startingTime={time}
           isActive={turn === color}
-          onTimeout={turn === color ? handleTimeout : undefined}
+          onTimeout={turn === color && id ? () => handleTimeout(id) : undefined}
           gameEnded={gameEnded}
           serverTimeLeft={color === "white" ? whiteTimeLeft : blackTimeLeft}
         />
