@@ -21,14 +21,15 @@ export const SignUpContainer = () => {
   const { title } = STEP_COPY[currentStep];
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0d0f14] text-white">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <header className="mx-auto flex w-full max-w-xl items-center justify-between px-4 pt-6 sm:px-0">
         {canGoBack ? (
           <Button
             variant="ghost"
             size="icon"
             onClick={goBack}
-            className="size-10 rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10"
+            className="size-10 rounded-full border border-border bg-muted transition hover:bg-accent"
+            aria-label="Go back"
           >
             <ArrowLeft className="size-5" />
           </Button>
@@ -39,7 +40,7 @@ export const SignUpContainer = () => {
         {currentStep === "intro" ? (
           <Link
             to={ROUTES.AUTH.SIGN_IN}
-            className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10"
+            className="rounded-full border border-border bg-muted px-4 py-2 text-sm font-medium transition hover:bg-accent"
           >
             Log in
           </Link>
@@ -50,7 +51,9 @@ export const SignUpContainer = () => {
 
       <div className="mx-auto w-full max-w-xl px-4 pb-16 sm:px-0">
         <Header>
-          <span className="text-base text-white/60 text-center">{title}</span>
+          <span className="text-base text-muted-foreground text-center">
+            {title}
+          </span>
         </Header>
         <main className="mt-10">
           <div className="w-full">

@@ -24,14 +24,14 @@ const SignInForm = () => {
           name="emailOrUsername"
           render={({ field }) => (
             <FormItem className="text-left">
-              <FormLabel className="text-sm font-semibold text-white">
+              <FormLabel className="text-sm font-semibold">
                 Email or username
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="you@example.com"
                   {...field}
-                  className="h-12 rounded-xl border-white/15 bg-white/5 text-white placeholder:text-white/40"
+                  className="h-12 rounded-xl"
                 />
               </FormControl>
               <FormMessage />
@@ -44,14 +44,13 @@ const SignInForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem className="text-left">
-              <FormLabel className="text-sm font-semibold text-white">
-                Password
-              </FormLabel>
+              <FormLabel className="text-sm font-semibold">Password</FormLabel>
               <FormControl>
                 <PasswordInput
                   placeholder="••••••••"
                   {...field}
-                  className="h-12 rounded-xl border-white/15 bg-white/5 text-white placeholder:text-white/40"
+                  className="h-12 rounded-xl"
+                  autoComplete="on"
                 />
               </FormControl>
               <FormMessage />
@@ -59,8 +58,11 @@ const SignInForm = () => {
           )}
         />
 
-        <div className="flex items-center justify-end text-sm text-white/70">
-          <Link to={ROUTES.AUTH.FORGOT_PASSWORD} className="text-white hover:underline">
+        <div className="flex items-center justify-end text-sm text-muted-foreground">
+          <Link
+            to={ROUTES.AUTH.FORGOT_PASSWORD}
+            className="text-foreground hover:underline"
+          >
             Forgot password?
           </Link>
         </div>
@@ -68,7 +70,7 @@ const SignInForm = () => {
         <Button
           type="submit"
           disabled={isLoading}
-          className="w-full rounded-full bg-lime-500 px-8 py-6 text-base font-semibold text-lime-950 transition hover:bg-lime-400"
+          className="w-full rounded-full px-8 py-6 text-base font-semibold"
         >
           {isLoading ? "Logging in..." : "Log in"}
         </Button>

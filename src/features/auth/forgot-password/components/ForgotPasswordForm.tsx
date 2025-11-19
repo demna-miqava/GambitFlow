@@ -15,7 +15,7 @@ export const ForgotPasswordForm = () => {
       className="w-full space-y-6"
     >
       <div className="space-y-2 text-left">
-        <label className="text-sm font-medium text-white" htmlFor="reset-email">
+        <label className="text-sm font-medium" htmlFor="reset-email">
           Email
         </label>
         <Input
@@ -25,13 +25,13 @@ export const ForgotPasswordForm = () => {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="you@example.com"
-          className="h-12 rounded-xl border-white/15 bg-white/5 text-white placeholder:text-white/40"
+          className="h-12 rounded-xl"
         />
       </div>
 
       <Button
         type="submit"
-        className="w-full rounded-full bg-lime-500 px-8 py-6 text-base font-semibold text-lime-950 transition hover:bg-lime-400"
+        className="w-full rounded-full px-8 py-6 text-base font-semibold"
       >
         Submit
       </Button>

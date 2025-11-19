@@ -65,7 +65,7 @@ export const CredentialsStep = ({
         <Button
           type="submit"
           disabled={!form.formState.isValid}
-          className="w-full rounded-full bg-lime-500 px-8 py-6 text-base font-semibold text-lime-950 transition hover:bg-lime-400"
+          className="w-full rounded-full px-8 py-6 text-base font-semibold"
         >
           Create account
         </Button>

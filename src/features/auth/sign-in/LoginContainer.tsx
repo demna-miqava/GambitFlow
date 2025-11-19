@@ -7,11 +7,11 @@ export const SignInContainer = () => {
   return (
     <FormContainer
       Footer={
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-muted-foreground">
           New to ChessHub?{" "}
           <Link
             to={ROUTES.AUTH.SIGN_UP}
-            className="font-semibold text-white hover:underline"
+            className="font-semibold text-foreground hover:underline"
           >
             Sign up and start playing chess!
           </Link>

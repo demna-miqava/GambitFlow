@@ -6,7 +6,7 @@ import { ROUTES } from "@/constants/routes";
 const IntroPage = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex gap-20 max-w-8xl mx-auto bg-black h-screen items-center justify-center">
+    <div className="flex gap-20 max-w-8xl mx-auto bg-background h-screen items-center justify-center">
       <Logo />
 
       <div className="flex flex-col gap-4">

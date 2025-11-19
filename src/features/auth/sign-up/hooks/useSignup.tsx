@@ -46,6 +46,7 @@ export const useSignup = (selectedSkill: SignupSkill) => {
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
+      username: "",
       password: "",
     },
   });

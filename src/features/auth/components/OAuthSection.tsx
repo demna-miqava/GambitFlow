@@ -6,15 +6,15 @@ type OAuthSectionType = "login" | "signup";
 const OAuthSection = ({ type }: { type: OAuthSectionType }) => {
   return (
     <div className="w-full space-y-6">
-      <div className="flex w-full items-center gap-4 text-sm text-white/40">
-        <Separator className="flex-1 bg-white/10" />
-        <span className="text-white">OR</span>
-        <Separator className="flex-1 bg-white/10" />
+      <div className="flex w-full items-center gap-4 text-sm text-muted-foreground">
+        <Separator className="flex-1" />
+        <span className="text-foreground">OR</span>
+        <Separator className="flex-1" />
       </div>
       <div className="w-full space-y-3">
         <Button
           variant="outline"
-          className="w-full rounded-full border-white/15 bg-white/5 px-8 py-6 text-base font-semibold text-white hover:bg-white/10"
+          className="w-full rounded-full px-8 py-6 text-base font-semibold"
         >
           {type === "login" ? "Log in with Google" : "Sign up with Google"}
         </Button>
