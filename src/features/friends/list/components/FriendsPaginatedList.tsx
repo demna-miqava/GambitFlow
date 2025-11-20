@@ -15,6 +15,8 @@ interface FriendsPaginatedListProps extends FriendActionHandlers {
   searchSlot?: ReactNode;
   emptyMessage?: string;
   showPagination?: boolean;
+  currentUserId?: number;
+  isOwnProfile?: boolean;
 }
 
 export const FriendsPaginatedList = ({
@@ -29,6 +31,8 @@ export const FriendsPaginatedList = ({
   searchSlot,
   emptyMessage = "No friends yet",
   showPagination = true,
+  currentUserId,
+  isOwnProfile,
 }: FriendsPaginatedListProps) => {
   const totalPages = pagination?.totalPages ?? 1;
   const hasNextPage = page < totalPages;
@@ -47,6 +51,8 @@ export const FriendsPaginatedList = ({
           onChallenge={onChallenge}
           onMessage={onMessage}
           onRemove={onRemove}
+          currentUserId={currentUserId}
+          isOwnProfile={isOwnProfile}
         />
       )}
 

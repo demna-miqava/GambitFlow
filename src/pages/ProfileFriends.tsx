@@ -4,12 +4,16 @@ import { FriendsSearch } from "@/features/friends/list/components/FriendsSearch"
 import { SuggestedFriends } from "@/features/friends/suggestions/components/SuggestedFriends";
 import { useUserFriends } from "@/features/friends/list/hooks/useUserFriends";
 import { useFriendActions } from "@/features/friends/hooks/useFriendActions";
+import { useUser } from "@/hooks/useUser";
+import { useProfileUserId } from "@/hooks/useProfileUserId";
 
 const ProfileFriends = () => {
   const { friends, page, setPage, pagination, search, isLoading } =
     useUserFriends({});
   const { onChallenge, onRemove, onMessage } = useFriendActions();
-
+  const { id: currentUserId } = useUser();
+  const userId = useProfileUserId();
+  const isOwnProfile = currentUserId === userId;
   const total = pagination?.total ?? 0;
 
   return (
@@ -29,6 +33,8 @@ const ProfileFriends = () => {
             onChallenge={onChallenge}
             onMessage={onMessage}
             onRemove={onRemove}
+            currentUserId={currentUserId}
+            isOwnProfile={isOwnProfile}
             searchSlot={<FriendsSearch />}
             emptyMessage={
               search
@@ -39,9 +45,9 @@ const ProfileFriends = () => {
           />
         </div>
 
-        <SuggestedFriends />
+        {isOwnProfile && <SuggestedFriends />}
       </section>
-      <PendingFriendRequests />
+      {isOwnProfile && <PendingFriendRequests />}
     </section>
   );
 };

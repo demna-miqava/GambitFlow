@@ -5,6 +5,8 @@ import type { Friend, FriendActionHandlers } from "@/types";
 interface FriendsListProps extends FriendActionHandlers {
   items: Friend[];
   emptyMessage?: string;
+  currentUserId?: number;
+  isOwnProfile?: boolean;
 }
 
 export const FriendsList = ({
@@ -13,6 +15,8 @@ export const FriendsList = ({
   onChallenge,
   onMessage,
   onRemove,
+  currentUserId,
+  isOwnProfile,
 }: FriendsListProps) => {
   if (items.length === 0 && emptyMessage) {
     return (
@@ -31,6 +35,8 @@ export const FriendsList = ({
           onChallenge={onChallenge}
           onMessage={onMessage}
           onRemove={onRemove}
+          currentUserId={currentUserId}
+          isOwnProfile={isOwnProfile}
           secondaryText={`Friends since ${format(
             new Date(friend.friendsSince),
             "MMM d, yyyy"

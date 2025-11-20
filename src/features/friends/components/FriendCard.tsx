@@ -22,6 +22,8 @@ interface FriendCardProps<T extends Friend> {
   onRemove?: (id: number) => void;
   onAddFriend?: (id: number) => void;
   secondaryText?: React.ReactNode;
+  currentUserId?: number;
+  isOwnProfile?: boolean;
 }
 
 export function FriendCard<T extends Friend>({
@@ -31,6 +33,8 @@ export function FriendCard<T extends Friend>({
   onRemove,
   onAddFriend,
   secondaryText,
+  currentUserId,
+  isOwnProfile = true,
 }: FriendCardProps<T>) {
   const actions = [
     onChallenge && {
@@ -56,7 +60,23 @@ export function FriendCard<T extends Friend>({
       variant: "destructive" as const,
       destructive: true,
     },
-  ].filter(Boolean) as Array<{
+  ]
+    .filter(Boolean)
+    .filter((action) => {
+      if (!action) return false;
+
+      // If the friend is the current user, hide all actions
+      if (currentUserId && friend.id === currentUserId) {
+        return false;
+      }
+
+      // If viewing another user's profile, hide message and remove actions
+      if (!isOwnProfile) {
+        return action.label !== "Remove";
+      }
+
+      return true;
+    }) as Array<{
     icon: typeof Sword;
     label: string;
     onClick: () => void;
