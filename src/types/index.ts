@@ -1,10 +1,14 @@
 // User types
-export type { User, AuthResponse, UserProfile, UserProfileResponse } from "./user.types";
+export type {
+  User,
+  AuthResponse,
+  UserProfile,
+  UserProfileResponse,
+} from "./user.types";
 
 // Game types
 export type {
   Game,
-  Player,
   PaginatedGamesResponse,
   GetUserGamesParams,
   TimeControlType,

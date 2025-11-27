@@ -21,8 +21,8 @@ import type {
  * @param handleDecline - Callback for declining challenges
  */
 export const useChallengeMessageHandlers = (
-  handleAccept: (challengerId: string) => void,
-  handleDecline: (challengerId: string) => void
+  handleAccept: (challengerId: number) => void,
+  handleDecline: (challengerId: number) => void
 ) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -79,11 +79,14 @@ export const useChallengeMessageHandlers = (
   }, []);
 
   // Handle error messages
-  const handleError = useCallback((message: NotificationWebSocketMessage) => {
-    if (message.type !== NOTIFICATION_MESSAGE_TYPES.ERROR) return;
-    toast.dismiss();
-    navigate(ROUTES.LANDING);
-  }, [navigate]);
+  const handleError = useCallback(
+    (message: NotificationWebSocketMessage) => {
+      if (message.type !== NOTIFICATION_MESSAGE_TYPES.ERROR) return;
+      toast.dismiss();
+      navigate(ROUTES.LANDING);
+    },
+    [navigate]
+  );
 
   // Handle match_created messages
   const handleMatchCreated = useCallback(

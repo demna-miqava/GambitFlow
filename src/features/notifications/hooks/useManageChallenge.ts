@@ -28,7 +28,7 @@ export const useManageChallenge = (
 
   const sendChallenge = useCallback(
     (data: {
-      challengedId: string;
+      challengedId: number;
       color: "white" | "black" | "random";
       time: number;
       increment: number;
@@ -47,7 +47,7 @@ export const useManageChallenge = (
   );
 
   const handleAccept = useCallback(
-    (challengerId: string) => {
+    (challengerId: number) => {
       if (!checkConnection()) return;
 
       toast.dismiss();
@@ -67,7 +67,7 @@ export const useManageChallenge = (
   );
 
   const handleDecline = useCallback(
-    (challengerId: string) => {
+    (challengerId: number) => {
       if (!checkConnection()) return;
 
       // Remove challenge from local state

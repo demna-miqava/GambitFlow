@@ -66,7 +66,7 @@ const CurrentGameBoard = () => {
     ]
   );
 
-  const handleTimeout = (timedOutUserId: string) => {
+  const handleTimeout = (timedOutUserId: number) => {
     if (!timeoutSentRef.current) {
       timeoutSentRef.current = true;
       sendMessage(

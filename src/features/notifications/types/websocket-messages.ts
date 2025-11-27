@@ -3,7 +3,7 @@ import { NOTIFICATION_MESSAGE_TYPES } from "../constants/websocket-types";
 export type SendChallengeMessage = {
   type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_SENT;
   data: {
-    challengedId: string;
+    challengedId: number;
     color: "white" | "black" | "random";
     time: number;
     increment: number;
@@ -13,21 +13,21 @@ export type SendChallengeMessage = {
 export type AcceptChallengeMessage = {
   type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_ACCEPTED;
   data: {
-    challengerId: string;
+    challengerId: number;
   };
 };
 
 export type DeclineChallengeMessage = {
   type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_DECLINED;
   data: {
-    challengerId: string;
+    challengerId: number;
   };
 };
 
 export type ChallengeReceivedNotification = {
   type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_RECEIVED;
   data: {
-    challengerId: string;
+    challengerId: number;
     username: string;
     avatarUrl: string | null;
     challengerRating: number;
@@ -68,7 +68,7 @@ export type ChallengeErrorNotification = {
 
 export type Challenge = {
   id: number;
-  challengerId: string;
+  challengerId: number;
   username: string;
   avatarUrl: string | null;
   color: "white" | "black" | "random";

@@ -5,13 +5,13 @@ import { toast } from "sonner";
 import { formatTimeControl } from "@/utils/timeControl";
 
 type NotificationItem = {
-  challengerId: string;
+  challengerId: number;
   username: string;
   avatar: string | null;
   time: number;
   increment: number;
-  onAccept: (challengerId: string) => void;
-  onDecline: (challengerId: string) => void;
+  onAccept: (challengerId: number) => void;
+  onDecline: (challengerId: number) => void;
 };
 
 const ChallengeNotification = ({

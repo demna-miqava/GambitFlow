@@ -6,10 +6,10 @@ import { useChallengeMessageHandlers } from "../hooks/useChallengeMessageHandler
 type ChallengesContextType = {
   sendMessage: (message: string) => void;
   readyState: number;
-  handleAcceptChallenge: (challengerId: string) => void;
-  handleDeclineChallenge: (challengerId: string) => void;
+  handleAcceptChallenge: (challengerId: number) => void;
+  handleDeclineChallenge: (challengerId: number) => void;
   sendChallenge: (data: {
-    challengedId: string;
+    challengedId: number;
     color: "white" | "black" | "random";
     time: number;
     increment: number;
