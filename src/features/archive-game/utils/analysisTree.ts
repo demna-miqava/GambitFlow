@@ -152,7 +152,7 @@ export function addMoveToTree(
   if (branch) {
     const branchMoves = moves[mainLineIndex]?.branches[branch.branchIndex];
     if (!branchMoves) {
-      return { branched: true, position, moves };
+      return { position, moves };
     }
 
     const nextMoveIndex = branch.moveIndex + 1;
@@ -160,7 +160,6 @@ export function addMoveToTree(
     // Check if move matches next move in branch
     if (branchMoves[nextMoveIndex]?.move === moveSan) {
       return {
-        branched: true,
         position: {
           mainLineIndex,
           branch: { branchIndex: branch.branchIndex, moveIndex: nextMoveIndex },
@@ -180,7 +179,6 @@ export function addMoveToTree(
     );
 
     return {
-      branched: true,
       position: {
         mainLineIndex,
         branch: { branchIndex: branch.branchIndex, moveIndex: nextMoveIndex },
@@ -193,7 +191,6 @@ export function addMoveToTree(
   const expectedMove = getExpectedMove(originalMoves, position);
   if (expectedMove === moveSan) {
     return {
-      branched: false,
       position: { mainLineIndex: mainLineIndex + 1, branch: null },
       moves,
     };
@@ -208,7 +205,6 @@ export function addMoveToTree(
 
     if (existingBranchIndex !== -1) {
       return {
-        branched: true,
         position: {
           mainLineIndex,
           branch: { branchIndex: existingBranchIndex, moveIndex: 0 },
@@ -223,7 +219,6 @@ export function addMoveToTree(
     newMoves[mainLineIndex].branches.push([newBranchMove]);
 
     return {
-      branched: true,
       position: {
         mainLineIndex,
         branch: { branchIndex: newBranchIndex, moveIndex: 0 },
@@ -242,7 +237,6 @@ export function addMoveToTree(
       fen: move.after,
     };
     return {
-      branched: false,
       position: { mainLineIndex: 1, branch: null },
       moves: [newNode],
     };
@@ -256,7 +250,6 @@ export function addMoveToTree(
 
   if (existingBranchIndex !== -1) {
     return {
-      branched: true,
       position: {
         mainLineIndex: lastMoveIndex,
         branch: { branchIndex: existingBranchIndex, moveIndex: 0 },
@@ -271,7 +264,6 @@ export function addMoveToTree(
   newMoves[lastMoveIndex].branches.push([newBranchMove]);
 
   return {
-    branched: true,
     position: {
       mainLineIndex: lastMoveIndex,
       branch: { branchIndex: newBranchIndex, moveIndex: 0 },

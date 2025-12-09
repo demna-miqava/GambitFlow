@@ -30,7 +30,6 @@ export interface AnalysisPosition {
 
 // Result of adding a move to the tree
 export interface AddMoveResult {
-  branched: boolean;
   position: AnalysisPosition;
   moves: AnalysisMoveNode[];
 }
