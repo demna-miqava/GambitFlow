@@ -1,5 +1,6 @@
 import type { Chess } from "chess.js";
 import type { Api } from "@lichess-org/chessground/api";
+import type { Key } from "@lichess-org/chessground/types";
 import type { PlayerColor } from "../types/game.types";
 
 /**
@@ -17,34 +18,54 @@ export const calculateLegalMoves = (chess: Chess) => {
 };
 
 /**
- * Synchronize the chessground board state with the chess.js instance
- * This updates the board UI after a move is made
+ * Get turn color from chess instance
  */
-export const syncBoardState = (
-  chessRef: React.RefObject<Chess | null>,
-  cgRef: React.RefObject<Api | null>,
-  playerColor: PlayerColor,
-  setTurn: React.Dispatch<PlayerColor>
-) => {
-  const chess = chessRef.current;
-  if (!chess || !cgRef.current) return;
+export const getTurnColor = (chess: Chess): PlayerColor => {
+  return chess.turn() === "w" ? "white" : "black";
+};
 
-  const turn = chess.turn();
-  const playerColorCode = playerColor === "white" ? "w" : "b";
-  const isMyTurn = turn === playerColorCode;
+export interface SyncBoardOptions {
+  cg: Api;
+  chess: Chess;
+  movableColor: PlayerColor | "both";
+  lastMove?: [Key, Key];
+  playPremove?: boolean;
+}
 
-  cgRef.current.set({
+/**
+ * Synchronize the chessground board state with the chess.js instance.
+ * Returns the current turn color.
+ */
+export const syncBoard = ({
+  cg,
+  chess,
+  movableColor,
+  lastMove,
+  playPremove = false,
+}: SyncBoardOptions): PlayerColor => {
+  const turn = getTurnColor(chess);
+
+  const dests =
+    movableColor === "both"
+      ? calculateLegalMoves(chess)
+      : turn === movableColor
+        ? calculateLegalMoves(chess)
+        : new Map();
+
+  cg.set({
     fen: chess.fen(),
-    turnColor: turn === "w" ? "white" : "black",
+    turnColor: turn,
     movable: {
-      color: playerColor,
-      dests: isMyTurn ? calculateLegalMoves(chess) : new Map(),
+      color: movableColor,
+      dests,
     },
     check: chess.inCheck(),
+    lastMove,
   });
-  setTurn(turn === "w" ? "white" : "black");
 
-  if (isMyTurn) {
-    cgRef.current.playPremove();
+  if (playPremove && movableColor !== "both" && turn === movableColor) {
+    cg.playPremove();
   }
+
+  return turn;
 };

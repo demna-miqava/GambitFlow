@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -5,7 +6,7 @@ import {
   ChevronsRight,
 } from "lucide-react";
 import { useGameNavigation } from "@/features/game/contexts/GameNavigationContext";
-import { Button } from "@/components/ui/button";
+import { BaseMoveControls, type MoveControl } from "./BaseMoveControls";
 
 const MoveControls = () => {
   const {
@@ -17,54 +18,41 @@ const MoveControls = () => {
     isAtEnd,
   } = useGameNavigation();
 
-  const moveControls = [
-    {
-      id: "first",
-      icon: ChevronsLeft,
-      title: "First move",
-      onClick: goToFirstMove,
-      disabled: isAtStart,
-    },
-    {
-      id: "previous",
-      icon: ChevronLeft,
-      title: "Previous move",
-      onClick: goToPreviousMove,
-      disabled: isAtStart,
-    },
-    {
-      id: "next",
-      icon: ChevronRight,
-      title: "Next move",
-      onClick: goToNextMove,
-      disabled: isAtEnd,
-    },
-    {
-      id: "last",
-      icon: ChevronsRight,
-      title: "Last move",
-      onClick: goToLastMove,
-      disabled: isAtEnd,
-    },
-  ];
-
-  return (
-    <nav className="flex w-full gap-2" aria-label="Move navigation">
-      {moveControls.map((control) => (
-        <Button
-          key={control.id}
-          type="button"
-          className="flex flex-1 items-center justify-center rounded-md bg-[#2f2f2f] py-2 text-white transition-colors hover:bg-[#3d3d3d] disabled:cursor-not-allowed disabled:opacity-50"
-          title={control.title}
-          aria-label={control.title}
-          onClick={control.onClick}
-          disabled={control.disabled}
-        >
-          <control.icon className="size-4" aria-hidden="true" />
-        </Button>
-      ))}
-    </nav>
+  const controls = useMemo<MoveControl[]>(
+    () => [
+      {
+        id: "first",
+        icon: ChevronsLeft,
+        title: "First move",
+        onClick: goToFirstMove,
+        disabled: isAtStart,
+      },
+      {
+        id: "previous",
+        icon: ChevronLeft,
+        title: "Previous move",
+        onClick: goToPreviousMove,
+        disabled: isAtStart,
+      },
+      {
+        id: "next",
+        icon: ChevronRight,
+        title: "Next move",
+        onClick: goToNextMove,
+        disabled: isAtEnd,
+      },
+      {
+        id: "last",
+        icon: ChevronsRight,
+        title: "Last move",
+        onClick: goToLastMove,
+        disabled: isAtEnd,
+      },
+    ],
+    [goToFirstMove, goToPreviousMove, goToNextMove, goToLastMove, isAtStart, isAtEnd]
   );
+
+  return <BaseMoveControls controls={controls} />;
 };
 
 export default MoveControls;

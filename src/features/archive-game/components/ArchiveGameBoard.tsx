@@ -15,7 +15,6 @@ interface ArchiveGameBoardProps {
     avatarUrl?: string;
   };
   timeControl: number;
-  result?: string;
 }
 
 const ArchiveGameBoard = ({

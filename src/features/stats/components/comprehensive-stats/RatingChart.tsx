@@ -16,7 +16,9 @@ const RatingChart = ({ statsData }: { statsData: ComprehensiveStatsData }) => {
 
   return (
     <div className="rounded-2xl border border-border bg-card p-6">
-      <h3 className="mb-4 text-lg font-semibold text-foreground">Rating Progress</h3>
+      <h3 className="mb-4 text-lg font-semibold text-foreground">
+        Rating Progress
+      </h3>
       <div className="h-64 relative">
         {/* Y-axis labels */}
         <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-muted-foreground">

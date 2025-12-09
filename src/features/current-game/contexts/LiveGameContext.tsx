@@ -15,7 +15,7 @@ import { useSettings } from "@/features/settings/SettingsContext";
 import { useUser } from "@/hooks/useUser";
 import type { Key } from "@lichess-org/chessground/types";
 import type { Square, PieceSymbol } from "chess.js";
-import { syncBoardState } from "@/features/game/utils/board-utils";
+import { syncBoard } from "@/features/game/utils/board-utils";
 import { useLiveGameMessages } from "../hooks/useLiveGameMessages";
 import type { SendMessage } from "react-use-websocket";
 import { GAME_MESSAGE_TYPES } from "@/features/game/constants/websocket-types";
@@ -74,7 +74,13 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
         const isCheckmate = chess.isCheckmate();
         const isStalemate = chess.isStalemate();
 
-        syncBoardState(chessRef, cgRef, color, setTurn);
+        const turn = syncBoard({
+          cg: cg,
+          chess,
+          movableColor: color,
+          playPremove: true,
+        });
+        setTurn(turn);
 
         playSoundForMove(move, isCheckmate);
 
@@ -128,7 +134,13 @@ export const LiveGameProvider = ({ children }: LiveGameProviderProps) => {
 
     if (cg && chess) {
       // Revert the board to the current chess state and sync everything
-      syncBoardState(chessRef, cgRef, color, setTurn);
+      const turn = syncBoard({
+        cg,
+        chess,
+        movableColor: color,
+        playPremove: true,
+      });
+      setTurn(turn);
     }
 
     setPendingPromotion(null);

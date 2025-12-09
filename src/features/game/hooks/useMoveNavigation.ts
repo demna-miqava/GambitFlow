@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useArrowKeyNavigation } from "./useArrowKeyNavigation";
 
 export const useMoveNavigation = (totalMoves: number) => {
   // null means at current position, number means viewing history
@@ -40,28 +41,12 @@ export const useMoveNavigation = (totalMoves: number) => {
     setViewingIndex(null); // null = current position
   }, []);
 
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      switch (event.key) {
-        case "ArrowLeft":
-          goToPreviousMove();
-          break;
-        case "ArrowRight":
-          goToNextMove();
-          break;
-        case "ArrowUp":
-          goToFirstMove();
-          break;
-        case "ArrowDown":
-          goToLastMove();
-          break;
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [goToFirstMove, goToPreviousMove, goToNextMove, goToLastMove]);
+  useArrowKeyNavigation({
+    onLeft: goToPreviousMove,
+    onRight: goToNextMove,
+    onUp: goToFirstMove,
+    onDown: goToLastMove,
+  });
 
   return {
     currentIndex,

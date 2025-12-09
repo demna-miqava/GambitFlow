@@ -5,7 +5,7 @@ import type {
   GameEndedMessage,
   InitialGameStateMessage,
 } from "@/features/game/types/websocket-messages";
-import { syncBoardState } from "@/features/game/utils/board-utils";
+import { syncBoard } from "@/features/game/utils/board-utils";
 import { useChessBoardContext } from "@/features/game/contexts/ChessBoardContext";
 import { useGameNavigation } from "@/features/game/contexts/GameNavigationContext";
 import { useChessSound } from "@/features/game/hooks/useChessSound";
@@ -51,7 +51,13 @@ export const useLiveGameMessages = ({
           const move = chess.move(data.move.lan);
           const isCheckmate = chess.isCheckmate();
 
-          syncBoardState(chessRef, cgRef, color, setTurn);
+          const turn = syncBoard({
+            cg: cgRef.current,
+            chess,
+            movableColor: color,
+            playPremove: true,
+          });
+          setTurn(turn);
           playSoundForMove(move, isCheckmate);
 
           // Auto-jump to latest move when opponent moves
@@ -101,7 +107,13 @@ export const useLiveGameMessages = ({
         chessRef.current.loadPgn(data.data.pgn);
       }
 
-      syncBoardState(chessRef, cgRef, color, setTurn);
+      const turn = syncBoard({
+        cg: cgRef.current,
+        chess: chessRef.current,
+        movableColor: color,
+        playPremove: true,
+      });
+      setTurn(turn);
 
       if (data.data.isFinished) {
         setGameEnded(true);
