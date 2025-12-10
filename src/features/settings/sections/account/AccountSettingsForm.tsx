@@ -1,15 +1,13 @@
 import { ChangePasswordForm } from "./components/ChangePasswordForm";
-import { ChangeEmailForm } from "./components/ChangeEmailForm";
+import { DeleteAccountSection } from "./components/DeleteAccountSection";
 
 export const AccountSettingsForm = () => {
   return (
     <div className="space-y-8">
-      {/* Change Password Section */}
       <ChangePasswordForm />
 
-      {/* Change Email Section */}
       <div className="pt-6 border-t">
-        <ChangeEmailForm />
+        <DeleteAccountSection />
       </div>
     </div>
   );
