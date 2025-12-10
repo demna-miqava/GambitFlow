@@ -17,7 +17,7 @@ export const MovesList = () => {
   const showIcons = settings?.pieceIconNotationEnabled ?? false;
 
   return (
-    <ScrollArea className="h-[600px] w-full rounded-md border p-4">
+    <ScrollArea className="h-[400px] w-full rounded-md border p-4">
       <div className="flex flex-col gap-2 rounded-lg p-3">
         {movePairs.map((pair) => (
           <div key={pair.moveNumber} className="flex text-sm justify-start">
