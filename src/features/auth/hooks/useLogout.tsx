@@ -1,29 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import { useUser } from "@/hooks/useUser";
-import { useMutation } from "@tanstack/react-query";
-import { logout as logoutApi } from "@/services/user";
-import { ROUTES } from "@/constants/routes";
+import { useClerk } from "@clerk/clerk-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useLogout = () => {
-  const navigate = useNavigate();
-  const { clearUser } = useUser();
+  const { signOut } = useClerk();
+  const queryClient = useQueryClient();
 
-  const logoutMutation = useMutation({
-    mutationFn: logoutApi,
-    onSuccess: () => {
-      clearUser();
-      navigate(ROUTES.AUTH.SIGN_IN);
-    },
-    onError: () => {
-      // Even if the API call fails, clear local state and redirect
-      clearUser();
-      navigate(ROUTES.AUTH.SIGN_IN);
+  const { mutate: logout, isPending: isLoading } = useMutation({
+    mutationFn: async () => {
+      queryClient.clear();
+      await signOut();
     },
   });
 
-  const logout = () => {
-    logoutMutation.mutate();
-  };
-
-  return { logout, isLoading: logoutMutation.isPending };
+  return { logout, isLoading };
 };

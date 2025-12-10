@@ -14,7 +14,7 @@ export const ROUTES = {
   AUTH: {
     SIGN_IN: "/signin",
     SIGN_UP: "/signup",
-    FORGOT_PASSWORD: "/forgot-password",
+    PROFILE_SETUP: "/profile-setup",
   },
   LANDING: "/",
 } as const;

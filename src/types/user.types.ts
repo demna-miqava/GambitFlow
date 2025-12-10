@@ -18,6 +18,7 @@ export type AuthResponse = {
 export type UserProfile = {
   id: number;
   username: string;
+  avatarUrl: string | null;
   createdAt: string;
   rapidRating: number;
   blitzRating: number;

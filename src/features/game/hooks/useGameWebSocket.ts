@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import useWebSocket from "react-use-websocket";
 import { BOARD_CONFIG } from "../constants/board-config";
 import { useParams } from "react-router-dom";
+import { useAuthenticatedWebSocketUrl } from "@/hooks/useAuthenticatedWebSocketUrl";
 import { parseWebSocketMessage } from "../utils/websocket-helpers";
 import { messageDispatcher } from "@/services/websocketMessageDispatcher";
 import type { GameWebSocketMessage } from "../types/websocket-messages";
@@ -17,10 +18,10 @@ import type { GameWebSocketMessage } from "../types/websocket-messages";
 export const useGameWebSocket = () => {
   const { gameId } = useParams();
 
-  const { lastMessage, sendMessage } = useWebSocket(
-    gameId ? `${BOARD_CONFIG.WEBSOCKET_BASE_URL}/game/${gameId}` : null,
-    { share: true }
-  );
+  const baseUrl = gameId ? `${BOARD_CONFIG.WEBSOCKET_BASE_URL}/game/${gameId}` : null;
+  const wsUrl = useAuthenticatedWebSocketUrl(baseUrl, true);
+
+  const { lastMessage, sendMessage } = useWebSocket(wsUrl, { share: true });
 
   useEffect(() => {
     if (!lastMessage) return;

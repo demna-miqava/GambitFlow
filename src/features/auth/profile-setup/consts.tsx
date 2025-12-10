@@ -1,7 +1,5 @@
 import { Crown, Shield, Sparkles, Trophy } from "lucide-react";
-import type { SignUpStep, SkillOption } from "./types";
-
-export const STEPS: SignUpStep[] = ["intro", "skill", "credentials"];
+import type { SkillOption } from "./types";
 
 export const SKILL_OPTIONS: SkillOption[] = [
   {
@@ -30,15 +28,3 @@ export const SKILL_OPTIONS: SkillOption[] = [
     icon: <Crown className="size-6" />,
   },
 ];
-
-export const STEP_COPY: Record<SignUpStep, { title: string }> = {
-  intro: {
-    title: "Create your ChessHub account",
-  },
-  skill: {
-    title: "What is your chess skill level?",
-  },
-  credentials: {
-    title: "Create your login",
-  },
-};

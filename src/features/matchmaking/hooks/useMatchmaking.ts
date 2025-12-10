@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import useWebSocket from "react-use-websocket";
 import { BOARD_CONFIG } from "@/features/game/constants/board-config";
+import { useAuthenticatedWebSocketUrl } from "@/hooks/useAuthenticatedWebSocketUrl";
 import type {
   MatchmakingMessage,
   MatchFoundMessage,
@@ -24,13 +25,15 @@ export const useMatchmaking = ({ time, increment }: UseMatchmakingProps) => {
   const [shouldConnect, setShouldConnect] = useState(false);
   const { startGame } = useStartGame();
 
-  const wsUrl = useMemo(
+  const baseUrl = useMemo(
     () =>
       shouldConnect
         ? `${BOARD_CONFIG.WEBSOCKET_BASE_URL}/matchmaking?time=${time}&increment=${increment}`
         : null,
     [shouldConnect, time, increment]
   );
+
+  const wsUrl = useAuthenticatedWebSocketUrl(baseUrl, shouldConnect);
 
   const { sendMessage, lastMessage, readyState } = useWebSocket(wsUrl, {
     share: true,

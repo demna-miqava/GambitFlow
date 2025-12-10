@@ -7,6 +7,9 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "./components/ui/sonner.tsx";
 import { FIVE_MINUTES_MS } from "@/constants/time";
+import { ClerkProviderWithRoutes } from "./components/ClerkProviderWithRoutes";
+
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,8 +25,10 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <App />
-          <Toaster />
+          <ClerkProviderWithRoutes>
+            <App />
+            <Toaster />
+          </ClerkProviderWithRoutes>
         </BrowserRouter>
       </QueryClientProvider>
     </ThemeProvider>

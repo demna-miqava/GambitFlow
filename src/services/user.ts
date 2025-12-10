@@ -1,25 +1,28 @@
-import type { SignUpData } from "@/features/auth/sign-up/hooks/useSignup";
-import type { SignInForm } from "@/features/auth/sign-in/hooks/useSignIn";
-import type { User, AuthResponse, UserProfileResponse, PaginatedFriendsResponse, PaginatedGamesResponse } from "@/types";
+import type { User, UserProfileResponse, PaginatedFriendsResponse, PaginatedGamesResponse } from "@/types";
 import type { ChangePasswordData, ChangeEmailData } from "@/features/auth/types";
+import type { SignupSkill } from "@/features/auth/profile-setup/types";
 import { apiRequest } from ".";
 
-export const signUp = async (data: SignUpData) => {
-  return apiRequest<AuthResponse>("post", "/users/signup", { data });
+export type ProfileStatusResponse = {
+  hasProfile: boolean;
+  user: User | null;
 };
 
-export const signIn = async (data: SignInForm) => {
-  return apiRequest<AuthResponse>("post", "/users/signin", { data });
+export const getProfileStatus = async (): Promise<ProfileStatusResponse> => {
+  return apiRequest<ProfileStatusResponse>("get", "/users/status");
 };
 
-export const getCurrentUser = async (): Promise<User> => {
-  const response = await apiRequest<{ user: User }>("get", "/users/me");
-
-  return response.user;
+export type SyncProfileData = {
+  username: string;
+  skill: SignupSkill;
 };
 
-export const logout = async () => {
-  return apiRequest<void>("post", "/users/logout");
+export const syncProfile = async (data: SyncProfileData): Promise<{ message: string; user: User }> => {
+  return apiRequest<{ message: string; user: User }>("post", "/users/sync", { data });
+};
+
+export const checkUsernameAvailability = async (username: string): Promise<{ available: boolean }> => {
+  return apiRequest<{ available: boolean }>("get", `/users/check-username?username=${encodeURIComponent(username)}`);
 };
 
 export const changePassword = async (data: ChangePasswordData) => {

@@ -1,7 +1,12 @@
-import { SignInContainer } from "@/features/auth/sign-in/LoginContainer";
+import { ROUTES } from "@/constants/routes";
+import { SignIn } from "@clerk/clerk-react";
 
-const SignIn = () => {
-  return <SignInContainer />;
+const SignInPage = () => {
+  return (
+    <div className="flex h-screen w-full items-center justify-center bg-background">
+      <SignIn signUpUrl={ROUTES.AUTH.SIGN_UP} forceRedirectUrl={ROUTES.HOME} />
+    </div>
+  );
 };
 
-export default SignIn;
+export default SignInPage;

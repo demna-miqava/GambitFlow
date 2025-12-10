@@ -1,42 +1,47 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getCurrentUser } from "@/services/user";
-import type { User } from "@/types";
-import { QKEY_USER } from "@/constants/queryKeys";
+import { useUser as useClerkUser } from "@clerk/clerk-react";
+import { useQuery } from "@tanstack/react-query";
+import { getProfileStatus } from "@/services/user";
 import { DEFAULT_AVATAR_URL } from "@/constants/defaults";
+import { QKEY_PROFILE_STATUS } from "@/constants/queryKeys";
 
-export const useUser = (enabled: boolean = true) => {
-  const queryClient = useQueryClient();
+export const useUser = () => {
+  const { user: clerkUser, isLoaded: clerkLoaded, isSignedIn } = useClerkUser();
 
   const {
-    data: userData,
-    isPending,
-    error,
+    data: profileStatus,
+    isFetched: profileFetched,
     refetch,
   } = useQuery({
-    queryKey: [QKEY_USER],
-    queryFn: getCurrentUser,
-    retry: false,
-    enabled,
+    queryKey: [QKEY_PROFILE_STATUS],
+    queryFn: getProfileStatus,
+    enabled: clerkLoaded && isSignedIn,
   });
 
-  const setUser = (userData: User) => {
-    queryClient.setQueryData([QKEY_USER], userData);
-  };
+  const chessProfile = profileStatus?.user;
+  const hasProfile = profileStatus?.hasProfile ?? false;
+  // Use chess profile data when available, fall back to Clerk data
+  const id = chessProfile?.id;
+  const username =
+    chessProfile?.username || clerkUser?.username || clerkUser?.fullName || "";
+  const image =
+    chessProfile?.avatarUrl || clerkUser?.imageUrl || DEFAULT_AVATAR_URL;
+  const email =
+    chessProfile?.email || clerkUser?.primaryEmailAddress?.emailAddress;
 
-  const clearUser = () => {
-    queryClient.removeQueries({ queryKey: [QKEY_USER] });
-  };
+  // isPending until Clerk loaded AND profile status fetched (when signed in)
+  const isPending = !clerkLoaded || (isSignedIn && !profileFetched);
+  const isAuthenticated = clerkLoaded && isSignedIn;
 
   return {
-    ...userData,
-    username: userData?.username || "",
-    image: userData?.avatarUrl ?? DEFAULT_AVATAR_URL,
-    joinedAt: userData?.createdAt ?? "",
+    id,
+    username,
+    image,
+    email,
     isPending,
-    error,
-    setUser,
-    clearUser,
-    isAuthenticated: !!userData,
+    isAuthenticated,
+    hasProfile,
+    chessProfile,
+    error: null,
     refetch,
   };
 };

@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { changePassword } from "@/services/user";
-import { AxiosError } from "axios";
+import { useUser } from "@clerk/clerk-react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { passwordSchema } from "@/lib/schemas/validation.schemas";
 
@@ -21,22 +20,8 @@ const changePasswordSchema = z
 export type ChangePasswordForm = z.infer<typeof changePasswordSchema>;
 
 export const useChangePassword = () => {
-  const changePasswordMutation = useMutation({
-    mutationFn: changePassword,
-    onSuccess: (data) => {
-      toast.success(data.message || "Password changed successfully");
-      form.reset();
-    },
-    onError: (error) => {
-      if (error instanceof AxiosError) {
-        toast.error(
-          error.response?.data?.message || "Failed to change password"
-        );
-      } else {
-        toast.error("An unexpected error occurred");
-      }
-    },
-  });
+  const { user } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<ChangePasswordForm>({
     resolver: zodResolver(changePasswordSchema),
@@ -49,15 +34,28 @@ export const useChangePassword = () => {
   });
 
   const onSubmit = async (data: ChangePasswordForm) => {
-    changePasswordMutation.mutate({
-      currentPassword: data.currentPassword,
-      newPassword: data.newPassword,
-    });
+    if (!user) return;
+
+    setIsLoading(true);
+    try {
+      await user.updatePassword({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      });
+      toast.success("Password changed successfully");
+      form.reset();
+    } catch (error) {
+      const clerkError = error as { errors?: { message: string }[] };
+      const message = clerkError.errors?.[0]?.message || "Failed to change password";
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return {
     form,
     onSubmit,
-    isLoading: changePasswordMutation.isPending,
+    isLoading,
   };
 };

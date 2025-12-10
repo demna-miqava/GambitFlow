@@ -18,7 +18,7 @@ const ProfileFriends = lazy(() => import("@/pages/ProfileFriends"));
 const SignIn = lazy(() => import("@/pages/SignIn"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
 const IntroPage = lazy(() => import("@/pages/IntroPage"));
-const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"));
+const ProfileSetup = lazy(() => import("@/pages/ProfileSetup"));
 const CurrentGame = lazy(() => import("@/pages/CurrentGame"));
 
 export const AppRoutes = () => {
@@ -40,7 +40,7 @@ export const AppRoutes = () => {
       <Route path={ROUTES.LANDING} element={<IntroPage />} />
       <Route path={ROUTES.AUTH.SIGN_IN} element={<SignIn />} />
       <Route path={ROUTES.AUTH.SIGN_UP} element={<SignUp />} />
-      <Route path={ROUTES.AUTH.FORGOT_PASSWORD} element={<ForgotPassword />} />
+      <Route path={ROUTES.AUTH.PROFILE_SETUP} element={<ProfileSetup />} />
     </Routes>
   );
 };
