@@ -18,6 +18,9 @@ export const useUser = () => {
   });
 
   const chessProfile = profileStatus?.user;
+
+  const { blitzRating, rapidRating, bulletRating } = chessProfile || {};
+
   const hasProfile = profileStatus?.hasProfile ?? false;
   // Use chess profile data when available, fall back to Clerk data
   const id = chessProfile?.id;
@@ -37,6 +40,9 @@ export const useUser = () => {
     username,
     image,
     email,
+    rapidRating,
+    blitzRating,
+    bulletRating,
     isPending,
     isAuthenticated,
     hasProfile,

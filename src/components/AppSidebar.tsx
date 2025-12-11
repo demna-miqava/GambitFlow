@@ -103,7 +103,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton onClick={logout} tooltip="Logout">
+            <SidebarMenuButton onClick={() => logout()} tooltip="Logout">
               <LogOut className="text-muted-foreground" />
               <span className="text-lg font-medium group-data-[collapsible=icon]:hidden">
                 Logout
