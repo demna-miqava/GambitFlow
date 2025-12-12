@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import {
-  StockfishService,
-  type StockfishOptions,
+  StockfishService, type StockfishOptions,
   type MultiPvResult,
-} from "@/services/stockfish";
+} from "../services/stockfish";
 
 interface UseStockfishOptions extends StockfishOptions {
   autoInit?: boolean;
