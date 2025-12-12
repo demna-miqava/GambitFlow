@@ -48,7 +48,7 @@ export function useEngineAnalysis({
             fen,
           });
         }
-      } catch (error) {
+      } catch {
         // Ignore errors from aborted analysis
         if (!analysisAbortedRef.current) {
           setAnalysis({ isAnalyzing: false });
