@@ -1,4 +1,4 @@
-import { Bot, Handshake, Plus, Zap } from "lucide-react";
+import { Handshake, Plus, Puzzle, Zap } from "lucide-react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
@@ -11,6 +11,7 @@ export const QuickPlayGrid = () => {
     return [
       {
         title: `Play ${previouslyPlayedTimeControl} `,
+        to: ROUTES.PLAY,
         description: "Fast-paced blitz match",
         icon: Zap,
         state: {
@@ -20,22 +21,22 @@ export const QuickPlayGrid = () => {
       {
         title: "New Game",
         description: "Start a fresh challenge",
+        to: ROUTES.PLAY,
         icon: Plus,
         state: {
           section: "new",
         },
       },
       {
-        title: "Play Bots",
-        description: "Practice against the engine",
-        icon: Bot,
-        state: {
-          section: "bots",
-        },
+        title: "Solve Puzzle",
+        to: "/puzzles",
+        description: "Challenge yourself with a puzzle",
+        icon: Puzzle,
       },
       {
         title: "Play a Friend",
         description: "Invite someone to play",
+        to: ROUTES.PLAY,
         icon: Handshake,
         state: {
           section: "friends",
@@ -47,8 +48,8 @@ export const QuickPlayGrid = () => {
   return (
     <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {gridOptions.map((option) => (
-        <Link key={option.title} to={ROUTES.PLAY} state={option.state}>
-          <div className="border-border/60 bg-card text-card-foreground hover:border-sidebar-ring/80 hover:shadow-lg transition-colors rounded-xl border p-6 flex items-center gap-4 h-full">
+        <Link key={option.title} to={option.to} state={option.state}>
+          <div className="h-full flex items-center rounded-xl border p-6 gap-4 border-border/60 bg-card text-card-foreground hover:border-sidebar-ring/80 hover:shadow-lg transition-all">
             <option.icon size={30} className="flex-shrink-0" />
             <div className="flex-1 min-w-0">
               <h3 className="text-lg font-semibold">{option.title}</h3>

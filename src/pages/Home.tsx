@@ -1,6 +1,6 @@
 import { GameTable } from "@/features/game-table";
-import { Header } from "@/features/home/components/Header";
-import { QuickPlayGrid } from "@/features/home/components/QuickPlayGrid";
+import { Header } from "@/components/home/Header";
+import { QuickPlayGrid } from "@/components/home/QuickPlayGrid";
 import StatsCardList from "@/features/stats/components/card/StatsCardList";
 import { useUser } from "@/hooks/useUser";
 import { getProfileGamesRoute } from "@/constants/routes";
