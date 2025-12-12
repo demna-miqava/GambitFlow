@@ -7,6 +7,9 @@ const Home = lazy(() => import("@/pages/Home"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Play = lazy(() => import("@/pages/CreateGame"));
 const ArchiveGame = lazy(() => import("@/pages/ArchiveGame"));
+const PuzzlesLanding = lazy(() => import("@/pages/PuzzlesLanding"));
+const PuzzlePage = lazy(() => import("@/pages/PuzzlePage"));
+const PuzzleRushPage = lazy(() => import("@/pages/PuzzleRushPage"));
 // Profile
 const Profile = lazy(() => import("@/pages/Profile"));
 const ProfileStats = lazy(() => import("@/pages/ProfileStats"));
@@ -35,6 +38,9 @@ export const AppRoutes = () => {
         <Route path={ROUTES.GAME} element={<CurrentGame />} />
         <Route path={ROUTES.ARCHIVE_GAME} element={<ArchiveGame />} />
         <Route path={ROUTES.SETTINGS} element={<Settings />} />
+        <Route path={ROUTES.PUZZLES} element={<PuzzlesLanding />} />
+        <Route path={ROUTES.PUZZLES_SOLVE} element={<PuzzlePage />} />
+        <Route path={ROUTES.PUZZLE_RUSH} element={<PuzzleRushPage />} />
       </Route>
       <Route path={ROUTES.LANDING} element={<IntroPage />} />
       <Route path={ROUTES.AUTH.SIGN_IN} element={<SignIn />} />
