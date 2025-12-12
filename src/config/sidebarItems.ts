@@ -58,6 +58,22 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     ]
   },
   {
+    title: "Puzzles",
+    icon: Puzzle,
+    color: "text-muted-foreground",
+    url: ROUTES.PUZZLES,
+    items: [
+      {
+        title: "Solve Puzzles",
+        url: ROUTES.PUZZLES_SOLVE,
+      },
+      {
+        title: "Puzzle Rush",
+        url: ROUTES.PUZZLE_RUSH,
+      },
+    ],
+  },
+  {
     title: "Settings",
     url: ROUTES.SETTINGS,
     icon: Settings,

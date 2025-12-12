@@ -1,5 +1,8 @@
 export const ROUTES = {
   HOME: "/home",
+  PUZZLES: "/puzzles",
+  PUZZLES_SOLVE: "/puzzles/solve",
+  PUZZLE_RUSH: "/puzzles/rush",
   PLAY: "/play",
   SETTINGS: "/settings",
   GAME: "/game/:gameId",
