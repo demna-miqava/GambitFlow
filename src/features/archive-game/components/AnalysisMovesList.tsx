@@ -29,7 +29,7 @@ export const AnalysisMovesList = () => {
   }
 
   return (
-    <ScrollArea className="h-[600px] w-full rounded-md border p-4 overflow-x-hidden">
+    <ScrollArea className="h-[400px] w-full rounded-md border p-4 overflow-x-hidden">
       <div
         role="list"
         aria-label="Game moves"
