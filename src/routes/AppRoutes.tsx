@@ -2,12 +2,11 @@ import { Route, Routes } from "react-router-dom";
 import { lazy } from "react";
 import { ROUTES } from "@/constants/routes";
 import { AppLayout } from "@/components/AppLayout";
-import ArchiveGame from "@/pages/ArchiveGame";
-
 // Protected
 const Home = lazy(() => import("@/pages/Home"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Play = lazy(() => import("@/pages/CreateGame"));
+const ArchiveGame = lazy(() => import("@/pages/ArchiveGame"));
 // Profile
 const Profile = lazy(() => import("@/pages/Profile"));
 const ProfileStats = lazy(() => import("@/pages/ProfileStats"));
