@@ -70,6 +70,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
       {
         title: "Puzzle Rush",
         url: ROUTES.PUZZLE_RUSH,
+        disabled: true,
       },
     ],
   },
