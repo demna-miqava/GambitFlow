@@ -29,10 +29,17 @@ A modern, real-time chess application built with React, TypeScript, and WebSocke
 - **Game history** with detailed move records
 - **User profiles** with personalized statistics
 
+### Analysis Mode
+
+- **Stockfish Integration** - Deep engine analysis running in web workers
+- **Evaluation Bar** - Real-time visual advantage indicator
+- **Multi-PV Analysis** - View multiple best lines with scores
+- **Archive Analysis** - Review past games with engine assistance
+
 ### Upcoming Features
 
 - **Spectator mode** for watching games
-- **Analysis mode** for game review
+- **Puzzles** - Sharpen your skills with different chess puzzles
 
 ## Tech Stack
 
@@ -48,6 +55,7 @@ A modern, real-time chess application built with React, TypeScript, and WebSocke
 - **Chessground** - Interactive chessboard
 - **Chess.js** - Chess logic and validation
 - **WebSockets** - Real-time communication
+- **Web Workers** - Off-main-thread processing
 - **Axios** - HTTP client
 
 ## Getting Started
@@ -143,6 +151,7 @@ src/
 ├── features/           # Feature-based modules
 │   ├── auth/          # Authentication
 │   ├── current-game/  # Live game functionality
+│   ├── engine-analysis/ # Stockfish analysis & evaluation
 │   ├── game/          # Shared game components
 │   ├── settings/      # User settings
 │   └── stats/         # Statistics and profiles
