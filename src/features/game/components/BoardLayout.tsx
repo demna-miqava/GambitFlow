@@ -14,8 +14,8 @@ interface PlayerInfo {
 
 interface BoardLayoutProps {
   boardRef: React.RefObject<HTMLDivElement | null>;
-  topPlayer: PlayerInfo;
-  bottomPlayer: PlayerInfo;
+  topPlayer?: PlayerInfo;
+  bottomPlayer?: PlayerInfo;
   topPlayerClock?: ReactNode;
   bottomPlayerClock?: ReactNode;
   children?: ReactNode;
@@ -35,7 +35,7 @@ export const BoardLayout = ({
 }: BoardLayoutProps) => {
   return (
     <section className="flex w-full flex-1 flex-col overflow-hidden rounded-xl border border-border/60 bg-background shadow-sm">
-      <PlayerDisplay {...topPlayer} clock={topPlayerClock} />
+      {topPlayer && <PlayerDisplay {...topPlayer} clock={topPlayerClock} />}
 
       <div className="flex flex-1 items-center justify-center bg-background">
         <div className="relative aspect-square w-full max-w-3xl">
@@ -44,7 +44,9 @@ export const BoardLayout = ({
         </div>
       </div>
 
-      <PlayerDisplay {...bottomPlayer} clock={bottomPlayerClock} />
+      {bottomPlayer && (
+        <PlayerDisplay {...bottomPlayer} clock={bottomPlayerClock} />
+      )}
     </section>
   );
 };
