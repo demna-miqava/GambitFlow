@@ -1,6 +1,6 @@
 import { Loader2 } from "lucide-react";
 import { useEngineAnalysis } from "../hooks/useEngineAnalysis";
-import { formatScore, formatPv } from "../utils/engineAnalysis.utils";
+import { AnalysisLineItem } from "./AnalysisLineItem";
 import { useMemo } from "react";
 import { useChessBoardContext } from "@/features/game/contexts/ChessBoardContext";
 
@@ -49,19 +49,12 @@ export const EngineAnalysisPanel = ({
           </div>
         ) : (
           displayData.lines.map((line) => (
-            <div
+            <AnalysisLineItem
               key={line.multipv}
-              className="relative overflow-hidden rounded-md border border-border/50 bg-muted/30"
-            >
-              <div className="relative flex items-center gap-2 px-4 py-1.5">
-                <span className="text-right text-sm font-semibold">
-                  {formatScore(line, color)}
-                </span>
-                <span className="truncate text-sm text-foreground/90">
-                  {formatPv(line.pv, displayData.fen)}
-                </span>
-              </div>
-            </div>
+              line={line}
+              fen={displayData.fen}
+              playerColor={color}
+            />
           ))
         )}
       </div>
