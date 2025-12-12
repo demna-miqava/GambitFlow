@@ -9,8 +9,6 @@ import { Toaster } from "./components/ui/sonner.tsx";
 import { FIVE_MINUTES_MS } from "@/constants/time";
 import { ClerkProviderWithRoutes } from "./components/ClerkProviderWithRoutes";
 
-
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
