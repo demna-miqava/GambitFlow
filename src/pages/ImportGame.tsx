@@ -6,9 +6,9 @@ import { GameLayout } from "@/features/game/components/GameLayout";
 import BoardSection from "@/features/import-game/components/BoardSection";
 import ImportGameSidebar from "@/features/import-game/components/ImportGameSidebar";
 
-const ImportGameContent = () => {
+const ImportGame = () => {
   const [pgn, setPgn] = useState<string | null>(null);
-  const isGameLoaded = pgn !== null;
+  const isGameLoaded = !!pgn;
 
   const handleLoadPgn = (newPgn: string) => {
     setPgn(newPgn);
@@ -18,47 +18,28 @@ const ImportGameContent = () => {
     setPgn(null);
   };
 
-  if (isGameLoaded) {
-    return (
-      <ChessBoardProvider color="white" isArchiveMode={true} key={pgn}>
-        <ArchiveGameProvider pgn={pgn}>
-          <EngineAnalysisProvider>
-            <GameLayout
-              board={<BoardSection isGameLoaded={isGameLoaded} />}
-              sidebar={
-                <ImportGameSidebar
-                  onLoadPgn={handleLoadPgn}
-                  onNewGame={handleNewGame}
-                  isGameLoaded={isGameLoaded}
-                />
-              }
-            />
-          </EngineAnalysisProvider>
-        </ArchiveGameProvider>
-      </ChessBoardProvider>
-    );
-  }
-
   return (
-    <ChessBoardProvider color="white" isArchiveMode={false}>
-      <EngineAnalysisProvider>
-        <GameLayout
-          board={<BoardSection isGameLoaded={isGameLoaded} />}
-          sidebar={
-            <ImportGameSidebar
-              onLoadPgn={handleLoadPgn}
-              onNewGame={handleNewGame}
-              isGameLoaded={isGameLoaded}
-            />
-          }
-        />
-      </EngineAnalysisProvider>
+    <ChessBoardProvider
+      color="white"
+      isArchiveMode={isGameLoaded}
+      key={pgn || "empty"}
+    >
+      <ArchiveGameProvider pgn={pgn || undefined}>
+        <EngineAnalysisProvider>
+          <GameLayout
+            board={<BoardSection isGameLoaded={isGameLoaded} />}
+            sidebar={
+              <ImportGameSidebar
+                onLoadPgn={handleLoadPgn}
+                onNewGame={handleNewGame}
+                isGameLoaded={isGameLoaded}
+              />
+            }
+          />
+        </EngineAnalysisProvider>
+      </ArchiveGameProvider>
     </ChessBoardProvider>
   );
-};
-
-const ImportGame = () => {
-  return <ImportGameContent />;
 };
 
 export default ImportGame;
