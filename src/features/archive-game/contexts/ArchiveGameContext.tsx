@@ -49,11 +49,13 @@ const ArchiveGameContext = createContext<ArchiveGameContextValue | null>(null);
 interface ArchiveGameProviderProps {
   children: ReactNode;
   pgn?: string;
+  extendMainLine?: boolean;
 }
 
 export const ArchiveGameProvider = ({
   children,
   pgn,
+  extendMainLine = false,
 }: ArchiveGameProviderProps) => {
   const { chessRef, cgRef, setTurn } = useChessBoardContext();
   const { settings } = useSettings();
@@ -71,7 +73,7 @@ export const ArchiveGameProvider = ({
     }
   }, [pgn]);
 
-  const tree = useAnalysisTree({ initialMoves });
+  const tree = useAnalysisTree({ initialMoves, extendMainLine });
   const navigation = useAnalysisNavigation({
     tree,
     cgRef,

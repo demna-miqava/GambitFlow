@@ -38,14 +38,16 @@ const AnalysisContext = createContext<EngineAnalysisContextValue | null>(null);
 
 interface EngineAnalysisProviderProps {
   children: ReactNode;
+  defaultEnabled?: boolean;
 }
 
 export const EngineAnalysisProvider = ({
   children,
+  defaultEnabled = false,
 }: EngineAnalysisProviderProps) => {
   const [analysis, setAnalysisState] =
     useState<EngineAnalysisState>(defaultAnalysis);
-  const [engineEnabled, setEngineEnabled] = useState(false);
+  const [engineEnabled, setEngineEnabled] = useState(defaultEnabled);
 
   const setAnalysis = useCallback((partial: Partial<EngineAnalysisState>) => {
     setAnalysisState((prev) => {

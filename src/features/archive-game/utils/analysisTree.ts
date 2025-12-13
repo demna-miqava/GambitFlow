@@ -129,15 +129,22 @@ export function isInBranch(position: AnalysisPosition): boolean {
   return position.branch !== null;
 }
 
+interface AddMoveOptions {
+  extendMainLine?: boolean;
+}
+
 /**
  * Adds a move to the tree
+ * @param extendMainLine - If true, moves at the end extend the main line instead of creating branches
  */
 export function addMoveToTree(
   moves: AnalysisMoveNode[],
   originalMoves: string[],
   position: AnalysisPosition,
-  move: Move
+  move: Move,
+  options: AddMoveOptions = {}
 ): AddMoveResult {
+  const { extendMainLine = false } = options;
   const { mainLineIndex, branch } = position;
   const moveSan = move.san;
 
@@ -227,7 +234,7 @@ export function addMoveToTree(
     };
   }
 
-  // Case 4: At end of original game - create branch on last move
+  // Case 4: At end of original game
   if (moves.length === 0) {
     const newNode: AnalysisMoveNode = {
       move: moveSan,
@@ -242,6 +249,22 @@ export function addMoveToTree(
     };
   }
 
+  // Case 5: extendMainLine mode - always extend the main line at the end
+  if (extendMainLine) {
+    const newNode: AnalysisMoveNode = {
+      move: moveSan,
+      branches: [],
+      from: move.from,
+      to: move.to,
+      fen: move.after,
+    };
+    return {
+      position: { mainLineIndex: moves.length + 1, branch: null },
+      moves: [...moves, newNode],
+    };
+  }
+
+  // Case 6: Create branch on last move (original behavior)
   const lastMoveIndex = moves.length - 1;
   const lastNode = moves[lastMoveIndex];
 

@@ -5,10 +5,12 @@ import * as TreeUtils from "../utils/analysisTree";
 
 interface UseAnalysisTreeOptions {
   initialMoves?: Move[];
+  extendMainLine?: boolean;
 }
 
 export const useAnalysisTree = ({
   initialMoves = [],
+  extendMainLine = false,
 }: UseAnalysisTreeOptions = {}) => {
   const [moves, setMoves] = useState<AnalysisMoveNode[]>(() =>
     TreeUtils.createTreeFromMoves(initialMoves)
@@ -44,7 +46,8 @@ export const useAnalysisTree = ({
         moves,
         originalMoves,
         currentPosition,
-        move
+        move,
+        { extendMainLine }
       );
 
       if (result.moves !== moves) {
@@ -53,7 +56,7 @@ export const useAnalysisTree = ({
       setCurrentPosition(result.position);
       return result;
     },
-    [moves, originalMoves, currentPosition]
+    [moves, originalMoves, currentPosition, extendMainLine]
   );
 
   // Reset tree with new moves
