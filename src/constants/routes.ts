@@ -18,6 +18,10 @@ export const ROUTES = {
     SIGN_UP: "/signup",
     PROFILE_SETUP: "/profile-setup",
   },
+  TOOLS: {
+    IMPORT_GAME: "/import-game",
+    ANALYSIS_BOARD: "/analysis",
+  },
   LANDING: "/",
 } as const;
 

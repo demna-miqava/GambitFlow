@@ -10,6 +10,8 @@ const CurrentGame = lazy(() => import("@/pages/CurrentGame"));
 const ArchiveGame = lazy(() => import("@/pages/ArchiveGame"));
 const PuzzlesLanding = lazy(() => import("@/pages/PuzzlesLanding"));
 const PuzzleModePage = lazy(() => import("@/pages/PuzzleModePage"));
+const ImportGame = lazy(() => import("@/pages/ImportGame"));
+const AnalysisBoard = lazy(() => import("@/pages/AnalysisBoard"));
 // Profile
 const Profile = lazy(() => import("@/pages/Profile"));
 const ProfileStats = lazy(() => import("@/pages/ProfileStats"));
@@ -39,6 +41,8 @@ export const AppRoutes = () => {
         <Route path={ROUTES.SETTINGS} element={<Settings />} />
         <Route path={ROUTES.PUZZLES} element={<PuzzlesLanding />} />
         <Route path={ROUTES.PUZZLE_MODE} element={<PuzzleModePage />} />
+        <Route path={ROUTES.TOOLS.IMPORT_GAME} element={<ImportGame />} />
+        <Route path={ROUTES.TOOLS.ANALYSIS_BOARD} element={<AnalysisBoard />} />
       </Route>
       <Route path={ROUTES.LANDING} element={<IntroPage />} />
       <Route path={ROUTES.AUTH.SIGN_IN} element={<SignIn />} />

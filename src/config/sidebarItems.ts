@@ -1,4 +1,4 @@
-import { Home, Puzzle, Settings, Gamepad2, type LucideIcon } from "lucide-react";
+import { Home, Puzzle, Settings, Gamepad2, Wrench, type LucideIcon } from "lucide-react";
 import { ROUTES, getProfileGamesRoute, getProfileStatsRoute, getPuzzleModeRoute } from "@/constants/routes";
 
 export interface SidebarItem {
@@ -74,6 +74,21 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
       {
         title: "Sudden Death",
         url: getPuzzleModeRoute("survival"),
+      },
+    ],
+  },
+  {
+    title: "Tools",
+    icon: Wrench,
+    color: "text-muted-foreground",
+    items: [
+      {
+        title: "Import Game",
+        url: ROUTES.TOOLS.IMPORT_GAME,
+      },
+      {
+        title: "Analysis Board",
+        url: ROUTES.TOOLS.ANALYSIS_BOARD,
       },
     ],
   },
