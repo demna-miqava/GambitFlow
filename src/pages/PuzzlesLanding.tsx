@@ -1,6 +1,6 @@
 import { GameLayout } from "@/features/game/components/GameLayout";
-import { LandingBoard } from "@/features/puzzles/components/LandingBoard";
-import { PuzzleModesList } from "@/features/puzzles/components/PuzzleModesList";
+import { LandingBoard } from "@/features/puzzles/components/layout/LandingBoard";
+import { PuzzleModesList } from "@/features/puzzles/components/selectors/PuzzleModesList";
 
 const PuzzlesLanding = () => {
   return (

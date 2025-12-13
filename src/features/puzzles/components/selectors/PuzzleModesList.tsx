@@ -1,4 +1,4 @@
-import { PUZZLE_MODES } from "../config/puzzleModes";
+import { PUZZLE_MODES } from "../../config/puzzleModes";
 import { PuzzleModeItem } from "./PuzzleModeItem";
 
 export const PuzzleModesList = () => {

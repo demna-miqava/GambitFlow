@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { type PuzzleMode } from "../config/puzzleModes";
+import { type PuzzleModeConfig } from "../../config/puzzleModes";
 import { cn } from "@/lib/utils";
 
 interface PuzzleModeItemProps {
-  mode: PuzzleMode;
+  mode: PuzzleModeConfig;
 }
 
 const buttonClasses = "h-auto w-full flex-col items-start gap-1 p-4";
