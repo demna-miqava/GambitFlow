@@ -36,10 +36,20 @@ A modern, real-time chess application built with React, TypeScript, and WebSocke
 - **Multi-PV Analysis** - View multiple best lines with scores
 - **Archive Analysis** - Review past games with engine assistance
 
+### Learning & Practice
+
+- **Puzzles** - Sharpen your skills with different puzzle modes like Survival
+- **Import Game** - rigorous analysis by importing PGNs from other platforms
+
+### Social & Community
+
+- **Friends System** - Add friends and see their status
+- **Smart Notifications** - Real-time alerts for game invites and friend requests
+
 ### Upcoming Features
 
-- **Spectator mode** for watching games
-- **Puzzles** - Sharpen your skills with different chess puzzles
+- **Spectator mode** - Watch ongoing games of your friends
+- **Tournaments** - Organized competitive play events
 
 ## Tech Stack
 
@@ -149,10 +159,19 @@ src/
 ├── components/          # Reusable UI components
 │   └── ui/             # shadcn/ui components
 ├── features/           # Feature-based modules
+│   ├── archive-game/  # Game archive and history
 │   ├── auth/          # Authentication
+│   ├── create-game/   # Game creation and setup
 │   ├── current-game/  # Live game functionality
 │   ├── engine-analysis/ # Stockfish analysis & evaluation
+│   ├── friends/       # Friend system and interactions
 │   ├── game/          # Shared game components
+│   ├── game-table/    # Game list and observation
+│   ├── import-game/   # PGN import functionality
+│   ├── matchmaking/   # Match finding logic
+│   ├── notifications/ # User notifications
+│   ├── profile/       # User profile management
+│   ├── puzzles/       # Chess puzzles and training
 │   ├── settings/      # User settings
 │   └── stats/         # Statistics and profiles
 ├── hooks/             # Custom React hooks
