@@ -81,6 +81,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     title: "Tools",
     icon: Wrench,
     color: "text-muted-foreground",
+    url: ROUTES.TOOLS.ANALYSIS_BOARD,
     items: [
       {
         title: "Import Game",
