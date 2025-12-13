@@ -1,8 +1,7 @@
 export const ROUTES = {
   HOME: "/home",
   PUZZLES: "/puzzles",
-  PUZZLES_SOLVE: "/puzzles/solve",
-  PUZZLE_RUSH: "/puzzles/rush",
+  PUZZLE_MODE: "/puzzles/:mode",
   PLAY: "/play",
   SETTINGS: "/settings",
   GAME: "/game/:gameId",
@@ -23,6 +22,8 @@ export const ROUTES = {
 } as const;
 
 // Helper functions for dynamic routes
+export const getPuzzleModeRoute = (mode: "infinite" | "rush" | "survival") =>
+  `/puzzles/${mode}`;
 export const getGameRoute = (gameId: string) => `/game/${gameId}`;
 export const getArchiveGameRoute = (gameId: string) => `/archive/${gameId}`;
 export const getProfileRoute = (id: number) => `/profile/${id}`;

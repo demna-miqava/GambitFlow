@@ -6,10 +6,10 @@ import { AppLayout } from "@/components/AppLayout";
 const Home = lazy(() => import("@/pages/Home"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Play = lazy(() => import("@/pages/CreateGame"));
+const CurrentGame = lazy(() => import("@/pages/CurrentGame"));
 const ArchiveGame = lazy(() => import("@/pages/ArchiveGame"));
 const PuzzlesLanding = lazy(() => import("@/pages/PuzzlesLanding"));
-const PuzzlePage = lazy(() => import("@/pages/PuzzlePage"));
-const PuzzleRushPage = lazy(() => import("@/pages/PuzzleRushPage"));
+const PuzzleModePage = lazy(() => import("@/pages/PuzzleModePage"));
 // Profile
 const Profile = lazy(() => import("@/pages/Profile"));
 const ProfileStats = lazy(() => import("@/pages/ProfileStats"));
@@ -21,7 +21,6 @@ const SignIn = lazy(() => import("@/pages/SignIn"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
 const IntroPage = lazy(() => import("@/pages/IntroPage"));
 const ProfileSetup = lazy(() => import("@/pages/ProfileSetup"));
-const CurrentGame = lazy(() => import("@/pages/CurrentGame"));
 
 export const AppRoutes = () => {
   return (
@@ -39,8 +38,7 @@ export const AppRoutes = () => {
         <Route path={ROUTES.ARCHIVE_GAME} element={<ArchiveGame />} />
         <Route path={ROUTES.SETTINGS} element={<Settings />} />
         <Route path={ROUTES.PUZZLES} element={<PuzzlesLanding />} />
-        <Route path={ROUTES.PUZZLES_SOLVE} element={<PuzzlePage />} />
-        <Route path={ROUTES.PUZZLE_RUSH} element={<PuzzleRushPage />} />
+        <Route path={ROUTES.PUZZLE_MODE} element={<PuzzleModePage />} />
       </Route>
       <Route path={ROUTES.LANDING} element={<IntroPage />} />
       <Route path={ROUTES.AUTH.SIGN_IN} element={<SignIn />} />

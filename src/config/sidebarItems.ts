@@ -1,5 +1,5 @@
 import { Home, Puzzle, Settings, Gamepad2, type LucideIcon } from "lucide-react";
-import { ROUTES, getProfileGamesRoute, getProfileStatsRoute } from "@/constants/routes";
+import { ROUTES, getProfileGamesRoute, getProfileStatsRoute, getPuzzleModeRoute } from "@/constants/routes";
 
 export interface SidebarItem {
   title: string;
@@ -65,12 +65,15 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     items: [
       {
         title: "Solve Puzzles",
-        url: ROUTES.PUZZLES_SOLVE,
+        url: getPuzzleModeRoute("infinite"),
       },
       {
         title: "Puzzle Rush",
-        url: ROUTES.PUZZLE_RUSH,
-        disabled: true,
+        url: getPuzzleModeRoute("rush"),
+      },
+      {
+        title: "Sudden Death",
+        url: getPuzzleModeRoute("survival"),
       },
     ],
   },
