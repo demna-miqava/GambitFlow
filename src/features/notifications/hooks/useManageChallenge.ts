@@ -11,6 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { QKEY_CHALLENGES } from "@/constants/queryKeys";
 import type { SendMessage } from "react-use-websocket";
 import type { ReadyState } from "react-use-websocket";
+import type { PlayerColorOption } from "@/types/game.types";
 
 export const useManageChallenge = (
   sendMessage: SendMessage,
@@ -29,7 +30,7 @@ export const useManageChallenge = (
   const sendChallenge = useCallback(
     (data: {
       challengedId: number;
-      color: "white" | "black" | "random";
+      color: PlayerColorOption;
       time: number;
       increment: number;
     }) => {

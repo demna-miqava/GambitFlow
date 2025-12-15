@@ -1,10 +1,11 @@
+import type { PlayerColorOption } from "@/types/game.types";
 import { NOTIFICATION_MESSAGE_TYPES } from "../constants/websocket-types";
 
 export type SendChallengeMessage = {
   type: NOTIFICATION_MESSAGE_TYPES.CHALLENGE_SENT;
   data: {
     challengedId: number;
-    color: "white" | "black" | "random";
+    color: PlayerColorOption;
     time: number;
     increment: number;
   };
@@ -31,7 +32,7 @@ export type ChallengeReceivedNotification = {
     username: string;
     avatarUrl: string | null;
     challengerRating: number;
-    color: "white" | "black" | "random";
+    color: PlayerColorOption;
     time: number;
     increment: number;
     createdAt: string;
@@ -71,7 +72,7 @@ export type Challenge = {
   challengerId: number;
   username: string;
   avatarUrl: string | null;
-  color: "white" | "black" | "random";
+  color: PlayerColorOption;
   time: number;
   increment: number;
   createdAt: string;

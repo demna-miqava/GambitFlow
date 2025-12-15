@@ -2,6 +2,7 @@ import { createContext, useContext, type ReactNode, useMemo } from "react";
 import { useNotificationWebSocket } from "../hooks/useNotificationWebSocket";
 import { useManageChallenge } from "../hooks/useManageChallenge";
 import { useChallengeMessageHandlers } from "../hooks/useChallengeMessageHandlers";
+import type { PlayerColorOption } from "@/types/game.types";
 
 type ChallengesContextType = {
   sendMessage: (message: string) => void;
@@ -10,7 +11,7 @@ type ChallengesContextType = {
   handleDeclineChallenge: (challengerId: number) => void;
   sendChallenge: (data: {
     challengedId: number;
-    color: "white" | "black" | "random";
+    color: PlayerColorOption;
     time: number;
     increment: number;
   }) => void;

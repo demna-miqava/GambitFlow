@@ -5,15 +5,14 @@ import { BotCard } from "./BotCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { PlayerColor } from "@/features/game/types/game.types";
+import type { PlayerColorOption } from "@/types/game.types";
 
-const colorOptions: (PlayerColor | "random")[] = ["white", "black", "random"];
+const colorOptions: PlayerColorOption[] = ["white", "black", "random"];
 
 export const BotSelector = () => {
   const [selectedBot, setSelectedBot] = useState<Bot | null>(null);
-  const [selectedColor, setSelectedColor] = useState<PlayerColor | "random">(
-    "random"
-  );
+  const [selectedColor, setSelectedColor] =
+    useState<PlayerColorOption>("random");
   const navigate = useNavigate();
 
   const handleStartGame = () => {

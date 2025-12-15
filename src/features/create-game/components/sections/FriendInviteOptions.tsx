@@ -7,13 +7,12 @@ import { TimeControlsSection } from "../TimeControlsSection";
 import { useGameSetup } from "../../GameSetupContext";
 import { UserAvatar } from "@/components/UserAvatar";
 import { useChallenges } from "@/features/notifications/context/ChallengesContext";
+import type { PlayerColorOption } from "@/types/game.types";
 
-type ColorChoice = "white" | "random" | "black";
-
-const COLOR_CHOICES: ColorChoice[] = ["white", "random", "black"];
+const COLOR_CHOICES: PlayerColorOption[] = ["white", "random", "black"];
 
 export const FriendInviteOptions = () => {
-  const [colorChoice, setColorChoice] = useState<ColorChoice>("random");
+  const [colorChoice, setColorChoice] = useState<PlayerColorOption>("random");
   const { selectedFriend, timeControl } = useGameSetup();
 
   const { sendChallenge } = useChallenges();

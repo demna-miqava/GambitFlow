@@ -41,3 +41,5 @@ export type GetUserGamesParams = {
   page?: number;
   limit?: number;
 };
+
+export type PlayerColorOption = "white" | "black" | "random";
