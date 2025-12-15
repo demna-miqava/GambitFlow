@@ -3,6 +3,8 @@ export const ROUTES = {
   PUZZLES: "/puzzles",
   PUZZLE_MODE: "/puzzles/:mode",
   PLAY: "/play",
+  PLAY_BOTS: "/play-bots",
+  BOT_GAME: "/bot-game",
   SETTINGS: "/settings",
   GAME: "/game/:gameId",
   ARCHIVE_GAME: "/archive/:gameId",

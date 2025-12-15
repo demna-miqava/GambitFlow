@@ -1,5 +1,17 @@
-import { Home, Puzzle, Settings, Gamepad2, Wrench, type LucideIcon } from "lucide-react";
-import { ROUTES, getProfileGamesRoute, getProfileStatsRoute, getPuzzleModeRoute } from "@/constants/routes";
+import {
+  Home,
+  Puzzle,
+  Settings,
+  Gamepad2,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
+import {
+  ROUTES,
+  getProfileGamesRoute,
+  getProfileStatsRoute,
+  getPuzzleModeRoute,
+} from "@/constants/routes";
 
 export interface SidebarItem {
   title: string;
@@ -13,7 +25,6 @@ export interface SidebarItem {
     disabled?: boolean;
   }[];
 }
-
 
 export const SIDEBAR_ITEMS: SidebarItem[] = [
   {
@@ -33,8 +44,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
       {
         title: "Profile",
         url: (id: number) => `/profile/${id}`,
-      }
-    ]
+      },
+    ],
   },
   {
     title: "Play",
@@ -48,14 +59,13 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
       },
       {
         title: "Play Bots",
-        url: ROUTES.PLAY,
-        disabled: true,
+        url: ROUTES.PLAY_BOTS,
       },
       {
         title: "Game History",
         url: (id: number) => getProfileGamesRoute(id),
-      }
-    ]
+      },
+    ],
   },
   {
     title: "Puzzles",
@@ -105,10 +115,9 @@ export const getSidebarItems = (id: number) => {
   return SIDEBAR_ITEMS.map((item) => ({
     ...item,
     url: typeof item.url === "function" ? item.url(id) : item.url,
-    items: item.items?.map(subItem => ({
+    items: item.items?.map((subItem) => ({
       ...subItem,
-      url: typeof subItem.url === "function" ? subItem.url(id) : subItem.url
-    }))
+      url: typeof subItem.url === "function" ? subItem.url(id) : subItem.url,
+    })),
   }));
 };
-
