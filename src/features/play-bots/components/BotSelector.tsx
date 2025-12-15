@@ -66,6 +66,7 @@ export const BotSelector = () => {
             <div className="grid grid-cols-3 gap-2">
               {colorOptions.map((color) => (
                 <Button
+                  key={color}
                   variant={selectedColor === color ? "default" : "outline"}
                   onClick={() => setSelectedColor(color)}
                   className="w-full capitalize"
