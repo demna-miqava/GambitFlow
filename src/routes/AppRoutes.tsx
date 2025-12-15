@@ -6,6 +6,7 @@ import { AppLayout } from "@/components/AppLayout";
 const Home = lazy(() => import("@/pages/Home"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Play = lazy(() => import("@/pages/CreateGame"));
+const PlayBots = lazy(() => import("@/pages/PlayBots"));
 const CurrentGame = lazy(() => import("@/pages/CurrentGame"));
 const ArchiveGame = lazy(() => import("@/pages/ArchiveGame"));
 const PuzzlesLanding = lazy(() => import("@/pages/PuzzlesLanding"));
@@ -36,6 +37,7 @@ export const AppRoutes = () => {
           <Route path={ROUTES.PROFILE.FRIENDS} element={<ProfileFriends />} />
         </Route>
         <Route path={ROUTES.PLAY} element={<Play />} />
+        <Route path={ROUTES.PLAY_BOTS} element={<PlayBots />} />
         <Route path={ROUTES.GAME} element={<CurrentGame />} />
         <Route path={ROUTES.ARCHIVE_GAME} element={<ArchiveGame />} />
         <Route path={ROUTES.SETTINGS} element={<Settings />} />
